@@ -3806,7 +3806,7 @@
                 <option value="zruc">Betonárna Zruč — Vřesová 206, 330 08 Zruč</option>
               </select>
               <div id="calcAutoNote" style="font-size:.72rem;color:var(--red);margin-top:6px;display:none;">
-                📍 Automaticky vybrána nejbližší betonárna
+                Automaticky vybrána nejbližší betonárna
               </div>
               <div id="calcDistResult" class="calc-dist" style="display:none;"></div>
             </div>
@@ -4444,7 +4444,7 @@
           calcState.lng = parseFloat(place.lon);
           const geoResult = document.getElementById('calcGeoResult');
           geoResult.style.display = 'block';
-          geoResult.innerHTML = `✅ <strong>${place.display_name.split(',').slice(0, 3).join(', ')}</strong>`;
+          geoResult.innerHTML = ` <strong>${place.display_name.split(',').slice(0, 3).join(', ')}</strong>`;
           calcSelectNearest();
           calcComputeDistance();
           calcUpdate();
@@ -4506,7 +4506,7 @@
         const place = data[0];
         calcState.lat = parseFloat(place.lat);
         calcState.lng = parseFloat(place.lon);
-        geoResult.innerHTML = `✅ <strong>${place.display_name.split(',').slice(0, 3).join(', ')}</strong>`;
+        geoResult.innerHTML = ` <strong>${place.display_name.split(',').slice(0, 3).join(', ')}</strong>`;
         calcSelectNearest();
         calcComputeDistance();
         calcUpdate();
@@ -4549,7 +4549,7 @@
 
       const distDiv = document.getElementById('calcDistResult');
       distDiv.style.display = 'flex';
-      distDiv.innerHTML = `📍 Vzdušná čára: <strong>${bird.toFixed(1)} km</strong> &nbsp;→&nbsp; Odhadovaná trasa: <strong>${calcState.dist} km</strong> &nbsp;<span style="font-size:.72rem;color:var(--mid);">(${branch.name})</span>`;
+      distDiv.innerHTML = ` Vzdušná čára: <strong>${bird.toFixed(1)} km</strong> &nbsp;→&nbsp; Odhadovaná trasa: <strong>${calcState.dist} km</strong> &nbsp;<span style="font-size:.72rem;color:var(--mid);">(${branch.name})</span>`;
     }
 
     // ── Výpočet ceny ──────────────────────────────────────
