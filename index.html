@@ -1973,13 +1973,6 @@
       }
 
 
-      /* ── PROMO ── */
-      .promo-inner {
-        grid-template-columns: 1fr;
-        gap: 24px;
-      }
-
-
       /* ── JOB CARDS ── */
       .job-card {
         flex-direction: column;
@@ -2636,6 +2629,15 @@
       position: relative;
       box-shadow: 0 24px 70px rgba(0, 0, 0, .28);
       animation: refModalIn .3s ease;
+      border-radius: 12px;
+    }
+
+    /* Gallery nahoře musí kopírovat zakulacení modalu */
+    .ref-modal-gallery {
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      border-radius: 12px 12px 0 0;
     }
 
     @keyframes refModalIn {
@@ -2675,11 +2677,6 @@
 
 
     /* ── Gallery ── */
-    .ref-modal-gallery {
-      position: relative;
-      overflow: hidden;
-      background: #111;
-    }
 
     .ref-modal-gallery img {
       width: 100%;
@@ -3528,7 +3525,7 @@
     /* ── PROMO SEKCE ── */
     .promo-section {
       background: var(--charcoal);
-      padding: 70px 40px;
+      padding: clamp(40px, 8vw, 70px) clamp(16px, 5vw, 40px);
       position: relative;
       overflow: hidden;
     }
@@ -3544,13 +3541,31 @@
       pointer-events: none;
     }
 
+    /* ── Mobile-first: single column, video on top ── */
     .promo-inner {
       max-width: 1200px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* Desktop: side-by-side, video left */
+    @media (min-width: 769px) {
+      .promo-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+
+      .promo-video-wrap {
+        order: 0;
+      }
+
+      .promo-text-col {
+        order: 0;
+      }
     }
 
     .promo-video-wrap {
@@ -3559,13 +3574,24 @@
       overflow: hidden;
       box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
       aspect-ratio: 16/9;
+      width: 100%;
+      /* Always renders first in DOM → first in column on mobile */
+      order: -1;
     }
 
     .promo-video-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       display: block;
       border: none;
+    }
+
+    .promo-text-col {
+      display: flex;
+      flex-direction: column;
     }
 
     .promo-text-header {
@@ -3581,27 +3607,30 @@
     .promo-text-title {
       font-family: 'Poppins', sans-serif;
       font-weight: 800;
-      font-size: 1.9rem;
+      font-size: clamp(1.4rem, 5vw, 1.9rem);
       color: var(--white);
       line-height: 1.2;
-      margin-bottom: 36px;
+      margin-bottom: 28px;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     .promo-features {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
     }
 
     .promo-feature {
       display: flex;
-      gap: 18px;
+      gap: 16px;
       align-items: flex-start;
     }
 
     .promo-feature-num {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
       flex-shrink: 0;
       border-radius: 50%;
       background: rgba(192, 33, 30, .18);
@@ -3621,12 +3650,13 @@
       font-size: .88rem;
       color: var(--white);
       margin-bottom: 5px;
+      line-height: 1.35;
     }
 
     .promo-feature-body p {
       font-size: .8rem;
       color: rgba(255, 255, 255, .55);
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
 
@@ -4164,6 +4194,7 @@
       display: flex;
       flex-direction: column;
       transition: box-shadow .22s, transform .22s;
+      border-radius: 10px;
     }
 
     .home-news-card:hover {
@@ -4177,6 +4208,7 @@
       position: relative;
       background: var(--light-gray);
       flex-shrink: 0;
+      border-radius: 10px 10px 0 0;
     }
 
     .home-news-card-img img {
@@ -4582,7 +4614,7 @@
   <div class="promo-section">
     <div class="promo-inner">
 
-      <!-- Video vlevo -->
+      <!-- Video — always renders first in DOM → top on mobile, left on desktop -->
       <div class="promo-video-wrap">
         <iframe src="https://www.youtube.com/embed/I01XsqvDfHY?si=McuHpiJYQnk6tdOH" title="YouTube video player"
           frameborder="0"
@@ -4591,8 +4623,8 @@
         </iframe>
       </div>
 
-      <!-- Text vpravo -->
-      <div>
+      <!-- Text col: header → title → features -->
+      <div class="promo-text-col">
         <div class="promo-text-header">B &amp; BC a.s.</div>
         <h2 class="promo-text-title">Výroba, doprava a dodávka betonových výrobků</h2>
 
@@ -4947,6 +4979,88 @@
           <div class="ico-row"><span class="lbl">Sídlo</span><span class="val">Sokolská 464, 330 22 Zbůch</span></div>
           <div class="ico-row"><span class="lbl">Datová schránka</span><span class="val">hqgccxg</span></div>
         </div>
+
+        <!-- ── INTERAKTIVNÍ MAPA SÍDLA ── -->
+        <div class="company-map-wrap">
+          <iframe class="company-map-iframe"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2566.254!2d13.3580!3d49.7330!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470af389ef0c3e1b%3A0x8e6a2b3c1f4d5e7a!2sSokolsk%C3%A1+464%2C+330+22+Zb%C5%AFch!5e0!3m2!1scs!2scz!4v1700000000000!5m2!1scs!2scz"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="Sídlo B &amp; BC a.s. — Sokolská 464, 330 22 Zbůch"></iframe>
+          <a class="company-map-link"
+            href="https://www.google.com/maps/dir/?api=1&destination=Sokolsk%C3%A1+464%2C+330+22+Zb%C5%AFch%2C+Czech+Republic"
+            target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+              <circle cx="12" cy="9" r="2.5" />
+            </svg>
+            Otevřít v Google Mapách
+            <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+          </a>
+        </div>
+
+        <style>
+          /* ── Mapa ── */
+          .company-map-wrap {
+            margin-top: 16px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .07);
+          }
+
+          .company-map-iframe {
+            display: block;
+            width: 100%;
+            height: 380px;
+            border: none;
+          }
+
+          /* ── Link pod mapou ── */
+          .company-map-link {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 11px 16px;
+            background: var(--white);
+            border-top: 1px solid var(--border);
+            font-family: 'Poppins', sans-serif;
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--red);
+            text-decoration: none;
+            transition: background .2s, color .2s;
+          }
+
+          .company-map-link:hover {
+            background: rgba(192, 33, 30, .04);
+            color: var(--red-dark);
+          }
+
+          .company-map-link svg:first-child {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+          }
+
+          .company-map-link .ext-icon {
+            width: 12px;
+            height: 12px;
+            margin-left: auto;
+            opacity: .5;
+          }
+
+          @media (max-width: 768px) {
+            .company-map-iframe {
+              height: 260px;
+            }
+          }
+        </style>
       </div>
     </div>
 
@@ -5642,17 +5756,269 @@
     <div class="section-heading" style="margin-top:50px">
       <h2>Napište nám</h2>
     </div>
-    <div class="form-row">
-      <div class="form-col">
-        <input class="form-input" type="text" placeholder="Vaše jméno">
-        <input class="form-input" type="email" placeholder="E-mail">
-        <input class="form-input" type="text" placeholder="Telefon">
+
+    <!--
+      ════════════════════════════════════════════════════════
+      KONTAKTNÍ FORMULÁŘ — Web3Forms
+      Doporučené free služby pro statické weby (GitHub Pages):
+
+      1. Web3Forms (web3forms.com) ← POUŽITO ZDE
+         • Zdarma 250 zpráv/měsíc
+         • Bez registrace — jen access key z e-mailu
+         • Honeypot anti-spam built-in
+         • Setup: <input name="access_key" value="VÁŠ_KLÍČ">
+
+      2. Formspree (formspree.io)
+         • Zdarma 50 zpráv/měsíc
+         • Registrace + ověření e-mailu
+         • action="https://formspree.io/f/VÁŠ_ID"
+
+      3. Basin (usebasin.com)
+         • Zdarma 100 zpráv/měsíc
+         • Nejčistší UI dashboardu
+         • action="https://usebasin.com/f/VÁŠ_ID"
+
+      NASTAVENÍ WEB3FORMS:
+      1. Jdi na https://web3forms.com
+      2. Zadej svůj e-mail → obdržíš Access Key
+      3. Vlož klíč do <input name="access_key" value="...">
+      4. Zprávy budou chodit na zadaný e-mail
+      ════════════════════════════════════════════════════════
+    -->
+
+    <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+
+      <!-- Web3Forms: povinný access key — vyměň za svůj klíč -->
+      <input type="hidden" name="access_key" value="VÁŠ-ACCESS-KEY-ZDE">
+
+      <!-- Web3Forms: předmět e-mailu ve schránce -->
+      <input type="hidden" name="subject" value="Nová zpráva z webu B&amp;BC a.s.">
+
+      <!-- Web3Forms: redirect po odeslání (volitelné — necháme prázdné, použijeme JS) -->
+      <input type="hidden" name="redirect" value="false">
+
+      <!-- ── HONEYPOT anti-spam ── -->
+      <!-- Boti toto pole vyplní, lidé ne → Web3Forms zprávu zahodí -->
+      <input type="text" name="botcheck" style="display:none !important" tabindex="-1" autocomplete="off">
+
+      <div class="form-row">
+        <div class="form-col">
+
+          <div class="form-field">
+            <input class="form-input" type="text" name="name" id="f-name" placeholder="Vaše jméno" required
+              minlength="2" autocomplete="name">
+            <span class="form-error">Vyplňte prosím jméno.</span>
+          </div>
+
+          <div class="form-field">
+            <input class="form-input" type="email" name="email" id="f-email" placeholder="E-mail" required
+              autocomplete="email">
+            <span class="form-error">Zadejte platný e-mail.</span>
+          </div>
+
+          <div class="form-field">
+            <input class="form-input" type="tel" name="phone" id="f-phone" placeholder="Telefon" autocomplete="tel">
+            <!-- Telefon není povinný -->
+          </div>
+
+        </div>
+        <div class="form-col">
+
+          <div class="form-field" style="flex:1">
+            <textarea class="form-input" name="message" id="f-message" placeholder="Vaše zpráva…" rows="5"
+              style="resize:vertical;flex:1;height:100%;min-height:130px" required minlength="10"></textarea>
+            <span class="form-error">Zpráva musí mít alespoň 10 znaků.</span>
+          </div>
+
+          <button type="submit" class="btn-primary" id="submitBtn" style="align-self:flex-start">
+            <span class="btn-text">Odeslat zprávu</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+
+        </div>
       </div>
-      <div class="form-col">
-        <textarea class="form-input" placeholder="Vaše zpráva…" rows="5" style="resize:vertical"></textarea>
-        <button class="btn-primary" style="align-self:flex-start">Odeslat zprávu</button>
-      </div>
-    </div>
+
+    </form>
+
+    <!-- Toast notifikace -->
+    <div id="formToast" class="form-toast" role="alert" aria-live="polite"></div>
+
+    <style>
+      /* ── Form field wrapper ── */
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      /* ── Chybová zpráva ── */
+      .form-error {
+        display: none;
+        font-size: .72rem;
+        color: var(--red);
+        font-family: 'Poppins', sans-serif;
+        padding-left: 2px;
+      }
+
+      .form-field.invalid .form-input {
+        border-color: var(--red);
+      }
+
+      .form-field.invalid .form-error {
+        display: block;
+      }
+
+      .form-field.valid .form-input {
+        border-color: #22a55b;
+      }
+
+      /* ── Spinner v tlačítku ── */
+      .btn-spinner {
+        display: none;
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(255, 255, 255, .35);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin .7s linear infinite;
+        margin-left: 8px;
+      }
+
+      #submitBtn.loading .btn-spinner {
+        display: inline-block;
+      }
+
+      #submitBtn.loading .btn-text {
+        opacity: .7;
+      }
+
+      #submitBtn:disabled {
+        cursor: not-allowed;
+        opacity: .75;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ── Toast ── */
+      .form-toast {
+        display: none;
+        margin-top: 20px;
+        padding: 14px 20px;
+        font-family: 'Poppins', sans-serif;
+        font-size: .85rem;
+        font-weight: 600;
+        border-left: 4px solid;
+        max-width: 800px;
+      }
+
+      .form-toast.success {
+        display: block;
+        background: rgba(34, 165, 91, .08);
+        border-color: #22a55b;
+        color: #1a7a44;
+      }
+
+      .form-toast.error {
+        display: block;
+        background: rgba(192, 33, 30, .07);
+        border-color: var(--red);
+        color: var(--red);
+      }
+
+      /* ── Mobile: form-row na 1 sloupec ── */
+      @media (max-width: 600px) {
+        .form-row {
+          grid-template-columns: 1fr;
+          max-width: 100%;
+        }
+      }
+    </style>
+
+    <script>
+      (function () {
+        const form = document.getElementById('contactForm');
+        const btn = document.getElementById('submitBtn');
+        const toast = document.getElementById('formToast');
+
+        /* ── Live validace při odchodu z pole ── */
+        form.querySelectorAll('.form-input').forEach(function (input) {
+          input.addEventListener('blur', function () { validateField(input); });
+          input.addEventListener('input', function () {
+            if (input.closest('.form-field').classList.contains('invalid')) {
+              validateField(input);
+            }
+          });
+        });
+
+        function validateField(input) {
+          var field = input.closest('.form-field');
+          if (!field) return true;
+          var ok = input.validity.valid;
+          field.classList.toggle('invalid', !ok);
+          field.classList.toggle('valid', ok);
+          return ok;
+        }
+
+        function validateAll() {
+          var allOk = true;
+          form.querySelectorAll('.form-input').forEach(function (input) {
+            if (!validateField(input)) allOk = false;
+          });
+          return allOk;
+        }
+
+        /* ── Submit handler ── */
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+
+          if (!validateAll()) {
+            /* Scroll k prvnímu chybnému poli */
+            var first = form.querySelector('.form-field.invalid .form-input');
+            if (first) first.focus();
+            return;
+          }
+
+          /* Loading state */
+          btn.disabled = true;
+          btn.classList.add('loading');
+          toast.className = 'form-toast';
+          toast.textContent = '';
+
+          try {
+            var data = new FormData(form);
+            var res = await fetch(form.action, {
+              method: 'POST',
+              body: data,
+              headers: { 'Accept': 'application/json' }
+            });
+            var json = await res.json();
+
+            if (json.success) {
+              toast.className = 'form-toast success';
+              toast.textContent = '✓ Zpráva byla úspěšně odeslána. Ozveme se vám co nejdříve.';
+              form.reset();
+              form.querySelectorAll('.form-field').forEach(function (f) {
+                f.classList.remove('valid', 'invalid');
+              });
+            } else {
+              throw new Error(json.message || 'Chyba odeslání');
+            }
+          } catch (err) {
+            toast.className = 'form-toast error';
+            toast.textContent = '✗ Zprávu se nepodařilo odeslat. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.';
+            console.error('[Form]', err);
+          } finally {
+            btn.disabled = false;
+            btn.classList.remove('loading');
+            toast.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        });
+      })();
+    </script>
   </div>
 </div>
 
@@ -5836,18 +6202,10 @@
     position: relative;
   }
 
-  .card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-  }
-
-  /* Placeholder ikona pro chybějící obrázky */
+  /* Placeholder — vždy viditelný jako fallback pod obrázkem */
   .card-img-placeholder {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -5858,6 +6216,17 @@
     width: 48px;
     height: 48px;
     opacity: 0.25;
+  }
+
+  /* Obrázek překryje placeholder absolutně */
+  .card-img img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
   }
 
   /* Obsah */
@@ -6027,7 +6396,8 @@
   <div class="news-grid">
 
     <!-- Karta 1 -->
-    <article class="news-card" data-category="akce">
+    <article class="news-card" data-category="akce" data-article="vyprodej-2026" role="button" tabindex="0"
+      aria-label="Otevřít aktualitu: Výprodej skladu výrobků 2026">
       <div class="card-img">
         <div class="card-img-placeholder">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -6036,7 +6406,8 @@
             <path d="m21 15-5-5L5 21" />
           </svg>
         </div>
-        <!-- <img src="fotky/aktuality/vyprodej2026.jpg" alt="Výprodej skladu"> -->
+        <img src="fotky/aktualita1.jpg" alt="Výprodej skladu výrobků 2026" loading="lazy"
+          onerror="this.style.display='none'">
       </div>
       <div class="card-body">
         <div class="card-meta">
@@ -6047,19 +6418,20 @@
         <p class="card-excerpt">Výprodej betonových dlažeb a zahradní architektury 2026 — nabízíme výjimečné ceny na
           skladové zásoby. Akce platí do vyprodání zásob. Přijďte si vybrat na výstavní ploše v areálu závodu Zbůch.
         </p>
-        <a href="#" class="read-more">
+        <span class="read-more" aria-hidden="true">
           Číst více
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
             stroke-linejoin="round">
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
           </svg>
-        </a>
+        </span>
       </div>
     </article>
 
     <!-- Karta 2 -->
-    <article class="news-card" data-category="provoz">
+    <article class="news-card" data-category="provoz" data-article="odpojeni-energie" role="button" tabindex="0"
+      aria-label="Otevřít aktualitu: Odpojení elektrické energie v závodě Zbůch">
       <div class="card-img">
         <div class="card-img-placeholder">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -6068,6 +6440,8 @@
             <path d="m21 15-5-5L5 21" />
           </svg>
         </div>
+        <img src="fotky/aktualita3.jpg" alt="Odpojení elektrické energie v závodě Zbůch" loading="lazy"
+          onerror="this.style.display='none'">
       </div>
       <div class="card-body">
         <div class="card-meta">
@@ -6077,19 +6451,20 @@
         <h3 class="card-title">Odpojení elektrické energie v závodě Zbůch</h3>
         <p class="card-excerpt">Dne 22.7.2025 od 14:00 do 16:00 proběhne plánovaná odstávka elektrické energie v
           areálu závodu Zbůch. V této době nebude možné přijímat ani expedovat objednávky.</p>
-        <a href="#" class="read-more">
+        <span class="read-more" aria-hidden="true">
           Číst více
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
             stroke-linejoin="round">
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
           </svg>
-        </a>
+        </span>
       </div>
     </article>
 
     <!-- Karta 3 -->
-    <article class="news-card" data-category="nabidka">
+    <article class="news-card" data-category="nabidka" data-article="letni-akce" role="button" tabindex="0"
+      aria-label="Otevřít aktualitu: Letní akce na beton">
       <div class="card-img">
         <div class="card-img-placeholder">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -6098,6 +6473,7 @@
             <path d="m21 15-5-5L5 21" />
           </svg>
         </div>
+        <img src="fotky/aktualita2.jpg" alt="Letní akce na beton" loading="lazy" onerror="this.style.display='none'">
       </div>
       <div class="card-body">
         <div class="card-meta">
@@ -6107,19 +6483,20 @@
         <h3 class="card-title">Letní akce na beton</h3>
         <p class="card-excerpt">Speciální letní ceny platné od 1.7. do 31.8.2025 na vybrané transportbetony a betonové
           výrobky. Využijte sezónní slev a zajistěte si materiál na letní stavební sezónu za výhodné ceny.</p>
-        <a href="#" class="read-more">
+        <span class="read-more" aria-hidden="true">
           Číst více
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
             stroke-linejoin="round">
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
           </svg>
-        </a>
+        </span>
       </div>
     </article>
 
     <!-- Karta 4 -->
-    <article class="news-card" data-category="provoz">
+    <article class="news-card" data-category="provoz" data-article="odstavka-zbuch" role="button" tabindex="0"
+      aria-label="Otevřít aktualitu: Odstávka betonárny Zbůch">
       <div class="card-img">
         <div class="card-img-placeholder">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -6128,6 +6505,7 @@
             <path d="m21 15-5-5L5 21" />
           </svg>
         </div>
+        <!-- Přidej vlastní fotku: <img src="fotky/aktualita4.jpg" alt="Odstávka betonárny Zbůch" loading="lazy" onerror="this.style.display='none'"> -->
       </div>
       <div class="card-body">
         <div class="card-meta">
@@ -6137,16 +6515,198 @@
         <h3 class="card-title">Odstávka betonárny Zbůch</h3>
         <p class="card-excerpt">Oznamujeme plánovanou odstávku betonárny Zbůch od čtvrtka 16.1. do pátku 17.1.2025 z
           důvodu plánované údržby. Objednávky lze zajistit prostřednictvím betonárny Plzeň nebo Přeštice.</p>
-        <a href="#" class="read-more">
+        <span class="read-more" aria-hidden="true">
           Číst více
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
             stroke-linejoin="round">
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
           </svg>
-        </a>
+        </span>
       </div>
     </article>
+
+    <!-- ── AKTUALITY MODAL ── -->
+    <div id="aktModalOverlay" class="akt-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="aktModalTitle">
+      <div class="akt-modal" id="aktModal">
+        <button class="akt-modal-close" id="aktModalClose" aria-label="Zavřít">&times;</button>
+
+        <!-- Placeholder / obrázek -->
+        <div class="akt-modal-img" id="aktModalImg">
+          <div class="card-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="m21 15-5-5L5 21" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="akt-modal-body">
+          <div class="akt-modal-meta">
+            <span class="card-date" id="aktModalDate"></span>
+            <span class="tag" id="aktModalTag"></span>
+          </div>
+          <h2 class="akt-modal-title" id="aktModalTitle"></h2>
+          <div class="akt-modal-text" id="aktModalText"></div>
+          <div class="akt-modal-footer">
+            <button class="akt-modal-btn-close job-modal-close-btn" id="aktModalBtnClose">Zavřít</button>
+            <button class="akt-modal-btn-contact btn-primary"
+              onclick="showPage('kontakty'); closeAktModal()">Kontaktovat nás</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      /* ── Karta: plně klikatelná ── */
+      .news-card {
+        cursor: pointer;
+        user-select: none;
+        outline: none;
+      }
+
+      .news-card:focus-visible {
+        outline: 2px solid var(--red);
+        outline-offset: 3px;
+      }
+
+      /* ── Aktuality Modal overlay ── */
+      .akt-modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .6);
+        z-index: 9300;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+      }
+
+      .akt-modal-overlay.open {
+        display: flex;
+        animation: mFadeIn .2s ease;
+      }
+
+      /* ── Modal box ── */
+      .akt-modal {
+        background: var(--white);
+        max-width: 680px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        border-radius: 12px;
+        position: relative;
+        box-shadow: 0 28px 80px rgba(0, 0, 0, .28);
+        animation: mSlideUp .28s cubic-bezier(.22, 1, .36, 1);
+      }
+
+      /* ── Obrázek ── */
+      .akt-modal-img {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        overflow: hidden;
+        background: var(--light-gray);
+        border-radius: 12px 12px 0 0;
+      }
+
+      .akt-modal-img .card-img-placeholder {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
+
+      .akt-modal-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* ── Zavírací křížek ── */
+      .akt-modal-close {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, .45);
+        border: none;
+        color: #fff;
+        font-size: 1.25rem;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background .2s;
+        z-index: 2;
+      }
+
+      .akt-modal-close:hover {
+        background: var(--red);
+      }
+
+      /* ── Obsah modalu ── */
+      .akt-modal-body {
+        padding: 28px 32px 24px;
+      }
+
+      .akt-modal-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .akt-modal-title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 800;
+        font-size: 1.4rem;
+        color: var(--charcoal);
+        line-height: 1.3;
+        margin-bottom: 16px;
+      }
+
+      .akt-modal-text {
+        font-size: .92rem;
+        color: #444;
+        line-height: 1.8;
+        white-space: pre-line;
+      }
+
+      /* ── Footer tlačítka ── */
+      .akt-modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+      }
+
+      @media (max-width: 480px) {
+        .akt-modal-body {
+          padding: 20px 18px 18px;
+        }
+
+        .akt-modal-title {
+          font-size: 1.15rem;
+        }
+
+        .akt-modal-footer {
+          flex-direction: column-reverse;
+        }
+
+        .akt-modal-footer button {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
     <style>
       /* ╔═════════════════════════════════════════════════════╗
    ║  AKTUALITY – REDESIGN (přidat do hlavního <style>)  ║
@@ -6390,27 +6950,146 @@
     </style>
   </div>
 
-  <!-- Filtrování JS -->
+  <!-- Filtrování + Modal JS -->
   <script>
     (function () {
-      const filterBtns = document.querySelectorAll('.filter-btn');
-      const cards = document.querySelectorAll('.news-card');
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('active'));
+
+      /* ════════════════════════════════════════════
+         DATA AKTUALIT — přidej/uprav texty zde
+      ════════════════════════════════════════════ */
+      var AKTUALITY = {
+        'vyprodej-2026': {
+          title: 'Výprodej skladu výrobků 2026',
+          date: '12. 3. 2026',
+          tagText: 'Akce',
+          tagClass: 'tag-akce',
+          img: 'fotky/aktualita1.jpg',
+          text: 'Výprodej betonových dlažeb a zahradní architektury 2026 — nabízíme výjimečné ceny na skladové zásoby. Akce platí do vyprodání zásob.\n\nPřijďte si vybrat na výstavní ploše v areálu závodu Zbůch, kde jsou výrobky trvale k prohlédnutí.\n\nSleva se vztahuje na vybrané typy zámkové dlažby, obrubníků a zahradních prvků z předzásobení. Zásoby jsou limitované. Platba v hotovosti nebo kartou přímo v závodě.\n\nOtevírací doba výstaviště: Po–Pá 7:00–16:00.'
+        },
+        'odpojeni-energie': {
+          title: 'Odpojení elektrické energie v závodě Zbůch',
+          date: '18. 7. 2025',
+          tagText: 'Provoz',
+          tagClass: 'tag-provoz',
+          img: 'fotky/aktualita3.jpg',
+          text: 'Dne 22.7.2025 od 14:00 do 16:00 proběhne plánovaná odstávka elektrické energie v areálu závodu Zbůch. V této době nebude možné přijímat ani expedovat objednávky.\n\nOmlouváme se za případné komplikace. Urgentní objednávky transportbetonu je možné v daném čase zajistit prostřednictvím betonárny Plzeň — tel. 377 199 111.\n\nDěkujeme za pochopení.'
+        },
+        'letni-akce': {
+          title: 'Letní akce na beton',
+          date: '30. 6. 2025',
+          tagText: 'Nabídka',
+          tagClass: 'tag-nabidka',
+          img: 'fotky/aktualita2.jpg',
+          text: 'Speciální letní ceny platné od 1.7. do 31.8.2025 na vybrané transportbetony a betonové výrobky. Využijte sezónní slev a zajistěte si materiál na letní stavební sezónu za výhodné ceny.\n\nAkce se týká betonů tříd C16/20 až C30/37 a vybraných betonových výrobků z naší standardní nabídky.\n\nBližší informace a ceník na vyžádání na obchodním oddělení.\nTel.: 377 199 104 | E-mail: obchod@babc.cz'
+        },
+        'odstavka-zbuch': {
+          title: 'Odstávka betonárny Zbůch',
+          date: '16. 1. 2025',
+          tagText: 'Provoz',
+          tagClass: 'tag-provoz',
+          img: '',
+          text: 'Oznamujeme plánovanou odstávku betonárny Zbůch od čtvrtka 16.1. do pátku 17.1.2025 z důvodu plánované údržby a revize technologie.\n\nObjednávky v daném období lze zajistit prostřednictvím:\n• Betonárna Plzeň — tel. 377 199 111\n• Betonárna Přeštice — tel. 377 199 122\n\nOd pondělí 20.1. bude provoz betonárny Zbůch opět plně funkční. Děkujeme za pochopení.'
+        }
+      };
+
+      /* ════════════════════════════════════════════
+         MODAL
+      ════════════════════════════════════════════ */
+      var overlay = document.getElementById('aktModalOverlay');
+      var modal = document.getElementById('aktModal');
+
+      function openAktModal(key) {
+        var a = AKTUALITY[key];
+        if (!a) return;
+
+        /* Naplň obsah */
+        document.getElementById('aktModalDate').textContent = a.date;
+        document.getElementById('aktModalTitle').textContent = a.title;
+        document.getElementById('aktModalText').textContent = a.text;
+
+        var tagEl = document.getElementById('aktModalTag');
+        tagEl.textContent = a.tagText;
+        tagEl.className = 'tag ' + a.tagClass;
+
+        /* Obrázek nebo placeholder */
+        var imgWrap = document.getElementById('aktModalImg');
+        if (a.img) {
+          imgWrap.innerHTML = '<img src="' + a.img + '" alt="' + a.title + '" onerror="this.parentNode.innerHTML=\'<div class=card-img-placeholder><svg viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"1.5\\\"><rect x=\\\"3\\\" y=\\\"3\\\" width=\\\"18\\\" height=\\\"18\\\" rx=\\\"2\\\"/><circle cx=\\\"8.5\\\" cy=\\\"8.5\\\" r=\\\"1.5\\\"/><path d=\\\"m21 15-5-5L5 21\\\"/></svg></div>\'">';
+        } else {
+          imgWrap.innerHTML = '<div class="card-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>';
+        }
+
+        overlay.classList.add('open');
+        document.body.style.overflowY = 'hidden';
+
+        /* Focus trap — pošli focus na zavírací tlačítko */
+        setTimeout(function () {
+          document.getElementById('aktModalClose').focus();
+        }, 50);
+      }
+
+      function closeAktModal() {
+        overlay.classList.remove('open');
+        document.body.style.overflowY = '';
+      }
+
+      /* Globální přístup (potřeba pro inline onclick) */
+      window.closeAktModal = closeAktModal;
+
+      /* Zavření kliknutím mimo modal */
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeAktModal();
+      });
+
+      /* Zavření tlačítkem */
+      document.getElementById('aktModalClose').addEventListener('click', closeAktModal);
+      document.getElementById('aktModalBtnClose').addEventListener('click', closeAktModal);
+
+      /* Escape klávesa */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeAktModal();
+      });
+
+      /* ════════════════════════════════════════════
+         KLIKATELNÉ KARTY
+      ════════════════════════════════════════════ */
+      document.querySelectorAll('.news-card[data-article]').forEach(function (card) {
+        /* Klik myší */
+        card.addEventListener('click', function () {
+          openAktModal(card.dataset.article);
+        });
+        /* Enter / Space pro klávesnici */
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openAktModal(card.dataset.article);
+          }
+        });
+      });
+
+      /* ════════════════════════════════════════════
+         FILTROVÁNÍ
+      ════════════════════════════════════════════ */
+      var filterBtns = document.querySelectorAll('.filter-btn');
+      var cards = document.querySelectorAll('.news-card');
+
+      filterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filterBtns.forEach(function (b) { b.classList.remove('active'); });
           btn.classList.add('active');
-          const filter = btn.dataset.filter;
-          cards.forEach((card, i) => {
-            const show = filter === 'all' || card.dataset.category === filter;
+          var filter = btn.dataset.filter;
+          cards.forEach(function (card, i) {
+            var show = filter === 'all' || card.dataset.category === filter;
             card.style.display = show ? '' : 'none';
             if (show) {
               card.style.animation = 'none';
-              card.offsetHeight;
+              card.offsetHeight; /* reflow */
               card.style.animation = 'cardIn 0.4s ease ' + (i * 0.06) + 's forwards';
             }
           });
         });
       });
+
     })();
   </script>
 
