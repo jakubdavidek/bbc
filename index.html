@@ -1858,7 +1858,19 @@
 
       /* ── CATEGORIES ── */
       .categories {
-        grid-template-columns: repeat(3, 1fr);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .cat-item {
+        width: 33.333%;
+        box-sizing: border-box;
+        border-right: 1px solid var(--border);
+      }
+
+      .cat-item:last-child {
+        border-right: 1px solid var(--border);
       }
 
 
@@ -2140,7 +2152,19 @@
 
       /* ── CATEGORIES ── */
       .categories {
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .cat-item {
+        width: 50%;
+        box-sizing: border-box;
+        border-right: 1px solid var(--border);
+      }
+
+      .cat-item:last-child {
+        border-right: 1px solid var(--border);
       }
 
 
@@ -4501,128 +4525,6 @@
       }
     }
   </style>
-
-  <!-- ═══ MOBILE RESPONSIVITY FIX ═══ -->
-  <style>
-    /* ── GLOBAL: prevent horizontal scroll on all pages ── */
-    .page,
-    .subpage-content {
-      max-width: 100%;
-      overflow-x: hidden;
-      box-sizing: border-box;
-    }
-
-    @media (max-width: 768px) {
-
-      /* ══ 1. KONTAKTY — karty na plnou šířku ══ */
-      .ct-grid {
-        grid-template-columns: 1fr !important;
-        gap: 16px !important;
-      }
-
-      .ct-card-body {
-        padding: 16px !important;
-      }
-
-      /* Větší font pro tel. čísla — klikatelná plocha */
-      .ct-table a[href^="tel"] {
-        font-size: 1rem !important;
-        font-weight: 700 !important;
-        color: var(--red) !important;
-        display: inline-block;
-        padding: 2px 0;
-      }
-
-      /* Label sloupec: kratší na mobilu */
-      .ct-table td:first-child {
-        width: 90px !important;
-        font-size: .76rem !important;
-      }
-
-      .ct-table td {
-        font-size: .83rem !important;
-        line-height: 1.6 !important;
-        word-break: break-word;
-      }
-
-      /* ══ 2. NABÍDKA PRODUKTŮ — 2 sloupce max ══ */
-      .prod-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px !important;
-      }
-
-      .prod-card-name {
-        font-size: .72rem !important;
-      }
-
-      /* ══ 3. KE STAŽENÍ — 1 karta na řádek ══ */
-      .dl-grid {
-        grid-template-columns: 1fr !important;
-        gap: 10px !important;
-      }
-
-      .dl-card {
-        padding: 14px 16px !important;
-      }
-
-      .dl-name {
-        font-size: .82rem !important;
-      }
-
-      /* ══ 4. PRODEJCI — vertikálně, 1 sloupec ══ */
-      .prodejci-grid {
-        grid-template-columns: 1fr !important;
-        gap: 14px !important;
-      }
-
-      .prodejci-card {
-        padding: 18px !important;
-      }
-
-      /* ══ 5. CENÍK — tabulky s horizontálním scrollem ══ */
-      .cenik-table-wrap {
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-        max-width: 100%;
-      }
-
-      .cenik-table {
-        min-width: 480px;
-        font-size: .78rem !important;
-      }
-
-      .cenik-table th,
-      .cenik-table td {
-        padding: 9px 12px !important;
-        white-space: nowrap;
-      }
-
-      .cenik-list li {
-        font-size: .82rem !important;
-      }
-
-      /* ══ 6. FORM — 1 sloupec na mobilu ══ */
-      .form-row {
-        grid-template-columns: 1fr !important;
-        gap: 0 !important;
-      }
-
-      /* ══ 7. JEDNOTNÉ OKRAJE pro všechny subpage sekce ══ */
-      .subpage-content {
-        padding-left: 16px !important;
-        padding-right: 16px !important;
-      }
-
-    }
-
-    /* ══ Extra malé telefony (< 400px) — produkty 1 sloupec ══ */
-    @media (max-width: 400px) {
-      .prod-grid {
-        grid-template-columns: 1fr !important;
-      }
-    }
-  </style>
-  <!-- ═══ END MOBILE FIX ═══ -->
 </head>
 
 <div id="siteHeader">
@@ -9315,9 +9217,9 @@
         </p>
         <ol class="vos-list">
           <li>Prostřednictvím elektronické pošty na adresu: <a
-              href="/cdn-cgi/l/email-protection#016e7b6f606c6e776075646d41636063622f627b"
+              href="/cdn-cgi/l/email-protection#3e5144505f5351485f4a5b527e5c5f5c5d105d44"
               style="color:var(--red);text-decoration:none;font-weight:600;"><span class="__cf_email__"
-                data-cfemail="7f1005111e1210091e0b1a133f1d1e1d1c511c05">[email&#160;protected]</span></a> — podané
+                data-cfemail="5b3421353a36342d3a2f3e371b393a3938753821">[email&#160;protected]</span></a> — podané
             oznámení
             bude doručeno pouze osobě příslušné k přijetí oznámení.</li>
           <li>Telefonicky na čísle: 724 268 277 (hovor přijímá pouze osoba příslušná k
@@ -9443,9 +9345,9 @@
           <li><strong>B &amp; BC, a.s.</strong></li>
           <li>Sokolská 464, 330 22 Zbůch</li>
           <li>Tel.: 377 199 104, 111</li>
-          <li>E-mail: <a href="/cdn-cgi/l/email-protection#630c01000b0c0723010201004d0019"
+          <li>E-mail: <a href="/cdn-cgi/l/email-protection#dcb3bebfb4b3b89cbebdbebff2bfa6"
               style="color:var(--red);text-decoration:none;"><span class="__cf_email__"
-                data-cfemail="78171a1b10171c381a191a1b561b02">[email&#160;protected]</span></a>
+                data-cfemail="c7a8a5a4afa8a387a5a6a5a4e9a4bd">[email&#160;protected]</span></a>
           </li>
           <li>IČO: 64832783</li>
         </ul>
@@ -9536,9 +9438,9 @@
 
       <div class="info-box" style="margin-top:24px;">
         V případě jakýchkoliv dotazů nebo požadavků týkajících se vašich osobních údajů nás prosím kontaktujte na adrese
-        <a href="/cdn-cgi/l/email-protection#c1aea3a2a9aea581a3a0a3a2efa2bb"
+        <a href="/cdn-cgi/l/email-protection#513e3332393e3511333033327f322b"
           style="color:var(--red);text-decoration:none;font-weight:600;"><span class="__cf_email__"
-            data-cfemail="a7c8c5c4cfc8c3e7c5c6c5c489c4dd">[email&#160;protected]</span></a>
+            data-cfemail="177875747f7873577576757439746d">[email&#160;protected]</span></a>
       </div>
 
     </div>
