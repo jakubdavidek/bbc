@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(awk 'NR>=3744 && NR<=3900' c:/code/bbc/index.html)"
-    ]
-  }
-}

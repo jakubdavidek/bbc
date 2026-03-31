@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="cs">
 
 <head>
@@ -1858,9 +1858,7 @@
 
       /* ── CATEGORIES ── */
       .categories {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: none;
       }
 
       .cat-item {
@@ -2152,9 +2150,7 @@
 
       /* ── CATEGORIES ── */
       .categories {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: none;
       }
 
       .cat-item {
@@ -3255,7 +3251,11 @@
       margin-top: 20px;
       border: 1.5px solid var(--border);
       background: var(--white);
-      padding: 18px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
     }
 
     .prod-contact-title {
@@ -3264,13 +3264,16 @@
       text-transform: uppercase;
       letter-spacing: .08em;
       margin-bottom: 10px;
+      flex-shrink: 0;
     }
 
     .prod-contact-body {
       font-size: .78rem;
       line-height: 1.7;
       color: #555;
-      margin-bottom: 14px;
+      margin-bottom: 0;
+      flex: 1;
+      min-width: 180px;
     }
 
     .prod-contact-body a {
@@ -4522,6 +4525,213 @@
 
       to {
         opacity: 1;
+      }
+    }
+  </style>
+
+  <!-- ══════════════════════════════════════════
+       MOBILE RESPONSIVE FIXES — všechny stránky
+       ══════════════════════════════════════════ -->
+  <style>
+    /* ── PRODUKTY: layout sidebar + obsah ── */
+    .prod-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* ── CENÍK: kalkulačka + výsledek ── */
+    .cenik-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ════════════════════════
+       TABLET + MOBIL ≤ 768px
+    ════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* ── PRODUKTY: jednosloupcový layout ── */
+      .prod-layout {
+        display: block !important;
+        grid-template-columns: unset !important;
+        gap: unset !important;
+      }
+
+      /* Sidebar: position:relative místo sticky — Safari fix pro bílý blok */
+      .prod-sidebar {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        float: none !important;
+        margin: 0 0 24px 0 !important;
+        box-sizing: border-box !important;
+      }
+
+      .prod-cat {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 14px 18px !important;
+        font-size: .82rem !important;
+      }
+
+      .prod-contact-box {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        margin-top: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .prod-contact-body {
+        margin-bottom: 4px !important;
+      }
+
+      #page-produkty .subpage-content {
+        padding: 24px 16px !important;
+        overflow: visible !important;
+      }
+
+      /* ── CENÍK: jednosloupcový layout ── */
+      .cenik-layout {
+        display: block !important;
+        grid-template-columns: unset !important;
+        gap: unset !important;
+      }
+
+      /* Výsledkový panel ceníku: plná šířka, přidej mezeru nad ním */
+      .cenik-layout>div+div {
+        margin-top: 28px !important;
+      }
+
+      /* ── CENÍK kalkulačka: menší padding + tlačítko Hledat viditelné ── */
+      .calc-step {
+        padding: 14px 12px !important;
+        gap: 10px !important;
+      }
+
+      .calc-btn-search {
+        padding: 10px 12px !important;
+        font-size: .68rem !important;
+        letter-spacing: .04em !important;
+        flex-shrink: 0 !important;
+      }
+
+      .calc-input {
+        min-width: 0 !important;
+      }
+
+      /* ── REFERENCE grid: 2 sloupce na tabletu ── */
+      .ref-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+
+      /* ── PRODUKT MODAL — bottom sheet na mobilech ── */
+      .modal-overlay {
+        padding: 0 !important;
+        align-items: flex-end !important;
+      }
+
+      .modal-box {
+        flex-direction: column !important;
+        max-height: 90vh !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 20px 20px 0 0 !important;
+        overflow: hidden !important;
+      }
+
+      /* Sidebar → kompaktní pruh nahoře */
+      .modal-sidebar {
+        width: 100% !important;
+        min-width: 0 !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        padding: 14px 16px !important;
+        gap: 14px !important;
+      }
+
+      .modal-sidebar-img {
+        width: 68px !important;
+        height: 68px !important;
+        min-height: 0 !important;
+        border-radius: 8px !important;
+        flex-shrink: 0 !important;
+      }
+
+      .modal-sidebar-placeholder {
+        width: 68px !important;
+        height: 68px !important;
+        min-height: 0 !important;
+        font-size: 2rem !important;
+        flex-shrink: 0 !important;
+      }
+
+      .modal-sidebar-badge {
+        display: none !important;
+      }
+
+      /* Pravý panel → scrollovatelný obsah */
+      .modal-content {
+        padding: 20px 18px 28px !important;
+        overflow-y: auto !important;
+        flex: 1 1 auto !important;
+      }
+
+      .modal-title {
+        font-size: 1.25rem !important;
+      }
+
+      /* KE STAŽENÍ: 1 sloupec ── */
+      .dl-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* ── PRODEJCI: 1 sloupec ── */
+      .prodejci-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* ── KONTAKTY: 1 sloupec ── */
+      .ct-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* ════════════
+       MOBIL ≤ 480px
+    ════════════ */
+    @media (max-width: 480px) {
+
+      .prod-layout,
+      .cenik-layout {
+        display: block !important;
+      }
+
+      .ref-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .dl-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .prodejci-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .ct-grid {
+        grid-template-columns: 1fr !important;
       }
     }
   </style>
@@ -6477,7 +6687,18 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     .subpage-hero {
-      padding: 44px 20px 36px;
+      padding: 36px 20px 28px;
+    }
+
+    .subpage-hero h1 {
+      font-size: clamp(1.4rem, 7vw, 2rem) !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      hyphens: auto !important;
+    }
+
+    .subpage-hero p {
+      font-size: .88rem !important;
     }
 
     .filter-bar {
@@ -6488,6 +6709,12 @@
       padding: 20px 20px 60px;
       grid-template-columns: 1fr;
       gap: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .subpage-hero h1 {
+      font-size: clamp(1.25rem, 6vw, 1.6rem) !important;
     }
   }
 </style>
@@ -6528,7 +6755,7 @@
           </svg>
         </div>
         <img src="fotky/aktualita1.jpg" alt="Výprodej skladu výrobků 2026" loading="lazy"
-          onerror="this.style.display='none'">
+          onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'">
       </div>
       <div class="card-body">
         <div class="card-meta">
@@ -6562,7 +6789,7 @@
           </svg>
         </div>
         <img src="fotky/aktualita3.jpg" alt="Odpojení elektrické energie v závodě Zbůch" loading="lazy"
-          onerror="this.style.display='none'">
+          onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'">
       </div>
       <div class="card-body">
         <div class="card-meta">
@@ -6594,7 +6821,8 @@
             <path d="m21 15-5-5L5 21" />
           </svg>
         </div>
-        <img src="fotky/aktualita2.jpg" alt="Letní akce na beton" loading="lazy" onerror="this.style.display='none'">
+        <img src="fotky/aktualita2.jpg" alt="Letní akce na beton" loading="lazy"
+          onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'">
       </div>
       <div class="card-body">
         <div class="card-meta">
@@ -6626,7 +6854,7 @@
             <path d="m21 15-5-5L5 21" />
           </svg>
         </div>
-        <!-- Přidej vlastní fotku: <img src="fotky/aktualita4.jpg" alt="Odstávka betonárny Zbůch" loading="lazy" onerror="this.style.display='none'"> -->
+        <!-- Přidej vlastní fotku: <img src="fotky/aktualita4.jpg" alt="Odstávka betonárny Zbůch" loading="lazy" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'"> -->
       </div>
       <div class="card-body">
         <div class="card-meta">
@@ -7378,7 +7606,7 @@
   </div>
   <div class="subpage-content">
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">
+    <div class="cenik-layout">
 
       <!-- LEFT: Formulář kalkulačky -->
       <div>
@@ -7989,7 +8217,7 @@
     <h1>Nabídka produktů</h1>
     <p>Výrobky z betonu pro stavebnictví, komunikace, kanalizaci i zahradní architekturu.</p>
   </div>
-  <div class="subpage-content" style="display:grid;grid-template-columns:260px 1fr;gap:40px;align-items:start;">
+  <div class="subpage-content prod-layout">
 
     <!-- Levý sidebar — kategorie -->
     <nav class="prod-sidebar">
@@ -8005,19 +8233,6 @@
       <a class="prod-cat" onclick="filterCat(this,'transportbeton')">Transportbeton <span>›</span></a>
       <a class="prod-cat" onclick="filterCat(this,'armovna')">Armovna <span>›</span></a>
 
-      <!-- Kontaktní box pod kategorií -->
-      <div class="prod-contact-box">
-        <div class="prod-contact-title">Potřebujete poradit?</div>
-        <div class="prod-contact-body">
-          <strong>B &amp; BC, a.s.</strong><br>
-          Sokolská 464<br>330 22 Zbůch<br><br>
-          Tel.: 377 199 104, 111<br>
-          E-mail: <a href="/cdn-cgi/l/email-protection#a3ccc1c0cbccc7e3c1c2c1c08dc0d9"
-            style="color:var(--red);text-decoration:none;"><span class="__cf_email__"
-              data-cfemail="741b16171c1b1034161516175a170e">[email&#160;protected]</span></a>
-        </div>
-        <button class="btn-contact" onclick="showPage('kontakty')">Kontaktní formulář</button>
-      </div>
     </nav>
 
     <!-- Pravá část — mřížka produktů -->
@@ -8028,21 +8243,24 @@
         <!-- komunikace -->
         <div class="prod-card" data-cat="komunikace"
           onclick="openModal('Dlažby','fotky/dlazby.jpg','Betonové dlažby pro zpevněné plochy, chodníky, příjezdové cesty a terasy. Dostupné v různých tvarech, rozměrech a barevných provedeních. Splňují ČSN EN 1338.')">
-          <div class="prod-img-wrap"><img src="fotky/dlazby.jpg" alt="Dlažby" onerror="this.style.display='none'">
+          <div class="prod-img-wrap"><img src="fotky/dlazby.jpg" alt="Dlažby"
+              onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'">
             <div class="prod-img-placeholder">🧱</div>
           </div>
           <div class="prod-card-name">Dlažby</div>
         </div>
         <div class="prod-card" data-cat="komunikace"
           onclick="openModal('Obrubníky','fotky/obrubníky.jpg','Silniční a zahradní obrubníky z vibrolisovaného betonu. Vhodné pro oddělení vozovky, chodníku nebo zelených ploch. Dostupné v délkách 500 a 1000 mm.')">
-          <div class="prod-img-wrap"><img src="fotky/obrubníky.jpg" alt="Obrubníky" onerror="this.style.display='none'">
+          <div class="prod-img-wrap"><img src="fotky/obrubníky.jpg" alt="Obrubníky"
+              onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'">
             <div class="prod-img-placeholder">🔲</div>
           </div>
           <div class="prod-card-name">Obrubníky</div>
         </div>
         <div class="prod-card" data-cat="komunikace"
           onclick="openModal('Palisády','fotky/palisady.jpg','Betonové palisády pro ohraničení záhonů, ploch a zahradní architekturu. Výška 100–250 mm, různá povrchová úprava.')">
-          <div class="prod-img-wrap"><img src="fotky/palisady.jpg" alt="Palisády" onerror="this.style.display='none'">
+          <div class="prod-img-wrap"><img src="fotky/palisady.jpg" alt="Palisády"
+              onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'">
             <div class="prod-img-placeholder">📐</div>
           </div>
           <div class="prod-card-name">Palisády</div>
@@ -8050,7 +8268,7 @@
         <div class="prod-card" data-cat="komunikace"
           onclick="openModal('Parkovací prvky','fotky/parkoviste.jpg','Prvky pro výstavbu parkovacích ploch — zatravňovací tvárnice, parkovací zábrany, přechodové bloky.')">
           <div class="prod-img-wrap"><img src="fotky/parkoviste.jpg" alt="Parkovací prvky"
-              onerror="this.style.display='none'">
+              onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'">
             <div class="prod-img-placeholder">🅿️</div>
           </div>
           <div class="prod-card-name">Parkovací prvky</div>
@@ -8058,7 +8276,7 @@
         <div class="prod-card" data-cat="komunikace"
           onclick="openModal('Desky a panely','fotky/desky.jpg','Prefabrikované betonové desky a průmyslové panely pro zpevnění ploch, zemědělských dvorů a skladišť.')">
           <div class="prod-img-wrap"><img src="fotky/desky.jpg" alt="Desky a panely"
-              onerror="this.style.display='none'">
+              onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'">
             <div class="prod-img-placeholder">▪️</div>
           </div>
           <div class="prod-card-name">Desky a panely</div>
@@ -8216,6 +8434,22 @@
           <div class="prod-card-name">Cementové potěry CEMLIT</div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Kontaktní box — pod produktovou mřížkou -->
+  <div class="subpage-content" style="padding-top:0;">
+    <div class="prod-contact-box">
+      <div class="prod-contact-title">Potřebujete poradit?</div>
+      <div class="prod-contact-body">
+        <strong>B &amp; BC, a.s.</strong><br>
+        Sokolská 464<br>330 22 Zbůch<br><br>
+        Tel.: 377 199 104, 111<br>
+        E-mail: <a href="/cdn-cgi/l/email-protection#a3ccc1c0cbccc7e3c1c2c1c08dc0d9"
+          style="color:var(--red);text-decoration:none;"><span class="__cf_email__"
+            data-cfemail="741b16171c1b1034161516175a170e">[email&#160;protected]</span></a>
+      </div>
+      <button class="btn-contact" onclick="showPage('kontakty')">Kontaktní formulář</button>
     </div>
   </div>
 </div>
@@ -8537,7 +8771,7 @@
         aria-label="Otevřít: Mezinárodní vodohospodářská výstava VODOVODY-KANALIZACE">
         <div class="vt-card-img">
           <img src="fotky/vystava1_1.jpg" alt="Mezinárodní vodohospodářská výstava VODOVODY-KANALIZACE" loading="lazy"
-            onerror="this.style.display='none'">
+            onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'">
         </div>
         <div class="vt-card-body">
           <h3 class="vt-card-title">Mezinárodní vodohospodářská výstava VODOVODY-KANALIZACE</h3>
@@ -8552,7 +8786,7 @@
         aria-label="Otevřít: 22. ročník výstavy VODOVODY-KANALIZACE 2023">
         <div class="vt-card-img">
           <img src="fotky/vystava2_1.jpg" alt="22. ročník výstavy VODOVODY-KANALIZACE 2023" loading="lazy"
-            onerror="this.style.display='none'">
+            onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'">
         </div>
         <div class="vt-card-body">
           <h3 class="vt-card-title">22. ročník výstavy VODOVODY-KANALIZACE 2023</h3>
@@ -9843,6 +10077,15 @@
     });
     var h = document.getElementById('prodHeading');
     if (h) h.textContent = CAT_LABELS[cat] || cat;
+
+    // Na mobilech odscrolluj k nadpisu produktové sekce (pod sidebar)
+    if (window.innerWidth <= 768 && h) {
+      setTimeout(function () {
+        var headerH = (document.getElementById('siteHeader') || {}).offsetHeight || 64;
+        var top = h.getBoundingClientRect().top + window.pageYOffset - headerH - 12;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }, 50);
+    }
   }
 
   function openModal(name, img, desc) {
