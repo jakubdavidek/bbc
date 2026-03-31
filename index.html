@@ -3201,6 +3201,7 @@
       gap: 0;
       position: sticky;
       top: 90px;
+      align-self: start;
     }
 
     .prod-cat {
@@ -4538,7 +4539,7 @@
       display: grid;
       grid-template-columns: 260px 1fr;
       gap: 40px;
-      align-items: start;
+      align-items: start !important;
     }
 
     /* ── CENÍK: kalkulačka + výsledek ── */
@@ -4571,9 +4572,22 @@
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
+        height: auto !important;
+        /* ruší nav { height: 100vh } */
+        padding: 0 !important;
+        /* ruší nav { padding: 80px 0 30px } */
         float: none !important;
         margin: 0 0 24px 0 !important;
         box-sizing: border-box !important;
+        align-self: start !important;
+        background: none !important;
+        /* ruší nav { background: white } */
+        box-shadow: none !important;
+        /* ruší nav { box-shadow } */
+        overflow: visible !important;
+        /* ruší nav { overflow-y: auto } */
+        z-index: auto !important;
+        /* ruší nav { z-index: 99 } */
       }
 
       .prod-cat {
@@ -4600,6 +4614,60 @@
       #page-produkty .subpage-content {
         padding: 24px 16px !important;
         overflow: visible !important;
+      }
+
+      /* ── PRODUKTY: kompaktní textový seznam, žádné bílé bloky ── */
+      .prod-img-wrap {
+        display: none !important;
+      }
+
+      .prod-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0 !important;
+        background: var(--border) !important;
+        border: none !important;
+        border-radius: 0 !important;
+        overflow: hidden !important;
+        margin-top: 0 !important;
+      }
+
+      /* Skryté karty přes JS class — spolehlivější než style attribute selektor */
+      .prod-card-hidden {
+        display: none !important;
+      }
+
+      /* Pouze viditelné karty */
+      .prod-card:not(.prod-card-hidden):not([style*="none"]) {
+        background: var(--white) !important;
+        border: none !important;
+        border-bottom: 1px solid var(--border) !important;
+        border-radius: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin-bottom: 0 !important;
+      }
+
+      .prod-card:not(.prod-card-hidden):not([style*="none"]):last-of-type {
+        border-bottom: none !important;
+      }
+
+      .prod-card-name {
+        border-top: none !important;
+        padding: 14px 16px !important;
+        font-size: .82rem !important;
+        text-align: left !important;
+        flex: 1 !important;
+        color: var(--charcoal) !important;
+      }
+
+      .prod-card:not(.prod-card-hidden):not([style*="none"])::after {
+        content: '›' !important;
+        padding-right: 16px !important;
+        color: var(--mid) !important;
+        font-size: 1.1rem !important;
+        flex-shrink: 0 !important;
       }
 
       /* ── CENÍK: jednosloupcový layout ── */
@@ -10073,7 +10141,13 @@
     document.querySelectorAll('.prod-cat').forEach(function (a) { a.classList.remove('active'); });
     el.classList.add('active');
     document.querySelectorAll('.prod-card').forEach(function (card) {
-      card.style.display = card.dataset.cat === cat ? '' : 'none';
+      if (card.dataset.cat === cat) {
+        card.classList.remove('prod-card-hidden');
+        card.style.display = '';
+      } else {
+        card.classList.add('prod-card-hidden');
+        card.style.display = 'none';
+      }
     });
     var h = document.getElementById('prodHeading');
     if (h) h.textContent = CAT_LABELS[cat] || cat;
