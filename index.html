@@ -34,7 +34,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-   <!-- manifest -->
+  <!-- manifest -->
   <link rel="manifest" href="/site.webmanifest">
 
   <!-- Theme color -->
@@ -5423,7 +5423,8 @@
             <p>Od roku 2008 se vstupem nového majitele Petra Březiny a s tím svázaným spojením s firmou APB Plzeň začala
               rozsáhlá modernizace v obou závodech. Firma má dnes dva závody — hlavní závod v obci
               <strong>Zbůch</strong>
-              a druhý závod v obci <strong>Zruč</strong>.</p>
+              a druhý závod v obci <strong>Zruč</strong>.
+            </p>
             <p>Naše výrobky si můžete prohlédnout na trvale přístupné výstavní ploše u výrobního závodu ve Zbůchu.
               Zajišťujeme vlastní silniční kamionovou dopravu — disponujeme rozsáhlým vozovým parkem a vlastním
               dispečerským střediskem.</p>
@@ -10105,10 +10106,12 @@
         }
 
         if (!fromPopstate) {
-          const url = id === 'home' ? '/' : '/' + id;
+          // Na GitHub Pages je bezpečnější měnit jen hash, aby se neztratila cesta k repozitáři
+          const url = id === 'home' ? window.location.pathname : window.location.pathname + '#' + id;
           history.pushState({ page: id }, '', url);
         }
       }
+
 
       window.addEventListener('popstate', function (e) {
         const id = (e.state && e.state.page) ? e.state.page : 'home';
