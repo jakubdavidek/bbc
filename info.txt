@@ -1,0 +1,32 @@
+<!-- ┌──────────────────┐
+     │ NABÍDKA PRODUKTŮ │
+     └──────────────────┘ -->
+<!--
+==========================================================
+  FOTKY PRODUKTŮ — složka: fotky/
+  Pojmenujte fotky přesně takto a vložte je vedle HTML:
+
+  fotky/dlazby.jpg           → Dlažby
+  fotky/obrubníky.jpg        → Obrubníky
+  fotky/palisady.jpg         → Palisády
+  fotky/parkoviste.jpg       → Parkovací prvky
+  fotky/desky.jpg            → Desky a panely
+  fotky/plot.jpg             → Plotové prvky
+  fotky/zahrada.jpg          → Zahradní tvarovky
+  fotky/zakladove.jpg        → Základové tvárnice
+  fotky/zdicibloky.jpg       → Zdicí bloky
+  fotky/operne.jpg           → Opěrné bloky L, T
+  fotky/gabion.jpg           → Gabionové prvky
+  fotky/sachty.jpg           → Šachty a skruže
+  fotky/potrubi.jpg          → Potrubí kanalizace
+  fotky/cistirny.jpg         → Čistírny odpadních vod
+  fotky/odvodnovaci.jpg      → Odvodňovací žlaby
+  fotky/sterbiny.jpg         → Štěrbinové žlaby
+  fotky/prefabrikaty.jpg     → Betonové prefabrikáty
+  fotky/transportbeton.jpg   → Transportbeton
+  fotky/cemlit.jpg           → Cementové potěry CEMLIT
+
+  Formát: JPG nebo PNG, doporučená velikost: 800×600 px min.
+  Fotka se zobrazí v kartě produktu i v popup okně.
+==========================================================
+-->
