@@ -30,3 +30,39 @@
   Fotka se zobrazí v kartě produktu i v popup okně.
 ==========================================================
 -->
+  /*
+     * ── FOTKY PRO SLIDER ─────────────────────────────
+     *    Slide 1 → background-image v #slide-1
+     *    Slide 2 → background-image v #slide-2
+     *    Slide 3 → background-image v #slide-3
+     *    Slide 4 → background-image v #slide-4
+     * ─────────────────────────────────────────────── */
+
+      <!--
+      ════════════════════════════════════════════════════════
+      KONTAKTNÍ FORMULÁŘ — Web3Forms
+      Doporučené free služby pro statické weby (GitHub Pages):
+
+      1. Web3Forms (web3forms.com) ← POUŽITO ZDE
+         • Zdarma 250 zpráv/měsíc
+         • Bez registrace — jen access key z e-mailu
+         • Honeypot anti-spam built-in
+         • Setup: <input name="access_key" value="VÁŠ_KLÍČ">
+
+      2. Formspree (formspree.io)
+         • Zdarma 50 zpráv/měsíc
+         • Registrace + ověření e-mailu
+         • action="https://formspree.io/f/VÁŠ_ID"
+
+      3. Basin (usebasin.com)
+         • Zdarma 100 zpráv/měsíc
+         • Nejčistší UI dashboardu
+         • action="https://usebasin.com/f/VÁŠ_ID"
+
+      NASTAVENÍ WEB3FORMS:
+      1. Jdi na https://web3forms.com
+      2. Zadej svůj e-mail → obdržíš Access Key
+      3. Vlož klíč do <input name="access_key" value="...">
+      4. Zprávy budou chodit na zadaný e-mail
+      ════════════════════════════════════════════════════════
+    -->

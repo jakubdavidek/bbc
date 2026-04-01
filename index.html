@@ -265,13 +265,6 @@
       z-index: 1;
     }
 
-    /*
-     * ── FOTKY PRO SLIDER ─────────────────────────────
-     *    Slide 1 → background-image v #slide-1
-     *    Slide 2 → background-image v #slide-2
-     *    Slide 3 → background-image v #slide-3
-     *    Slide 4 → background-image v #slide-4
-     * ─────────────────────────────────────────────── */
 
     .slide-overlay {
       position: absolute;
@@ -5014,10 +5007,6 @@
           </div>
         </div>
 
-        <!-- Šipky -->
-        <button class="slider-arrow prev" onclick="sliderMove(-1)" aria-label="Předchozí slide">&#8249;</button>
-        <button class="slider-arrow next" onclick="sliderMove(1)" aria-label="Další slide">&#8250;</button>
-
         <!-- Tečky -->
         <div class="slider-dots" role="tablist" aria-label="Výběr slidu">
           <button class="slider-dot active" onclick="sliderGoTo(0)" aria-label="Slide 1"></button>
@@ -5500,15 +5489,15 @@
               </div>
             </div>
             <div class="ico-info">
-              <div class="ico-row"><span class="lbl">Obchodní firma</span><span class="val">B &amp; BC, a.s.</span>
+              <div class="ico-row"><span class="lbl">Obchodní firma: </span><span class="val">B &amp; BC, a.s.</span>
               </div>
-              <div class="ico-row"><span class="lbl">IČO</span><span class="val">64832783</span></div>
-              <div class="ico-row"><span class="lbl">DIČ</span><span class="val">CZ64832783</span></div>
+              <div class="ico-row"><span class="lbl">IČO: </span><span class="val">64832783</span></div>
+              <div class="ico-row"><span class="lbl">DIČ: </span><span class="val">CZ64832783</span></div>
               <div class="ico-row"><span class="lbl">Právní forma</span><span class="val">Akciová společnost</span>
               </div>
-              <div class="ico-row"><span class="lbl">Sídlo</span><span class="val">Sokolská 464, 330 22 Zbůch</span>
+              <div class="ico-row"><span class="lbl">Sídlo: </span><span class="val">Sokolská 464, 330 22 Zbůch</span>
               </div>
-              <div class="ico-row"><span class="lbl">Datová schránka</span><span class="val">hqgccxg</span></div>
+              <div class="ico-row"><span class="lbl">Datová schránka: </span><span class="val">hqgccxg</span></div>
             </div>
 
             <!-- ── INTERAKTIVNÍ MAPA SÍDLA ── -->
@@ -5609,18 +5598,6 @@
             <div class="role">Místopředseda představenstva</div>
             <p>Den vzniku funkce: 14. února 2024. Za společnost jedná samostatně.</p>
           </div>
-        </div>
-
-        <div class="section-heading" style="margin-top:50px">
-          <h2>Předmět podnikání</h2>
-        </div>
-        <div class="predmet-grid">
-          <div class="predmet-item">Výroba, obchod a služby neuvedené v přílohách 1–3 živnostenského zákona</div>
-          <div class="predmet-item">Zámečnictví, nástrojářství</div>
-          <div class="predmet-item">Provádění staveb, jejich změn a odstraňování</div>
-          <div class="predmet-item">Silniční motorová doprava — nákladní vnitrostátní vozidly nad 3,5 t</div>
-          <div class="predmet-item">Pronájem nemovitostí, bytů a nebytových prostor</div>
-          <div class="predmet-item">Výroba a montáž armovací oceli (armovny Losiná a Zbůch)</div>
         </div>
       </div>
     </div>
@@ -6298,35 +6275,6 @@
         <div class="section-heading" style="margin-top:50px">
           <h2>Napište nám</h2>
         </div>
-
-        <!--
-      ════════════════════════════════════════════════════════
-      KONTAKTNÍ FORMULÁŘ — Web3Forms
-      Doporučené free služby pro statické weby (GitHub Pages):
-
-      1. Web3Forms (web3forms.com) ← POUŽITO ZDE
-         • Zdarma 250 zpráv/měsíc
-         • Bez registrace — jen access key z e-mailu
-         • Honeypot anti-spam built-in
-         • Setup: <input name="access_key" value="VÁŠ_KLÍČ">
-
-      2. Formspree (formspree.io)
-         • Zdarma 50 zpráv/měsíc
-         • Registrace + ověření e-mailu
-         • action="https://formspree.io/f/VÁŠ_ID"
-
-      3. Basin (usebasin.com)
-         • Zdarma 100 zpráv/měsíc
-         • Nejčistší UI dashboardu
-         • action="https://usebasin.com/f/VÁŠ_ID"
-
-      NASTAVENÍ WEB3FORMS:
-      1. Jdi na https://web3forms.com
-      2. Zadej svůj e-mail → obdržíš Access Key
-      3. Vlož klíč do <input name="access_key" value="...">
-      4. Zprávy budou chodit na zadaný e-mail
-      ════════════════════════════════════════════════════════
-    -->
 
         <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
 
