@@ -1,0 +1,32 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ManufacturingBusiness",
+  "name": "B & BC a.s.",
+  "description": "Výrobce betonových výrobků od roku 1991",
+  "foundingDate": "1991",
+  "url": "https://www.babc.cz",
+  "telephone": "+420377199104",
+  "email": "obchod@babc.cz",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Sokolská 464",
+    "postalCode": "330 22",
+    "addressLocality": "Zbůch",
+    "addressCountry": "CZ"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 49.7063,
+    "longitude": 13.2869
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "07:00",
+      "closes": "17:00"
+    }
+  ]
+}
+</script>
