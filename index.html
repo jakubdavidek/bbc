@@ -1051,10 +1051,29 @@
       text-decoration: none;
       transition: color .2s;
       cursor: pointer;
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-col a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s cubic-bezier(.4, 0, .2, 1);
     }
 
     .footer-col a:hover {
       color: var(--red);
+    }
+
+    .footer-col a:hover::after {
+      transform: scaleX(1);
     }
 
     .footer-contact-info {
@@ -1068,11 +1087,16 @@
       text-decoration: none;
     }
 
-    .footer-bottom {
+    .footer-bottom-wrap {
       border-top: 1px solid var(--border);
+      padding: 0;
+      margin-top: 10px;
+    }
+
+    .footer-bottom {
       padding: 18px 0;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       max-width: 1120px;
       margin: 0 auto;
@@ -1080,14 +1104,39 @@
       color: #555;
     }
 
+    .footer-bottom-nav {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
     .footer-bottom a {
       color: #555;
       text-decoration: none;
       cursor: pointer;
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-bottom a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s cubic-bezier(.4, 0, .2, 1);
     }
 
     .footer-bottom a:hover {
       color: var(--red);
+    }
+
+    .footer-bottom a:hover::after {
+      transform: scaleX(1);
     }
 
 
@@ -4919,6 +4968,14 @@
           onclick="showPage('aktuality');closeMobileNav();return false;">Aktuality</a>
         <a id="nav-kontakty" href="/kontakty" onclick="showPage('kontakty');closeMobileNav();return false;">Kontakty</a>
         <a id="nav-cenik" href="/cenik" onclick="showPage('cenik');closeMobileNav();return false;">Ceník</a>
+        <button class="nav-cart-btn" onclick="katTogCart()">
+          <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3z" />
+          </svg>
+          Poptávka
+          <span class="nav-cart-cnt" id="katCartCnt">0</span>
+        </button>
       </nav>
       <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Otevřít / zavřít navigaci"
         aria-expanded="false" aria-controls="mainNav">
@@ -5579,6 +5636,1305 @@
                 .company-map-iframe {
                   height: 260px;
                 }
+              }
+
+              /* ═══════════════════════════════════════════════════════════
+       KATALOG — sidebar layout + variant table + detail
+    ═══════════════════════════════════════════════════════════ */
+              .kat-wrap {
+                padding: 0 !important;
+              }
+
+              .kat-layout {
+                display: flex;
+                min-height: 600px;
+              }
+
+              .kat-sidebar {
+                width: 280px;
+                flex-shrink: 0;
+                background: #fff;
+                border-right: 1px solid var(--border-light, #e2ddd8);
+                overflow-y: auto;
+              }
+
+              .kat-sbhd {
+                background: var(--red);
+                color: #fff;
+                font-size: .62rem;
+                font-weight: 700;
+                letter-spacing: .16em;
+                text-transform: uppercase;
+                padding: 11px 14px;
+              }
+
+              .kat-main {
+                flex: 1;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+              }
+
+              .kat-bc {
+                background: #faf9f7;
+                border-bottom: 1px solid var(--border-light, #e2ddd8);
+                padding: 7px 22px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: .72rem;
+                color: #888;
+                flex-wrap: wrap;
+                min-height: 34px;
+              }
+
+              .kat-bcb {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: var(--red);
+                font-size: .72rem;
+                font-family: inherit;
+                padding: 0;
+              }
+
+              .kat-bcb:hover {
+                text-decoration: underline;
+              }
+
+              .kat-bcs {
+                color: #ccc;
+              }
+
+              .kat-bcc {
+                color: #888;
+              }
+
+              .kat-content {
+                padding: 22px;
+                flex: 1;
+              }
+
+              /* Tree */
+              .kat-ti {
+                border-bottom: 1px solid #edeae5;
+              }
+
+              .kat-ti:last-child {
+                border-bottom: none;
+              }
+
+              .kat-tb {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                background: none;
+                border: none;
+                text-align: left;
+                cursor: pointer;
+                transition: background .1s;
+                font-family: inherit;
+              }
+
+              .kat-tb:hover {
+                background: rgba(192, 33, 30, .05);
+              }
+
+              .kat-tb.act {
+                background: rgba(192, 33, 30, .07);
+              }
+
+              .kat-tbar {
+                width: 3px;
+                background: var(--red);
+                opacity: 0;
+                align-self: stretch;
+                flex-shrink: 0;
+              }
+
+              .kat-tb.act .kat-tbar {
+                opacity: 1;
+              }
+
+              .kat-tl {
+                flex: 1;
+                font-size: .77rem;
+                font-weight: 500;
+                color: #1e2025;
+                padding: 10px 10px;
+                line-height: 1.3;
+                transition: color .1s;
+              }
+
+              .kat-tb.act .kat-tl {
+                color: var(--red);
+                font-weight: 700;
+              }
+
+              .kat-d1 {
+                font-weight: 700;
+                font-size: .8rem;
+              }
+
+              .kat-d2 {
+                padding-left: 20px !important;
+              }
+
+              .kat-d3 {
+                padding-left: 30px !important;
+              }
+
+              .kat-d4 {
+                padding-left: 42px !important;
+                font-size: .73rem !important;
+                color: #888;
+              }
+
+              .kat-d5 {
+                padding-left: 54px !important;
+                font-size: .71rem !important;
+                color: #888;
+              }
+
+              .kat-tb.act .kat-d4,
+              .kat-tb.act .kat-d5 {
+                color: var(--red) !important;
+              }
+
+              .kat-tarr {
+                width: 28px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #bbb;
+                font-size: .6rem;
+                flex-shrink: 0;
+                transition: transform .18s, color .1s;
+              }
+
+              .kat-tb.open .kat-tarr {
+                transform: rotate(90deg);
+                color: var(--red);
+              }
+
+              .kat-tb.act .kat-tarr {
+                color: var(--red);
+              }
+
+              .kat-tch {
+                display: none;
+                background: rgba(0, 0, 0, .013);
+                border-top: 1px solid #edeae5;
+              }
+
+              .kat-tch.open {
+                display: block;
+              }
+
+              /* Cat grid */
+              .kat-ptit {
+                font-size: 1.25rem;
+                font-weight: 800;
+                color: #1e2025;
+                margin-bottom: 16px;
+                letter-spacing: -.01em;
+              }
+
+              .kat-cgrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 14px;
+              }
+
+              .kat-cc {
+                background: #fff;
+                border: 1.5px solid #dedad4;
+                border-radius: 3px;
+                overflow: hidden;
+                cursor: pointer;
+                transition: box-shadow .18s, border-color .18s, transform .18s;
+              }
+
+              .kat-cc:hover {
+                box-shadow: 0 4px 18px rgba(192, 33, 30, .12);
+                border-color: var(--red);
+                transform: translateY(-2px);
+              }
+
+              .kat-cimg {
+                height: 120px;
+                background: #eceae6;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                overflow: hidden;
+              }
+
+              .kat-cimg img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                padding: 8px;
+                position: absolute;
+                inset: 0;
+              }
+
+              .kat-cico {
+                font-size: 2.2rem;
+                z-index: 1;
+              }
+
+              .kat-cbody {
+                padding: 10px 12px 12px;
+              }
+
+              .kat-cname {
+                font-size: .75rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: .05em;
+                color: #1e2025;
+                margin-bottom: 2px;
+              }
+
+              .kat-ccnt {
+                font-size: .68rem;
+                color: #aaa;
+              }
+
+              .kat-carr {
+                font-size: .67rem;
+                color: var(--red);
+                font-weight: 700;
+                margin-top: 7px;
+                display: block;
+              }
+
+              /* Variant list */
+              .kat-phero {
+                width: 100%;
+                max-height: 150px;
+                object-fit: contain;
+                border-radius: 3px;
+                border: 1px solid #dedad4;
+                margin-bottom: 14px;
+                background: #fff;
+                padding: 8px;
+                display: block;
+              }
+
+              .kat-ptitle {
+                font-size: 1.1rem;
+                font-weight: 800;
+                margin-bottom: 6px;
+                color: #1e2025;
+              }
+
+              .kat-pdesc {
+                font-size: .8rem;
+                color: #888;
+                margin-bottom: 14px;
+                line-height: 1.6;
+              }
+
+              .kat-fbar {
+                background: #fff;
+                border: 1px solid #dedad4;
+                border-radius: 3px;
+                padding: 11px 14px;
+                display: flex;
+                align-items: flex-end;
+                gap: 12px;
+                flex-wrap: wrap;
+                margin-bottom: 12px;
+              }
+
+              .kat-fitem {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+              }
+
+              .kat-flbl {
+                font-size: .6rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: .1em;
+                color: #aaa;
+              }
+
+              .kat-fsel {
+                border: 1.5px solid #dedad4;
+                border-radius: 3px;
+                padding: 6px 24px 6px 9px;
+                font-size: .78rem;
+                color: #1e2025;
+                outline: none;
+                background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E") no-repeat right 8px center;
+                -webkit-appearance: none;
+                appearance: none;
+                cursor: pointer;
+                min-width: 120px;
+                transition: border-color .15s;
+              }
+
+              .kat-fsel:hover,
+              .kat-fsel:focus {
+                border-color: var(--red);
+              }
+
+              .kat-freset {
+                background: none;
+                border: 1.5px solid #dedad4;
+                border-radius: 3px;
+                padding: 6px 12px;
+                font-size: .68rem;
+                font-weight: 600;
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: .06em;
+                transition: all .15s;
+                align-self: flex-end;
+                cursor: pointer;
+              }
+
+              .kat-freset:hover {
+                border-color: var(--red);
+                color: var(--red);
+              }
+
+              .kat-sbar {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                font-size: .72rem;
+                color: #888;
+                margin-bottom: 8px;
+                flex-wrap: wrap;
+              }
+
+              .kat-sbar span {
+                font-weight: 600;
+                margin-right: 3px;
+              }
+
+              .kat-sbt {
+                background: none;
+                border: none;
+                font-size: .72rem;
+                color: var(--red);
+                text-decoration: underline;
+                cursor: pointer;
+                font-family: inherit;
+              }
+
+              .kat-sbt.act {
+                color: #1e2025;
+                text-decoration: none;
+                font-weight: 700;
+              }
+
+              .kat-ssep {
+                color: #ddd;
+              }
+
+              .kat-vtw {
+                background: #fff;
+                border: 1.5px solid #dedad4;
+                border-radius: 3px;
+                overflow: hidden;
+                margin-bottom: 22px;
+              }
+
+              .kat-vt {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: .8rem;
+              }
+
+              .kat-vt thead tr {
+                background: #eceae6;
+              }
+
+              .kat-vt th {
+                padding: 9px 12px;
+                text-align: left;
+                font-size: .62rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: .1em;
+                color: #888;
+                border-bottom: 1.5px solid #dedad4;
+                white-space: nowrap;
+              }
+
+              .kat-vt td {
+                padding: 9px 12px;
+                border-bottom: 1px solid #dedad4;
+                vertical-align: middle;
+              }
+
+              .kat-vt tbody tr:last-child td {
+                border-bottom: none;
+              }
+
+              .kat-vt tbody tr:hover {
+                background: rgba(192, 33, 30, .04);
+              }
+
+              .kat-vname {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+              }
+
+              .kat-vth {
+                width: 48px;
+                height: 48px;
+                border: 1px solid #dedad4;
+                border-radius: 3px;
+                overflow: hidden;
+                flex-shrink: 0;
+                background: #eceae6;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+              }
+
+              .kat-vth img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                padding: 3px;
+              }
+
+              .kat-vnm {
+                font-weight: 600;
+                color: #1e2025;
+                line-height: 1.3;
+                font-size: .78rem;
+              }
+
+              .kat-vpr {
+                font-weight: 700;
+                color: var(--red);
+                white-space: nowrap;
+              }
+
+              .kat-vdbtn {
+                background: var(--red);
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                padding: 6px 14px;
+                font-size: .68rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: .08em;
+                cursor: pointer;
+                transition: background .15s;
+                white-space: nowrap;
+              }
+
+              .kat-vdbtn:hover {
+                background: #9a1a17;
+              }
+
+              .kat-nores {
+                text-align: center;
+                padding: 28px;
+                color: #888;
+                font-size: .8rem;
+              }
+
+              /* Detail */
+              .kat-dbody {
+                display: grid;
+                grid-template-columns: 300px 1fr;
+                gap: 24px;
+                align-items: start;
+                margin-bottom: 24px;
+              }
+
+              @media (max-width: 760px) {
+                .kat-dbody {
+                  grid-template-columns: 1fr;
+                }
+
+                .kat-sidebar {
+                  display: none;
+                }
+              }
+
+              .kat-dimgb {
+                border: 1.5px solid #dedad4;
+                border-radius: 3px;
+                overflow: hidden;
+                background: #fff;
+                position: relative;
+              }
+
+              .kat-dimgb img {
+                width: 100%;
+                aspect-ratio: 4/3;
+                object-fit: contain;
+                display: block;
+                padding: 14px;
+              }
+
+              .kat-dnoimg {
+                width: 100%;
+                aspect-ratio: 4/3;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 5rem;
+                color: #ccc;
+                background: #eceae6;
+              }
+
+              .kat-dchip {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, .5);
+                color: #fff;
+                font-size: .68rem;
+                font-weight: 600;
+                text-align: center;
+                padding: 4px;
+              }
+
+              .kat-dname {
+                font-size: 1.15rem;
+                font-weight: 800;
+                color: #1e2025;
+                margin-bottom: 14px;
+                line-height: 1.2;
+              }
+
+              .kat-dpt {
+                border-collapse: collapse;
+                font-size: .84rem;
+                width: 100%;
+                margin-bottom: 12px;
+              }
+
+              .kat-dpt td {
+                padding: 3px 0;
+              }
+
+              .kat-dpt td:first-child {
+                font-weight: 600;
+                color: #1e2025;
+                width: 155px;
+                padding-right: 10px;
+              }
+
+              .kat-dpt td:last-child {
+                font-weight: 700;
+                color: var(--red);
+                font-size: .92rem;
+              }
+
+              .kat-dat {
+                border-collapse: collapse;
+                font-size: .8rem;
+                margin-bottom: 14px;
+              }
+
+              .kat-dat td {
+                padding: 2px 0;
+              }
+
+              .kat-dat td:first-child {
+                color: #888;
+                padding-right: 10px;
+              }
+
+              .kat-dat td:first-child::before {
+                content: "›\00a0";
+                color: var(--red);
+                font-weight: 700;
+              }
+
+              .kat-dat td:last-child {
+                font-weight: 600;
+              }
+
+              .kat-dqr {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin: 14px 0;
+                flex-wrap: wrap;
+              }
+
+              .kat-dql {
+                font-size: .74rem;
+                font-weight: 600;
+              }
+
+              .kat-dqw {
+                display: flex;
+                align-items: center;
+                border: 1.5px solid #dedad4;
+                border-radius: 3px;
+                overflow: hidden;
+              }
+
+              .kat-dqb {
+                width: 32px;
+                height: 34px;
+                background: #eceae6;
+                border: none;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background .1s;
+                cursor: pointer;
+              }
+
+              .kat-dqb:hover {
+                background: #e2ddd8;
+              }
+
+              .kat-dqi {
+                width: 48px;
+                height: 34px;
+                border: none;
+                outline: none;
+                text-align: center;
+                font-size: .88rem;
+                font-weight: 700;
+                background: #fff;
+              }
+
+              .kat-dqu {
+                font-size: .73rem;
+                color: #888;
+              }
+
+              .kat-pbtn {
+                background: var(--red);
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                padding: 9px 20px;
+                font-size: .73rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: .1em;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                transition: background .15s, transform .12s;
+              }
+
+              .kat-pbtn:hover {
+                background: #9a1a17;
+                transform: translateY(-1px);
+              }
+
+              .kat-dsk {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                font-size: .73rem;
+                font-weight: 700;
+                padding: 4px 9px;
+                border-radius: 20px;
+                margin-bottom: 8px;
+              }
+
+              .kat-sky {
+                background: #edf7ee;
+                color: #1a6a24;
+              }
+
+              .kat-skn {
+                background: #fdf0ef;
+                color: var(--red);
+              }
+
+              .kat-dsk::before {
+                content: "●";
+                font-size: .5rem;
+              }
+
+              .kat-sh {
+                font-size: .8rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: .08em;
+                color: #1e2025;
+                padding-bottom: 8px;
+                margin-bottom: 12px;
+                border-bottom: 2px solid var(--red);
+              }
+
+              .kat-secb {
+                margin-bottom: 24px;
+              }
+
+              .kat-tgrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 0 20px;
+              }
+
+              .kat-tlist {
+                list-style: none;
+                padding: 0;
+              }
+
+              .kat-tlist li {
+                display: flex;
+                align-items: baseline;
+                gap: 6px;
+                padding: 5px 0;
+                border-bottom: 1px solid #edeae5;
+                font-size: .78rem;
+              }
+
+              .kat-tk {
+                color: #888;
+                white-space: nowrap;
+              }
+
+              .kat-tk::before {
+                content: "›\00a0";
+                color: var(--red);
+                font-weight: 700;
+              }
+
+              .kat-tv {
+                font-weight: 700;
+              }
+
+              .kat-dlgrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+                gap: 16px 22px;
+              }
+
+              .kat-dlct {
+                font-size: .6rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: .1em;
+                color: #aaa;
+                margin-bottom: 7px;
+              }
+
+              .kat-dllnk {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: .75rem;
+                color: var(--red);
+                font-weight: 600;
+                margin-bottom: 5px;
+                cursor: pointer;
+                text-decoration: none;
+                transition: opacity .12s;
+              }
+
+              .kat-dllnk:hover {
+                opacity: .7;
+                text-decoration: underline;
+              }
+
+              .kat-dlb {
+                width: 30px;
+                height: 20px;
+                border-radius: 2px;
+                font-size: .56rem;
+                font-weight: 800;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+              }
+
+              .kat-dlpdf {
+                background: #ffe8e8;
+                color: var(--red);
+              }
+
+              .kat-dldwg {
+                background: #e8eeff;
+                color: #2255cc;
+              }
+
+              .kat-dljpg {
+                background: #e8f8ee;
+                color: #1a7a30;
+              }
+
+              .kat-ggrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 8px;
+              }
+
+              .kat-gitem {
+                position: relative;
+                aspect-ratio: 4/3;
+                border-radius: 3px;
+                overflow: hidden;
+                background: #eceae6;
+                cursor: pointer;
+              }
+
+              .kat-gitem img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                transition: transform .3s;
+              }
+
+              .kat-gitem:hover img {
+                transform: scale(1.06);
+              }
+
+              .kat-gcap {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(transparent, rgba(0, 0, 0, .6));
+                color: #fff;
+                font-size: .65rem;
+                font-weight: 500;
+                padding: 14px 7px 5px;
+              }
+
+              .kat-relw {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+              }
+
+              .kat-relb {
+                border: 1px solid #dedad4;
+                border-radius: 3px;
+                background: #fff;
+                padding: 7px 12px;
+                font-size: .73rem;
+                cursor: pointer;
+                transition: all .15s;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                font-family: inherit;
+              }
+
+              .kat-relb:hover {
+                border-color: var(--red);
+                color: var(--red);
+              }
+
+              .kat-relb img {
+                width: 30px;
+                height: 30px;
+                object-fit: contain;
+                border-radius: 2px;
+              }
+
+              /* Cart panel */
+              .kat-cpanel {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 420px;
+                height: 100vh;
+                background: #fff;
+                border-left: 1px solid #dedad4;
+                box-shadow: -3px 0 20px rgba(0, 0, 0, .1);
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+                transform: translateX(100%);
+                transition: transform .25s cubic-bezier(.4, 0, .2, 1);
+              }
+
+              .kat-cpanel.open {
+                transform: none;
+              }
+
+              .kat-cph {
+                display: flex;
+                align-items: center;
+                padding: 12px 16px;
+                border-bottom: 1px solid #dedad4;
+                gap: 12px;
+              }
+
+              .kat-cph h3 {
+                font-size: .85rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: .06em;
+                flex: 1;
+                margin: 0;
+              }
+
+              .kat-cpx {
+                background: none;
+                border: none;
+                font-size: 1.3rem;
+                color: #888;
+                cursor: pointer;
+              }
+
+              .kat-cpx:hover {
+                color: var(--red);
+              }
+
+              .kat-cpbody {
+                flex: 1;
+                overflow-y: auto;
+                padding: 14px 16px;
+              }
+
+              .kat-cpfoot {
+                padding: 12px 16px;
+                border-top: 1.5px solid #dedad4;
+              }
+
+              .kat-cemp {
+                text-align: center;
+                padding: 40px 16px;
+              }
+
+              .kat-cempico {
+                font-size: 2.8rem;
+                margin-bottom: 10px;
+              }
+
+              .kat-cemp p {
+                font-size: .8rem;
+                color: #888;
+              }
+
+              .kat-citem {
+                display: grid;
+                grid-template-columns: 48px 1fr auto;
+                gap: 9px;
+                align-items: center;
+                padding: 9px 0;
+                border-bottom: 1px solid #dedad4;
+              }
+
+              .kat-citem:last-child {
+                border-bottom: none;
+              }
+
+              .kat-cithumb {
+                width: 48px;
+                height: 48px;
+                border: 1px solid #dedad4;
+                border-radius: 3px;
+                background: #eceae6;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+              }
+
+              .kat-cithumb img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                padding: 3px;
+              }
+
+              .kat-cin {
+                font-size: .75rem;
+                font-weight: 600;
+                line-height: 1.3;
+                margin-bottom: 3px;
+              }
+
+              .kat-cip {
+                font-size: .72rem;
+                color: #888;
+              }
+
+              .kat-ciqw {
+                display: flex;
+                align-items: center;
+                border: 1px solid #dedad4;
+                border-radius: 3px;
+                overflow: hidden;
+                margin-top: 5px;
+                width: fit-content;
+              }
+
+              .kat-ciqb {
+                width: 24px;
+                height: 26px;
+                background: #eceae6;
+                border: none;
+                font-size: .85rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+              }
+
+              .kat-ciqi {
+                width: 32px;
+                height: 26px;
+                border: none;
+                outline: none;
+                text-align: center;
+                font-size: .76rem;
+                font-weight: 700;
+                background: #fff;
+              }
+
+              .kat-ciact {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 4px;
+              }
+
+              .kat-citot {
+                font-weight: 700;
+                color: var(--red);
+                font-size: .8rem;
+              }
+
+              .kat-cirm {
+                background: none;
+                border: none;
+                color: #ccc;
+                font-size: 1rem;
+                cursor: pointer;
+              }
+
+              .kat-cirm:hover {
+                color: var(--red);
+              }
+
+              .kat-ctr {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                margin-bottom: 12px;
+              }
+
+              .kat-ctl {
+                font-size: .7rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: .06em;
+                color: #888;
+              }
+
+              .kat-ctv {
+                font-size: 1.3rem;
+                font-weight: 800;
+                color: var(--red);
+              }
+
+              .kat-iqs {
+                border-top: 1px solid #dedad4;
+                padding-top: 12px;
+                margin-top: 4px;
+              }
+
+              .kat-iqs h4 {
+                font-size: .65rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: .12em;
+                color: #888;
+                margin-bottom: 10px;
+              }
+
+              .kat-igrid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 7px;
+              }
+
+              .kat-iff {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+              }
+
+              .kat-iff label {
+                font-size: .64rem;
+                font-weight: 600;
+                color: #888;
+              }
+
+              .kat-req {
+                color: var(--red);
+              }
+
+              .kat-inp {
+                border: 1.5px solid #dedad4;
+                border-radius: 3px;
+                padding: 6px 8px;
+                font-size: .75rem;
+                font-family: inherit;
+                outline: none;
+                transition: border-color .15s;
+                background: #fff;
+                width: 100%;
+              }
+
+              .kat-inp:focus {
+                border-color: var(--red);
+              }
+
+              .kat-inp.err {
+                border-color: var(--red);
+              }
+
+              .kat-ifu {
+                grid-column: 1/-1;
+              }
+
+              .kat-igdpr {
+                display: flex;
+                align-items: flex-start;
+                gap: 6px;
+                font-size: .67rem;
+                color: #888;
+                line-height: 1.5;
+                margin-top: 7px;
+              }
+
+              .kat-igdpr input {
+                width: 13px;
+                height: 13px;
+                accent-color: var(--red);
+                flex-shrink: 0;
+                margin-top: 2px;
+              }
+
+              .kat-isub {
+                width: 100%;
+                background: var(--red);
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                padding: 10px;
+                font-size: .75rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: .1em;
+                cursor: pointer;
+                margin-top: 10px;
+                transition: background .15s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                font-family: inherit;
+              }
+
+              .kat-isub:hover {
+                background: #9a1a17;
+              }
+
+              .kat-iok {
+                background: #edf7ee;
+                border-radius: 3px;
+                padding: 20px;
+                text-align: center;
+                margin-top: 12px;
+              }
+
+              .kat-iok h4 {
+                font-size: .88rem;
+                color: #1a6a24;
+                margin-bottom: 6px;
+              }
+
+              .kat-iok p {
+                font-size: .73rem;
+                color: #2a7a34;
+              }
+
+              /* Nav poptávka button */
+              .nav-cart-btn {
+                background: var(--red);
+                color: #fff !important;
+                display: inline-flex !important;
+                align-items: center;
+                gap: 7px;
+                padding: 7px 14px !important;
+                margin-left: 8px;
+                border-radius: 3px;
+                font-weight: 700 !important;
+                font-size: .72rem;
+                letter-spacing: .06em;
+                text-transform: uppercase;
+                cursor: pointer;
+                border: none;
+                text-decoration: none !important;
+                transition: background .15s;
+                white-space: nowrap;
+              }
+
+              .nav-cart-btn:hover {
+                background: #9a1a17 !important;
+              }
+
+              .nav-cart-cnt {
+                background: #fff;
+                color: var(--red);
+                border-radius: 50%;
+                width: 17px;
+                height: 17px;
+                font-size: 10px;
+                font-weight: 800;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+              }
+
+              /* Toast */
+              #katToast {
+                position: fixed;
+                bottom: 22px;
+                right: 22px;
+                background: #1e2025;
+                color: #fff;
+                border-left: 4px solid var(--red);
+                border-radius: 5px;
+                padding: 11px 16px;
+                font-size: .76rem;
+                max-width: 290px;
+                box-shadow: 0 4px 18px rgba(0, 0, 0, .18);
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                z-index: 2000;
+                transform: translateY(8px);
+                opacity: 0;
+                transition: opacity .2s, transform .2s;
+                pointer-events: none;
+              }
+
+              #katToast.show {
+                opacity: 1;
+                transform: none;
               }
             </style>
           </div>
@@ -8353,247 +9709,39 @@
 
     <div id="page-produkty" class="page" aria-hidden="true">
       <div class="subpage-hero">
-        <div class="breadcrumb"><a href="/" onclick="showPage('home');return false;"
-            style="color:#888;text-decoration:none;">Úvod</a> › <span>Nabídka produktů</span></div>
-        <h1>Nabídka produktů</h1>
+        <div class="breadcrumb" id="prodPageBreadcrumb">
+          <a href="/" onclick="showPage('home');return false;" style="color:#888;text-decoration:none;">Úvod</a>
+          › <span id="prodHeroBreadcrumb">Nabídka produktů</span>
+        </div>
+        <h1 id="prodPageHero">Nabídka produktů</h1>
         <p>Výrobky z betonu pro stavebnictví, komunikace, kanalizaci i zahradní architekturu.</p>
       </div>
-      <div class="subpage-content prod-layout">
 
-        <!-- Levý sidebar — kategorie -->
-        <nav class="prod-sidebar">
-          <a class="prod-cat active" onclick="filterCat(this,'komunikace')">Zpevněné plochy a komunikace
-            <span>›</span></a>
-          <a class="prod-cat" onclick="filterCat(this,'pozemni')">Pozemní stavby <span>›</span></a>
-          <a class="prod-cat" onclick="filterCat(this,'oploceni')">Prvky pro oplocení a zahradní architekturu
-            <span>›</span></a>
-          <a class="prod-cat" onclick="filterCat(this,'operne')">Prvky pro opěrné stěny a svahy <span>›</span></a>
-          <a class="prod-cat" onclick="filterCat(this,'doplnky')">Ostatní doplňky a výrobky <span>›</span></a>
-          <a class="prod-cat" onclick="filterCat(this,'inzenyrske')">Program pro inženýrské sítě <span>›</span></a>
-          <a class="prod-cat" onclick="filterCat(this,'linove')">Liniové odvodnění <span>›</span></a>
-          <a class="prod-cat" onclick="filterCat(this,'transportbeton')">Transportbeton <span>›</span></a>
-          <a class="prod-cat" onclick="filterCat(this,'armovna')">Armovna <span>›</span></a>
-
-        </nav>
-
-        <!-- Pravá část — mřížka produktů -->
-        <div>
-          <h2 class="prod-heading" id="prodHeading">Zpevněné plochy a komunikace</h2>
-
-          <div class="prod-grid" id="prodGrid">
-            <!-- komunikace -->
-            <div class="prod-card" data-cat="komunikace"
-              onclick="openModal('Dlažby','fotky/dlazby.jpg','Betonové dlažby pro zpevněné plochy, chodníky, příjezdové cesty a terasy. Dostupné v různých tvarech, rozměrech a barevných provedeních. Splňují ČSN EN 1338.')">
-              <div class="prod-img-wrap"><img src="fotky/dlazby.jpg" alt="Dlažby"
-                  onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'"
-                  loading="lazy">
-                <div class="prod-img-placeholder">🧱</div>
-              </div>
-              <div class="prod-card-name">Dlažby</div>
-            </div>
-            <div class="prod-card" data-cat="komunikace"
-              onclick="openModal('Obrubníky','fotky/obrubníky.jpg','Silniční a zahradní obrubníky z vibrolisovaného betonu. Vhodné pro oddělení vozovky, chodníku nebo zelených ploch. Dostupné v délkách 500 a 1000 mm.')">
-              <div class="prod-img-wrap"><img src="fotky/obrubniky.jpg" alt="Obrubníky"
-                  onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'"
-                  loading="lazy">
-                <div class="prod-img-placeholder">🔲</div>
-              </div>
-              <div class="prod-card-name">Obrubníky</div>
-            </div>
-            <div class="prod-card" data-cat="komunikace"
-              onclick="openModal('Palisády','fotky/palisady.jpg','Betonové palisády pro ohraničení záhonů, ploch a zahradní architekturu. Výška 100–250 mm, různá povrchová úprava.')">
-              <div class="prod-img-wrap"><img src="fotky/palisady.jpg" alt="Palisády"
-                  onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'"
-                  loading="lazy">
-                <div class="prod-img-placeholder">📐</div>
-              </div>
-              <div class="prod-card-name">Palisády</div>
-            </div>
-            <div class="prod-card" data-cat="komunikace"
-              onclick="openModal('Parkovací prvky','fotky/parkoviste.jpg','Prvky pro výstavbu parkovacích ploch — zatravňovací tvárnice, parkovací zábrany, přechodové bloky.')">
-              <div class="prod-img-wrap"><img src="fotky/parkoviste.jpg" alt="Parkovací prvky"
-                  onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'"
-                  loading="lazy">
-                <div class="prod-img-placeholder">🅿️</div>
-              </div>
-              <div class="prod-card-name">Parkovací prvky</div>
-            </div>
-            <div class="prod-card" data-cat="komunikace"
-              onclick="openModal('Desky a panely','fotky/desky.jpg','Prefabrikované betonové desky a průmyslové panely pro zpevnění ploch, zemědělských dvorů a skladišť.')">
-              <div class="prod-img-wrap"><img src="fotky/desky.jpg" alt="Desky a panely"
-                  onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'"
-                  loading="lazy">
-                <div class="prod-img-placeholder">▪️</div>
-              </div>
-              <div class="prod-card-name">Desky a panely</div>
-            </div>
-            <!-- oploceni -->
-            <div class="prod-card" data-cat="oploceni" style="display:none;"
-              onclick="openModal('Plotové prvky','fotky/plot.jpg','Betonové plotové prvky — tvarovky, sloupky a parapety pro stavbu pevných plotů a ohrazení pozemků.')">
-              <div class="prod-img-wrap"><img src="fotky/plot.jpg" alt="Plotové prvky"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Plotové prvky</div>
-            </div>
-            <div class="prod-card" data-cat="oploceni" style="display:none;"
-              onclick="openModal('Zahradní tvarovky','fotky/zahrada.jpg','Dekorativní betonové tvarovky pro zahradní architekturu — záhonové obrubníky, schodišťové stupně, okrasné bloky.')">
-              <div class="prod-img-wrap"><img src="fotky/zahrada.jpg" alt="Zahradní tvarovky"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Zahradní tvarovky</div>
-            </div>
-            <!-- pozemni -->
-            <div class="prod-card" data-cat="pozemni" style="display:none;"
-              onclick="openModal('Základové tvárnice','fotky/zakladove.jpg','Betonové tvárnice pro zakládání staveb, výstavbu základových pásů a ploten. Rozměry dle ČSN.')">
-              <div class="prod-img-wrap"><img src="fotky/zakladove.jpg" alt="Základové tvárnice"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Základové tvárnice</div>
-            </div>
-            <div class="prod-card" data-cat="pozemni" style="display:none;"
-              onclick="openModal('Zdicí bloky','fotky/zdicibloky.jpg','Lehčené i plné zdicí betonové bloky. Vhodné pro nosné i nenosné zdivo, sklepy, garáže a průmyslové stavby.')">
-              <div class="prod-img-wrap"><img src="fotky/zdicibloky.jpg" alt="Zdicí bloky"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Zdicí bloky</div>
-            </div>
-            <!-- operne -->
-            <div class="prod-card" data-cat="operne" style="display:none;"
-              onclick="openModal('Opěrné bloky L, T','fotky/operne.jpg','Prefabrikované L a T opěrné bloky pro terénní úpravy, svahy, podpěrné zdi a průmyslová ohrazení. Hmotnost od 300 kg do 3 t.')">
-              <div class="prod-img-wrap"><img src="fotky/operne.jpg" alt="Opěrné bloky L, T"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Opěrné bloky L, T</div>
-            </div>
-            <div class="prod-card" data-cat="operne" style="display:none;"
-              onclick="openModal('Gabionové prvky','fotky/gabion.jpg','Bednící a výplňové betonové prvky pro gabionové opěrné stěny. Kombinace s kamenem pro přírodní vzhled.')">
-              <div class="prod-img-wrap"><img src="fotky/gabion.jpg" alt="Gabionové prvky"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Gabionové prvky</div>
-            </div>
-            <!-- inzenyrske -->
-            <div class="prod-card" data-cat="inzenyrske" style="display:none;"
-              onclick="openModal('Šachty a skruže','fotky/sachty.jpg','Betonové šachtové skruže, dna a kónusy pro revizní a kanalizační šachty. Průmery DN 600–2000 mm, dle ČSN EN 1917.')">
-              <div class="prod-img-wrap"><img src="fotky/sachty.jpg" alt="Šachty a skruže"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Šachty a skruže</div>
-            </div>
-            <div class="prod-card" data-cat="inzenyrske" style="display:none;"
-              onclick="openModal('Potrubí kanalizace','fotky/potrubi.jpg','Betonové potrubí a trouby pro gravitační kanalizaci a dešťové odvodnění. DN 300–1200 mm, hrdlové i přírubové spoje.')">
-              <div class="prod-img-wrap"><img src="fotky/potrubi.jpg" alt="Potrubí kanalizace"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Potrubí kanalizace</div>
-            </div>
-            <div class="prod-card" data-cat="inzenyrske" style="display:none;"
-              onclick="openModal('Čistírny odpadních vod','fotky/cistirny.jpg','Prefabrikované betonové domovní čistírny a septiky. Objemy 3–20 m³, kompletní montáž a atestace.')">
-              <div class="prod-img-wrap"><img src="fotky/cistirny.jpg" alt="Čistírny odpadních vod"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Čistírny odpadních vod</div>
-            </div>
-            <!-- linove -->
-            <div class="prod-card" data-cat="linove" style="display:none;"
-              onclick="openModal('Odvodňovací žlaby','fotky/odvodnovaci.jpg','Liniové odvodňovací žlaby pro komunikace a zpevněné plochy. Různé světlosti a typy mříží — litina, galvanizovaná ocel, nerez.')">
-              <div class="prod-img-wrap"><img src="fotky/odvodnovaci.jpg" alt="Odvodňovací žlaby"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Odvodňovací žlaby</div>
-            </div>
-            <div class="prod-card" data-cat="linove" style="display:none;"
-              onclick="openModal('Štěrbinové žlaby','fotky/sterbiny.jpg','Štěrbinové žlaby pro diskrétní odvodnění komunikací a teras. Estetický design bez viditelné mříže.')">
-              <div class="prod-img-wrap"><img src="fotky/sterbiny.jpg" alt="Štěrbinové žlaby"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Štěrbinové žlaby</div>
-            </div>
-            <!-- doplnky -->
-            <div class="prod-card" data-cat="doplnky" style="display:none;"
-              onclick="openModal('Betonové prefabrikáty','fotky/prefabrikaty.jpg','Ostatní prefabrikované betonové doplňky — silniční svodidla, silniční obruby, zarážedla, sloupky.')">
-              <div class="prod-img-wrap"><img src="fotky/prefabrikaty.jpg" alt="Betonové prefabrikáty"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Betonové prefabrikáty</div>
-            </div>
-            <!-- transportbeton -->
-            <div class="prod-card" data-cat="transportbeton" style="display:none;"
-              onclick="openModal('Transportbeton','fotky/transportbeton.jpg','Transportbeton tříd C8/10 až C35/45 pro veškeré stavební konstrukce. Dodávka autodomíchávači 6–8 m³, čerpadlem až 46 m.')">
-              <div class="prod-img-wrap"><img src="fotky/transportbeton.jpg" alt="Transportbeton"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Transportbeton</div>
-            </div>
-            <!-- armovna -->
-            <div class="prod-card" data-cat="armovna" style="display:none;"
-              onclick="openModal('Výztuž a armování','fotky/armotura.jpg','Výroba a montáž armovací oceli pro průmyslové a pozemní stavby. Armovny v Losiné a Zbůchu, kapacita výroby dle požadavků projektu. Atestace dle ČSN.')">
-              <div class="prod-img-wrap"><img src="fotky/armotura.jpg" alt="Výztuž"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">⚙️</div>
-              </div>
-              <div class="prod-card-name">Výztuž a armování</div>
-            </div>
-            <div class="prod-card" data-cat="armovna" style="display:none;"
-              onclick="openModal('Svařované sítě','fotky/site.jpg','Prefabrikované svařované sítě z betonářské oceli pro vyztužení desek, stěn a základů. Standardní i atypické rozměry dle projektové dokumentace.')">
-              <div class="prod-img-wrap"><img src="fotky/site.jpg" alt="Sítě"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🔩</div>
-              </div>
-              <div class="prod-card-name">Svařované sítě</div>
-            </div>
-            <div class="prod-card" data-cat="transportbeton" style="display:none;"
-              onclick="openModal('Cementové potěry CEMLIT','fotky/cemlit.jpg','Litý cementový potěr CEMLIT pro průmyslové a bytové podlahy. Samonivelační, rychloschnoucí, pevnost CT–C20–F4 a vyšší.')">
-              <div class="prod-img-wrap"><img src="fotky/cemlit.jpg" alt="Cementové potěry CEMLIT"
-                  style="width:100%;height:100%;object-fit:cover;display:block;"
-                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" loading="lazy">
-                <div class="prod-img-placeholder" style="display:none;">🏗️</div>
-              </div>
-              <div class="prod-card-name">Cementové potěry CEMLIT</div>
-            </div>
+      <!-- ── KATALOG LAYOUT ── -->
+      <div class="subpage-content kat-wrap">
+        <div class="kat-layout">
+          <!-- SIDEBAR -->
+          <aside class="kat-sidebar" id="katSidebar">
+            <div class="kat-sbhd">Katalog produktů</div>
+            <div id="katTree"></div>
+          </aside>
+          <!-- MAIN -->
+          <div class="kat-main">
+            <nav class="kat-bc" id="katBC"></nav>
+            <div class="kat-content" id="katContent"></div>
           </div>
         </div>
       </div>
 
-      <!-- Kontaktní box — pod produktovou mřížkou -->
+      <!-- Contact box -->
       <div class="subpage-content" style="padding-top:0;">
         <div class="prod-contact-box">
           <div class="prod-contact-title">Potřebujete poradit?</div>
           <div class="prod-contact-body">
             <strong>B &amp; BC, a.s.</strong><br>
-            Sokolská 464<br>330 22 Zbůch<br><br>
+            Sokolská 464&nbsp;&nbsp;330 22 Zbůch<br><br>
             Tel.: 377 199 104, 111<br>
-            E-mail: <a href="/cdn-cgi/l/email-protection#a3ccc1c0cbccc7e3c1c2c1c08dc0d9"
-              style="color:var(--red);text-decoration:none;"><span class="__cf_email__"
-                data-cfemail="741b16171c1b1034161516175a170e">[email&#160;protected]</span></a>
+            E-mail: <a href="mailto:info@babc.cz" style="color:var(--red);text-decoration:none;">info@babc.cz</a>
           </div>
           <button class="btn-contact" onclick="showPage('kontakty')">Kontaktní formulář</button>
         </div>
@@ -9904,12 +11052,12 @@
         <div class="footer-col">
           <h4>Produkty</h4>
           <ul>
-            <li><a>Prvky pro komunikace</a></li>
-            <li><a>Štěrbinové žlaby</a></li>
-            <li><a>Prvky pro kanalizaci</a></li>
-            <li><a>Transportbeton</a></li>
-            <li><a>Armovna</a></li>
-            <li><a>Zahradní architektura</a></li>
+            <li><a onclick="showPage('produkty')">Prvky pro komunikace</a></li>
+            <li><a onclick="showPage('produkty')">Štěrbinové žlaby</a></li>
+            <li><a onclick="showPage('produkty')">Prvky pro kanalizaci</a></li>
+            <li><a onclick="showPage('produkty')">Transportbeton</a></li>
+            <li><a onclick="showPage('produkty')">Armovna</a></li>
+            <li><a onclick="showPage('produkty')">Zahradní architektura</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -9932,14 +11080,12 @@
                 data-cfemail="caa5a8a9a2a5ae8aa8aba8a9e4a9b0">[email&#160;protected]</span></a></div>
         </div>
       </div>
-      <div style="background:var(--bg);border-top:1px solid var(--border);padding:16px 40px;text-align:center;">
-        <p style="font-size:.72rem;color:var(--mid);font-family:'Poppins',sans-serif;margin:0;">© Copyright 2026
-          B&amp;BC
-          a.s. &nbsp;·&nbsp; Všechna práva vyhrazena. &nbsp;·&nbsp;
-          <a onclick="showPage('obchodni-podminky')"
-            style="color:var(--mid);text-decoration:underline;cursor:pointer;font-family:'Poppins',sans-serif;">Obchodní
-            podmínky</a>
-        </p>
+      <div class="footer-bottom-wrap">
+        <div class="footer-bottom">
+          <p>© <span id="footerYear"></span> B &amp; BC a.s. Všechna práva vyhrazena.
+            <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
+          </p>
+        </div>
       </div>
     </footer>
 
@@ -10329,58 +11475,543 @@
       }
 
 
-      // ── PRODUCTS PAGE FILTER ──
-      const CAT_LABELS = {
-        komunikace: 'Zpevněné plochy a komunikace',
-        pozemni: 'Pozemní stavby',
-        oploceni: 'Prvky pro oplocení a zahradní architekturu',
-        operne: 'Prvky pro opěrné stěny a svahy',
-        doplnky: 'Ostatní doplňky a výrobky',
-        inzenyrske: 'Program pro inženýrské sítě',
-        linove: 'Liniové odvodnění',
-        transportbeton: 'Transportbeton',
-        armovna: 'Armovna'
-      };
+      // ── PRODUCTS CATALOGUE ──
+      /* ══════════════════════════════════════════════════════════
+         KATALOG — plná data + navigace (babc.cz 1:1)
+      ══════════════════════════════════════════════════════════ */
+      const CIMG = 'https://static.babc.cloud.fishcms.cz/media/image/thumb/';
+      const CAT = [
+        {
+          id: 'komunikace', label: 'Zpevněné plochy a komunikace', icon: '🏗️', img: CIMG + 'blocek_nevidomy_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg',
+          children: [
+            {
+              id: 'dlazby', label: 'Dlažby', img: CIMG + '3-icko_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg', children: [
+                {
+                  id: 'zamkove', label: 'Zámkové', img: CIMG + '3-icko_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                    {
+                      id: 'icko_cela', label: 'B&BC Ičko (celá)', img: CIMG + '3-icko_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Základní tvar zámkové dlažby B&BC Ičko. Výšky 40, 60, 80, 100 mm, jemný a polohrubý povrch.',
+                      filters: { 'Výška': ['40 mm', '60 mm', '80 mm', '100 mm'], 'Povrch': ['jemný', 'polohrubý'], 'Barva': ['přírodní', 'okrová', 'červená', 'antracit', 'žlutá', 'colormix 1', 'colormix 3', 'karamel', 'bílá BC'] },
+                      dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: 'fotky/ke-stazeni/prohlaseni-obecne.pdf', t: 'pdf' }], cad: [{ n: 'Technický výkres DXF', u: '#', t: 'dwg' }], vyk: [{ n: 'Technický výkres JPG', u: '#', t: 'jpg' }], tl: [{ n: 'Technický list', u: 'fotky/ke-stazeni/technicky-list.pdf', t: 'pdf', s: '1,38 MB' }], post: [{ n: 'Montážní postup', u: '#', t: 'pdf' }, { n: 'Zásady pokládky dlažeb', u: '#', t: 'pdf' }] },
+                      gal: [{ i: CIMG + 'plzen_invelt_icko_prirodni_043.jpg/p_product_gallery_thumb.jpg', n: 'Plzeň – Invelt' }, { i: CIMG + 'plzen-majak-icko-prirodni-slepecka_004.jpg/p_product_gallery_thumb.jpg', n: 'Plzeň – Maják' }, { i: CIMG + '2-cernice-icko-prirodni_13.jpg/p_product_gallery_thumb.jpg', n: 'Černice' }],
+                      v: [
+                        { id: 'i1', n: 'B&BC Ičko 4, jemný, přírodní', p: 330.33, u: 'm²', a: { 'Výška': '40 mm', 'Povrch': 'jemný', 'Barva': 'přírodní' }, img: CIMG + 'model_139_icko_jemny_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Délka', '200 mm'], ['Šířka', '140 mm'], ['Výška', '40 mm'], ['Množství', '14,94 m²/pal'], ['Hmotnost', '92 kg/m²'], ['Počet', '36 ks/m²'], ['Na kamion 24t', '253,98 m²']] },
+                        { id: 'i2', n: 'B&BC Ičko 4, jemný, okrová', p: 504.57, u: 'm²', a: { 'Výška': '40 mm', 'Povrch': 'jemný', 'Barva': 'okrová' }, img: CIMG + 'model_10907_icko_jemny_okrova.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Délka', '200 mm'], ['Šířka', '140 mm'], ['Výška', '40 mm']] },
+                        { id: 'i3', n: 'B&BC Ičko 4, jemný, červená', p: 504.57, u: 'm²', a: { 'Výška': '40 mm', 'Povrch': 'jemný', 'Barva': 'červená' }, img: CIMG + 'model_140_icko_jemny_cervena.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Délka', '200 mm'], ['Šířka', '140 mm'], ['Výška', '40 mm']] },
+                        { id: 'i4', n: 'B&BC Ičko 4, jemný, žlutá', p: 615.89, u: 'm²', a: { 'Výška': '40 mm', 'Povrch': 'jemný', 'Barva': 'žlutá' }, img: CIMG + 'model_13598_icko_jemny_zluta.jpg/p_catalogue_lc_list_thumb.jpg', sk: false, tp: [['Délka', '200 mm'], ['Šířka', '140 mm'], ['Výška', '40 mm']] },
+                        { id: 'i5', n: 'B&BC Ičko 4, jemný, colormix 1', p: 555.39, u: 'm²', a: { 'Výška': '40 mm', 'Povrch': 'jemný', 'Barva': 'colormix 1' }, img: CIMG + 'model_11684_icko_jemny_colormix_1.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Výška', '40 mm']] },
+                        { id: 'i6', n: 'B&BC Ičko 4, jemný, karamel', p: 504.57, u: 'm²', a: { 'Výška': '40 mm', 'Povrch': 'jemný', 'Barva': 'karamel' }, img: CIMG + 'model_54536_icko_jemny_karamel.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Výška', '40 mm']] },
+                        { id: 'i7', n: 'B&BC Ičko 4, polohrubý, přírodní', p: 388.41, u: 'm²', a: { 'Výška': '40 mm', 'Povrch': 'polohrubý', 'Barva': 'přírodní' }, img: CIMG + 'model_20903_icko_polohruby_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Délka', '200 mm'], ['Šířka', '140 mm'], ['Výška', '40 mm'], ['Na kamion 24t', '253,98 m²']] },
+                        { id: 'i8', n: 'B&BC Ičko 6, jemný, přírodní', p: 373.13, u: 'm²', a: { 'Výška': '60 mm', 'Povrch': 'jemný', 'Barva': 'přírodní' }, img: CIMG + 'model_139_icko_jemny_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Délka', '200 mm'], ['Šířka', '140 mm'], ['Výška', '60 mm'], ['Na kamion 24t', '203,32 m²']] },
+                        { id: 'i9', n: 'B&BC Ičko 6, jemný, červená', p: 560.56, u: 'm²', a: { 'Výška': '60 mm', 'Povrch': 'jemný', 'Barva': 'červená' }, img: CIMG + 'model_140_icko_jemny_cervena.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Výška', '60 mm']] },
+                        { id: 'i10', n: 'B&BC Ičko 8, jemný, přírodní', p: 429.80, u: 'm²', a: { 'Výška': '80 mm', 'Povrch': 'jemný', 'Barva': 'přírodní' }, img: null, sk: false, tp: [['Délka', '200 mm'], ['Šířka', '140 mm'], ['Výška', '80 mm'], ['Na kamion 24t', '152,89 m²']] },
+                        { id: 'i11', n: 'B&BC Ičko 10, jemný, přírodní', p: 501.43, u: 'm²', a: { 'Výška': '100 mm', 'Povrch': 'jemný', 'Barva': 'přírodní' }, img: null, sk: false, tp: [['Výška', '100 mm'], ['Na kamion 24t', '122,31 m²']] },
+                      ]
+                    },
+                    {
+                      id: 'icko_p', label: 'B&BC Ičko P (půlka)', img: CIMG + 'model_159_icko_pulka_jemny_zluta.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Půlka zámkové dlažby B&BC Ičko pro ukončení řad a doplnění plochy.', filters: { 'Barva': ['přírodní', 'červená', 'žlutá'] },
+                      dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: 'fotky/ke-stazeni/technicky-list.pdf', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'ip1', n: 'B&BC Ičko P 4, jemný, přírodní', p: 374.00, u: 'm²', a: { 'Barva': 'přírodní' }, img: CIMG + 'model_159_icko_pulka_jemny_zluta.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['100×140×40 mm']] }, { id: 'ip2', n: 'B&BC Ičko P 6, jemný, přírodní', p: 422.00, u: 'm²', a: { 'Barva': 'přírodní' }, img: null, sk: true, tp: [['100×140×60 mm']] }]
+                    },
+                    {
+                      id: 'icko_k', label: 'B&BC Ičko K (kraj)', img: CIMG + 'model_171_icko_kraj_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Krajový kus dlažby B&BC Ičko.', filters: { 'Barva': ['přírodní', 'červená'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'ik1', n: 'B&BC Ičko K 6, jemný, přírodní', p: 407.00, u: 'm²', a: { 'Barva': 'přírodní' }, img: CIMG + 'model_171_icko_kraj_jemny_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Výška', '60 mm']] }]
+                    },
+                    {
+                      id: 'icko_r', label: 'B&BC Ičko R (rovná)', img: CIMG + 'model_161_icko_rovny_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Rovná varianta dlažby B&BC Ičko pro pojízdné plochy.', filters: { 'Výška': ['40 mm', '60 mm', '80 mm', '100 mm'], 'Barva': ['přírodní', 'červená', 'antracit'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'ir1', n: 'B&BC Ičko R 4, jemný, přírodní', p: 330.33, u: 'm²', a: { 'Výška': '40 mm', 'Barva': 'přírodní' }, img: CIMG + 'model_161_icko_rovny_jemny_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['200×140×40 mm']] }, { id: 'ir2', n: 'B&BC Ičko R 6, jemný, přírodní', p: 373.13, u: 'm²', a: { 'Výška': '60 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['200×140×60 mm']] }, { id: 'ir3', n: 'B&BC Ičko R 8, jemný, přírodní', p: 429.80, u: 'm²', a: { 'Výška': '80 mm', 'Barva': 'přírodní' }, img: null, sk: false, tp: [['200×140×80 mm']] }]
+                    },
+                    {
+                      id: 'icko_sp', label: 'B&BC Ičko SP (strojní pokládka)', img: CIMG + 'model_39934_icko_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Verze B&BC Ičko pro strojní pokládku.', filters: { 'Výška': ['80 mm', '100 mm'], 'Barva': ['přírodní', 'červená'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'isp1', n: 'B&BC Ičko SP 8, jemný, přírodní', p: 429.80, u: 'm²', a: { 'Výška': '80 mm', 'Barva': 'přírodní' }, img: CIMG + 'model_39934_icko_jemny_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Strojní pokládka', 'ANO'], ['Výška', '80 mm']] }]
+                    },
+                    {
+                      id: 'vlnka_cela', label: 'B&BC Vlnka (celá)', img: CIMG + 'model_66_vlnka_polohruby_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Zámková dlažba B&BC Vlnka s vlnitým tvarem pro pěší zóny a chodníky.',
+                      filters: { 'Výška': ['40 mm', '60 mm', '80 mm'], 'Povrch': ['jemný', 'polohrubý'], 'Barva': ['přírodní', 'červená', 'antracit', 'žlutá'] },
+                      dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'vl1', n: 'B&BC Vlnka 6, jemný, přírodní', p: 373.13, u: 'm²', a: { 'Výška': '60 mm', 'Povrch': 'jemný', 'Barva': 'přírodní' }, img: CIMG + 'model_66_vlnka_polohruby_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['225×112×60 mm'], ['Na kamion 24t', '195 m²']] }, { id: 'vl2', n: 'B&BC Vlnka 6, jemný, červená', p: 560.56, u: 'm²', a: { 'Výška': '60 mm', 'Povrch': 'jemný', 'Barva': 'červená' }, img: null, sk: true, tp: [['Výška', '60 mm']] }, { id: 'vl3', n: 'B&BC Vlnka 6, polohrubý, přírodní', p: 427.71, u: 'm²', a: { 'Výška': '60 mm', 'Povrch': 'polohrubý', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['Výška', '60 mm']] }, { id: 'vl4', n: 'B&BC Vlnka 8, jemný, přírodní', p: 429.80, u: 'm²', a: { 'Výška': '80 mm', 'Povrch': 'jemný', 'Barva': 'přírodní' }, img: null, sk: false, tp: [['Výška', '80 mm']] }]
+                    },
+                    {
+                      id: 'vlnka_pk', label: 'B&BC Vlnka P/K (půlka/kraj)', img: CIMG + 'model_184_vlnka_pulka_kraj_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Doplňkový kus dlažby B&BC Vlnka.', filters: { 'Barva': ['přírodní', 'červená'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'vpk1', n: 'B&BC Vlnka P/K 6, jemný, přírodní', p: 407.00, u: 'm²', a: { 'Barva': 'přírodní' }, img: CIMG + 'model_184_vlnka_pulka_kraj_jemny_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Výška', '60 mm']] }]
+                    },
+                    {
+                      id: 'zip115', label: 'B&BC ZIP 11,5', img: CIMG + 'model_66807_tbx_zip.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Speciální dlažba ZIP 11,5 cm pro těžce zatížené plochy.', filters: { 'Barva': ['přírodní', 'červená'] },
+                      dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'z1', n: 'B&BC ZIP 11,5, přírodní', p: 799.00, u: 'm²', a: { 'Barva': 'přírodní' }, img: CIMG + 'model_66807_tbx_zip.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['220×115×115 mm']] }]
+                    },
+                  ]
+                },
+                {
+                  id: 'variabilni', label: 'Variabilní', img: CIMG + 'blocek_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                    {
+                      id: 'kostka', label: 'B&BC Kostka', img: CIMG + 'model_209_kostka_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Klasická betonová kostka pro parkoviště a příjezdové plochy.', filters: { 'Výška': ['40 mm', '60 mm', '80 mm'], 'Barva': ['přírodní', 'červená', 'antracit'] },
+                      dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [{ i: CIMG + 'plzen_invelt_icko_prirodni_043.jpg/p_product_gallery_thumb.jpg', n: 'Plzeň – pěší zóna' }],
+                      v: [{ id: 'k1', n: 'B&BC Kostka 4, jemný, přírodní', p: 268.00, u: 'm²', a: { 'Výška': '40 mm', 'Barva': 'přírodní' }, img: CIMG + 'model_209_kostka_jemny_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['200×100×40 mm'], ['50 ks/m²']] }, { id: 'k2', n: 'B&BC Kostka 6, jemný, přírodní', p: 312.00, u: 'm²', a: { 'Výška': '60 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['200×100×60 mm'], ['Na kamion 24t', '230 m²']] }, { id: 'k3', n: 'B&BC Kostka 6, jemný, červená', p: 468.00, u: 'm²', a: { 'Výška': '60 mm', 'Barva': 'červená' }, img: null, sk: true, tp: [['Výška', '60 mm']] }, { id: 'k4', n: 'B&BC Kostka 8, jemný, přírodní', p: 375.00, u: 'm²', a: { 'Výška': '80 mm', 'Barva': 'přírodní' }, img: null, sk: false, tp: [['Výška', '80 mm']] }]
+                    },
+                    {
+                      id: 'blocek', label: 'B&BC Bloček', img: CIMG + 'model_61_blocek_jemny_colormix_3.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Obdélníkový bloček pro vzorované chodníkové pokládky.', filters: { 'Výška': ['40 mm', '60 mm'], 'Barva': ['přírodní', 'červená', 'colormix 3'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'bl1', n: 'B&BC Bloček 6, jemný, přírodní', p: 342.00, u: 'm²', a: { 'Výška': '60 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['200×100×60 mm']] }, { id: 'bl2', n: 'B&BC Bloček 6, jemný, colormix 3', p: 555.00, u: 'm²', a: { 'Výška': '60 mm', 'Barva': 'colormix 3' }, img: CIMG + 'model_61_blocek_jemny_colormix_3.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Výška', '60 mm']] }]
+                    },
+                    {
+                      id: 'blocek_nev', label: 'B&BC Bloček pro nevidomé', img: CIMG + 'model_46947_blocek_nevidomy_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Hmatový prvek pro nevidomé – signální a varovný pás dle ČSN 73 6110.', filters: { 'Barva': ['přírodní', 'žlutá'] },
+                      dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'bn1', n: 'B&BC Bloček pro nevidomé 6, přírodní', p: 442.00, u: 'm²', a: { 'Barva': 'přírodní' }, img: CIMG + 'model_46947_blocek_nevidomy_jemny_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['200×100×60 mm'], ['Hmatový vzor', 'varovný/signální']] }, { id: 'bn2', n: 'B&BC Bloček pro nevidomé 6, žlutá', p: 620.00, u: 'm²', a: { 'Barva': 'žlutá' }, img: null, sk: true, tp: [['200×100×60 mm']] }]
+                    },
+                    {
+                      id: 'ctverec', label: 'B&BC Čtverec', img: CIMG + 'model_59_ctverec-tbx_22_jemny_colormix_1.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Čtvercová variabilní dlažba pro chodníky.', filters: { 'Výška': ['60 mm', '80 mm'], 'Barva': ['přírodní', 'červená', 'colormix 1'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'cv1', n: 'B&BC Čtverec 6, jemný, přírodní', p: 342.00, u: 'm²', a: { 'Výška': '60 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['200×200×60 mm'], ['25 ks/m²']] }]
+                    },
+                  ]
+                },
+                {
+                  id: 'velkoplosne', label: 'Velkoplošné', img: CIMG + 'ctverec-tbx-6_44_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                    {
+                      id: 'deska_3030', label: 'B&BC Čtverec 4 (30×30)', img: CIMG + 'ctverec-tbx-6_44_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Velkoplošná dlažba 300×300×40 mm.', filters: { 'Barva': ['přírodní', 'červená'] },
+                      dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'vp1', n: 'B&BC Čtverec 4 (30×30), přírodní', p: 312.00, u: 'm²', a: { 'Barva': 'přírodní' }, img: CIMG + 'ctverec-tbx-6_44_jemny_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['300×300×40 mm'], ['11,1 ks/m²']] }]
+                    },
+                    {
+                      id: 'deska_4040', label: 'B&BC Čtverec 4,5 (40×40)', img: null,
+                      desc: 'Velkoplošná dlažba 400×400×45 mm.', filters: { 'Barva': ['přírodní', 'červená'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'vp2', n: 'B&BC Čtverec 4,5 (40×40), přírodní', p: 345.00, u: 'm²', a: { 'Barva': 'přírodní' }, img: null, sk: true, tp: [['400×400×45 mm'], ['6,25 ks/m²']] }]
+                    },
+                    {
+                      id: 'deska_5050', label: 'B&BC Čtverec 5 (50×50)', img: null,
+                      desc: 'Reprezentativní formát 500×500×50 mm.', filters: { 'Barva': ['přírodní', 'červená'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'vp3', n: 'B&BC Čtverec 5 (50×50), přírodní', p: 428.00, u: 'm²', a: { 'Barva': 'přírodní' }, img: null, sk: true, tp: [['500×500×50 mm'], ['4 ks/m²']] }]
+                    },
+                  ]
+                },
+                {
+                  id: 'specialni', label: 'Speciální a designové', img: CIMG + 'sestihran_polohruby_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                    {
+                      id: 'sestihran', label: 'B&BC Šestihran', img: CIMG + 'sestihran_polohruby_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Šestihranná dlažba pro moderní pěší zóny.', filters: { 'Povrch': ['jemný', 'polohrubý'], 'Barva': ['přírodní', 'červená', 'antracit'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'sh1', n: 'B&BC Šestihran 6, polohrubý, přírodní', p: 385.00, u: 'm²', a: { 'Povrch': 'polohrubý', 'Barva': 'přírodní' }, img: CIMG + 'sestihran_polohruby_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Výška', '60 mm']] }]
+                    },
+                  ]
+                },
+                {
+                  id: 'zatravnovaci', label: 'Zatravňovací dlažby a vegetační', img: CIMG + 'zatravnovaci_tvarnice_tbm_17_40_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                    {
+                      id: 'zatrav', label: 'B&BC Zatravňovací tvárnice', img: CIMG + 'zatravnovaci_tvarnice_tbm_17_40_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Zatravňovací dlažba TBM 17-40 pro vjezdy, parkoviště a svahová zpevnění.', filters: { 'Výška': ['80 mm', '100 mm'] },
+                      dl: { cert: [{ n: 'Prohlášení o shodě', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'zt1', n: 'B&BC Zatravňovací tvárnice TBM 17-40, tl. 80 mm', p: 178.00, u: 'm²', a: { 'Výška': '80 mm' }, img: CIMG + 'zatravnovaci_tvarnice_tbm_17_40_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['400×215×80 mm'], ['Zelená plocha', '35 %']] }, { id: 'zt2', n: 'B&BC Zatravňovací tvárnice TBM 17-40, tl. 100 mm', p: 198.00, u: 'm²', a: { 'Výška': '100 mm' }, img: null, sk: true, tp: [['400×215×100 mm']] }]
+                    },
+                  ]
+                },
+                {
+                  id: 'doplnky_dlazeb', label: 'Doplňky dlažeb', img: CIMG + 'krajnik-10_50_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                    {
+                      id: 'krajnik', label: 'B&BC Krajník', img: CIMG + 'krajnik-10_50_jemny_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Krajníky pro lemování dlažebních ploch u obrubníků.', filters: { 'Délka': ['250 mm', '500 mm'], 'Barva': ['přírodní', 'červená'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'kr1', n: 'B&BC Krajník 25, jemný, přírodní', p: 68.00, u: 'ks', a: { 'Délka': '250 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['250×100×60 mm']] }, { id: 'kr2', n: 'B&BC Krajník 50, jemný, přírodní', p: 124.00, u: 'ks', a: { 'Délka': '500 mm', 'Barva': 'přírodní' }, img: CIMG + 'krajnik-10_50_jemny_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['500×100×60 mm']] }]
+                    },
+                  ]
+                },
+              ]
+            },
+            {
+              id: 'zlaby', label: 'Žlaby', img: CIMG + 'zlab-tbm-8-60_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                {
+                  id: 'zlab_tbm', label: 'B&BC Žlab TBM', img: CIMG + 'zlab-tbm-8-60_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                  desc: 'Betonové žlaby TBM pro odvodnění komunikací. Světlosti DN 100–300 mm.', filters: { 'Světlost': ['DN 100', 'DN 150', 'DN 200', 'DN 300'], 'Typ roštu': ['bez roštu', 'litinový rošt', 'pozinkovaný rošt'] },
+                  dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                  v: [{ id: 'zt1', n: 'B&BC Žlab TBM DN 100, bez roštu', p: 245.00, u: 'ks', a: { 'Světlost': 'DN 100', 'Typ roštu': 'bez roštu' }, img: null, sk: true, tp: [['Délka', '500 mm'], ['Světlost', '100 mm']] }, { id: 'zt2', n: 'B&BC Žlab TBM DN 150, bez roštu', p: 312.00, u: 'ks', a: { 'Světlost': 'DN 150', 'Typ roštu': 'bez roštu' }, img: CIMG + 'zlab-tbm-8-60_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Délka', '500 mm'], ['Světlost', '150 mm']] }, { id: 'zt3', n: 'B&BC Žlab TBM DN 200, bez roštu', p: 398.00, u: 'ks', a: { 'Světlost': 'DN 200', 'Typ roštu': 'bez roštu' }, img: null, sk: true, tp: [['Délka', '500 mm'], ['Světlost', '200 mm']] }, { id: 'zt4', n: 'B&BC Žlab TBM DN 100, litinový rošt', p: 545.00, u: 'ks', a: { 'Světlost': 'DN 100', 'Typ roštu': 'litinový rošt' }, img: null, sk: true, tp: [['Rošt', 'litina, tř. C250']] }, { id: 'zt5', n: 'B&BC Žlab TBM DN 150, litinový rošt', p: 648.00, u: 'ks', a: { 'Světlost': 'DN 150', 'Typ roštu': 'litinový rošt' }, img: null, sk: true, tp: [['Rošt', 'litina, tř. C250']] }]
+                },
+              ]
+            },
+            {
+              id: 'obrubniky', label: 'Obrubníky', img: CIMG + 'obrubnik-silnicni-abo-2-15_prirodni.jpg/p_catalogue_list_thumb.jpg', children: [
+                {
+                  id: 'silnicni_ob', label: 'Silniční', img: CIMG + 'obrubnik-silnicni-abo-2-15-r3_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                    {
+                      id: 'abo', label: 'Silniční obrubníky ABO', img: CIMG + 'obrubnik-silnicni-abo-2-15_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Silniční obrubníky ABO pro oddělení vozovky a chodníku.', filters: { 'Typ': ['ABO 2-10', 'ABO 2-15', 'ABO 2-15 R'], 'Délka': ['500 mm', '1000 mm'], 'Barva': ['přírodní', 'červená', 'antracit'] },
+                      dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], cad: [{ n: 'Technický výkres DXF', u: '#', t: 'dwg' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'ab1', n: 'B&BC ABO 2-10, přírodní, 1000 mm', p: 89.20, u: 'ks', a: { 'Typ': 'ABO 2-10', 'Délka': '1000 mm', 'Barva': 'přírodní' }, img: CIMG + 'obrubnik-silnicni-abo-2-15_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['1000×100×250 mm'], ['Hmotnost', '75 kg/ks']] }, { id: 'ab2', n: 'B&BC ABO 2-15, přírodní, 1000 mm', p: 94.40, u: 'ks', a: { 'Typ': 'ABO 2-15', 'Délka': '1000 mm', 'Barva': 'přírodní' }, img: CIMG + 'obrubnik-silnicni-abo-2-15_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['1000×150×250 mm'], ['Hmotnost', '95 kg/ks'], ['Na kamion 24t', '252 ks']] }, { id: 'ab3', n: 'B&BC ABO 2-10, přírodní, 500 mm', p: 46.50, u: 'ks', a: { 'Typ': 'ABO 2-10', 'Délka': '500 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['500×100×250 mm'], ['Hmotnost', '38 kg/ks']] }, { id: 'ab4', n: 'B&BC ABO 2-15, přírodní, 500 mm', p: 49.80, u: 'ks', a: { 'Typ': 'ABO 2-15', 'Délka': '500 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['500×150×250 mm'], ['Hmotnost', '48 kg/ks']] }, { id: 'ab5', n: 'B&BC ABO 2-15, červená, 1000 mm', p: 118.00, u: 'ks', a: { 'Typ': 'ABO 2-15', 'Délka': '1000 mm', 'Barva': 'červená' }, img: null, sk: false, tp: [['1000×150×250 mm']] }, { id: 'ab6', n: 'B&BC ABO 2-15 R, přírodní, 1000 mm', p: 118.00, u: 'ks', a: { 'Typ': 'ABO 2-15 R', 'Délka': '1000 mm', 'Barva': 'přírodní' }, img: CIMG + 'obrubnik-silnicni-abo-2-15-r3_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Poloměr zatáčky', '3 m']] }]
+                    },
+                  ]
+                },
+                {
+                  id: 'parkove_ob', label: 'Parkové a sadové', img: CIMG + 'obrubnik-parkove-abo-17-10_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                    {
+                      id: 'zao', label: 'Zahradní obrubníky ZAO', img: CIMG + 'obrubnik-parkove-abo-17-10_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                      desc: 'Zahradní obrubníky ZAO pro lemování chodníků a záhonů.', filters: { 'Výška': ['80 mm', '100 mm', '120 mm'], 'Barva': ['přírodní', 'červená'] },
+                      dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                      v: [{ id: 'zo1', n: 'B&BC ZAO 8, přírodní, 500 mm', p: 28.40, u: 'ks', a: { 'Výška': '80 mm', 'Barva': 'přírodní' }, img: CIMG + 'obrubnik-parkove-abo-17-10_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Délka', '500 mm'], ['Výška', '80 mm']] }, { id: 'zo2', n: 'B&BC ZAO 10, přírodní, 500 mm', p: 32.60, u: 'ks', a: { 'Výška': '100 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['Výška', '100 mm']] }, { id: 'zo3', n: 'B&BC ZAO 12, přírodní, 500 mm', p: 38.00, u: 'ks', a: { 'Výška': '120 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['Výška', '120 mm']] }]
+                    },
+                  ]
+                },
+              ]
+            },
+            {
+              id: 'panely', label: 'Panely', img: CIMG + 'panel-silnicni-kp-1-10.jpg/p_catalogue_list_thumb.jpg', products: [
+                {
+                  id: 'panel', label: 'Silniční panely KP', img: CIMG + 'panel-silnicni-kp-1-10.jpg/p_catalogue_list_thumb.jpg',
+                  desc: 'Prefabrikované silniční panely 3×1 m pro komunikace a staveniště.', filters: { 'Tloušťka': ['100 mm', '150 mm', '200 mm'] },
+                  dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                  v: [{ id: 'ps1', n: 'B&BC KP 1-10 (3×1 m, tl. 100 mm)', p: 1250.00, u: 'ks', a: { 'Tloušťka': '100 mm' }, img: CIMG + 'panel-silnicni-kp-1-10.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['3000×1000 mm'], ['Tloušťka', '100 mm'], ['Hmotnost', '720 kg/ks']] }, { id: 'ps2', n: 'B&BC KP 1-15 (3×1 m, tl. 150 mm)', p: 1680.00, u: 'ks', a: { 'Tloušťka': '150 mm' }, img: null, sk: true, tp: [['Tloušťka', '150 mm'], ['Hmotnost', '1080 kg/ks']] }, { id: 'ps3', n: 'B&BC KP 1-20 (3×1 m, tl. 200 mm)', p: 2050.00, u: 'ks', a: { 'Tloušťka': '200 mm' }, img: null, sk: false, tp: [['Tloušťka', '200 mm'], ['Hmotnost', '1440 kg/ks']] }]
+                },
+              ]
+            },
+          ]
+        },
+        {
+          id: 'pozemni', label: 'Pozemní stavby', icon: '🧱', img: CIMG + 'panel-silnicni-izd-2-10.jpg/p_catalogue_list_thumb.jpg',
+          children: [
+            {
+              id: 'zakladove_tv', label: 'Základové tvárnice', products: [
+                {
+                  id: 'zbt', label: 'Základové tvárnice ZBT', img: CIMG + 'model_46313_betonove-tvarnice-zbt-15.jpg/p_catalogue_lc_list_thumb.jpg',
+                  desc: 'Betonové tvárnice pro zakládání staveb metodou ztraceného bednění. ZBT 10–50.',
+                  filters: { 'Šířka': ['100 mm', '150 mm', '200 mm', '250 mm', '300 mm', '400 mm', '500 mm'] },
+                  dl: { cert: [{ n: 'Montážní návod', u: 'http://www.babc.cz/media/document/certifikat_46313_babc_mp-prefa_2a3-07_zbt.pdf', t: 'pdf', s: '1,58 MB' }, { n: 'Prohlášení o vlastnostech', u: 'http://www.babc.cz/media/document/certifikat_46313_babc_p_pov_27_zbt.pdf', t: 'pdf', s: '293 KB' }], cad: [{ n: 'Technický výkres DXF', u: '#', t: 'dwg' }], vyk: [{ n: 'Technický výkres JPG', u: 'http://www.babc.cz/media/image/vykres_46313_zbt-15.jpg', t: 'jpg' }], tl: [{ n: 'Technický list', u: 'http://www.babc.cz/media/document/technicky-list-ztracene-bedneni.pdf', t: 'pdf' }], post: [{ n: 'Zásady montáže tvárnic ZBT', u: 'http://www.babc.cz/media/document/zasady-montaze-tvarnic-zbt.pdf', t: 'pdf' }] },
+                  gal: [{ i: CIMG + 'rs5788_zbt-30_003-scr.jpg/p_product_gallery_thumb.jpg', n: 'Realizace ZBT' }, { i: CIMG + 'rs3069_chotikov-zbt-zed_006-scr.jpg/p_product_gallery_thumb.jpg', n: 'Chotíkov – ZBT zeď' }],
+                  v: [{ id: 'zb1', n: 'B&BC ZBT 10', p: 59.29, u: 'ks', a: { 'Šířka': '100 mm' }, img: null, sk: true, tp: [['500×100×250 mm'], ['Hmotnost', '17 kg/ks'], ['Na kamion 24t', '1 400 ks']] }, { id: 'zb2', n: 'B&BC ZBT 15', p: 60.50, u: 'ks', a: { 'Šířka': '150 mm' }, img: CIMG + 'model_46313_betonove-tvarnice-zbt-15.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['500×150×250 mm'], ['Hmotnost', '24 kg/ks'], ['Na kamion 24t', '1 000 ks']] }, { id: 'zb3', n: 'B&BC ZBT 20', p: 64.13, u: 'ks', a: { 'Šířka': '200 mm' }, img: CIMG + 'model_10704_betonove-tvarnice-zbt-20.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['500×200×250 mm'], ['Hmotnost', '30 kg/ks'], ['Na kamion 24t', '800 ks']] }, { id: 'zb4', n: 'B&BC ZBT 25', p: 75.02, u: 'ks', a: { 'Šířka': '250 mm' }, img: null, sk: true, tp: [['500×250×250 mm'], ['Na kamion 24t', '648 ks']] }, { id: 'zb5', n: 'B&BC ZBT 30', p: 78.65, u: 'ks', a: { 'Šířka': '300 mm' }, img: CIMG + 'model_10705_betonove-tvarnice-zbt-30.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['500×300×250 mm'], ['Hmotnost', '44 kg/ks'], ['Na kamion 24t', '545 ks']] }, { id: 'zb6', n: 'B&BC ZBT 40', p: 89.54, u: 'ks', a: { 'Šířka': '400 mm' }, img: CIMG + 'model_10706_betonove-tvarnice-zbt-40.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['500×400×250 mm'], ['Hmotnost', '58 kg/ks'], ['Na kamion 24t', '413 ks']] }, { id: 'zb7', n: 'B&BC ZBT 50', p: 105.27, u: 'ks', a: { 'Šířka': '500 mm' }, img: CIMG + 'model_44648_betonove-tvarnice-zbt-50.jpg/p_catalogue_lc_list_thumb.jpg', sk: false, tp: [['500×500×250 mm'], ['Hmotnost', '73 kg/ks'], ['Na kamion 24t', '328 ks']] }]
+                },
+              ]
+            },
+            {
+              id: 'stropni_d', label: 'Stropní desky PZD Z4', products: [
+                {
+                  id: 'pzd', label: 'B&BC PZD Z4', img: null,
+                  desc: 'Předpjaté stropní dutinové desky PZD Z4. Beton C40/50, předpjatá výztuž Y1860.',
+                  filters: { 'Čistá rozpětí': ['do 3,6 m', 'do 4,8 m', 'do 6,0 m', 'do 7,2 m'] },
+                  dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }], post: [{ n: 'Montážní postup', u: '#', t: 'pdf' }] }, gal: [],
+                  v: [{ id: 'pz1', n: 'B&BC PZD Z4, tl. 200 mm, do 4,8 m', p: 890.00, u: 'ks', a: { 'Čistá rozpětí': 'do 4,8 m' }, img: null, sk: true, tp: [['Šířka', '600 mm'], ['Tloušťka', '200 mm'], ['Beton', 'C40/50']] }, { id: 'pz2', n: 'B&BC PZD Z4, tl. 265 mm, do 6,0 m', p: 1150.00, u: 'ks', a: { 'Čistá rozpětí': 'do 6,0 m' }, img: null, sk: true, tp: [['Tloušťka', '265 mm']] }, { id: 'pz3', n: 'B&BC PZD Z4, tl. 320 mm, do 7,2 m', p: 1420.00, u: 'ks', a: { 'Čistá rozpětí': 'do 7,2 m' }, img: null, sk: false, tp: [['Tloušťka', '320 mm']] }]
+                },
+              ]
+            },
+          ]
+        },
+        {
+          id: 'oploceni', label: 'Prvky pro oplocení a zahradní architekturu', icon: '🌿', img: CIMG + 'sbt-3-20-38_prirodni.jpg/p_catalogue_list_thumb.jpg',
+          children: [
+            {
+              id: 'ploty_tv', label: 'Ploty z tvarovek', img: CIMG + 'sbt-3-20-30_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                {
+                  id: 'sbt', label: 'Plotové tvarovky SBT', img: CIMG + 'sbt-3-20-30_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                  desc: 'Betonové plotové tvarovky SBT. Hladká, štípaná nebo strukturovaná povrchová úprava.',
+                  filters: { 'Povrch': ['hladký', 'štípaný', 'strukturovaný'], 'Barva': ['přírodní', 'červená', 'antracit', 'pálená cihla'] },
+                  dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }], post: [{ n: 'Montážní postup plotu', u: '#', t: 'pdf' }] }, gal: [],
+                  v: [{ id: 'sb1', n: 'B&BC SBT 3-20-30, hladký, přírodní', p: 52.00, u: 'ks', a: { 'Povrch': 'hladký', 'Barva': 'přírodní' }, img: CIMG + 'sbt-3-20-30_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['300×200×200 mm'], ['Hmotnost', '12 kg/ks']] }, { id: 'sb2', n: 'B&BC SBT 3-20-38, hladký, přírodní', p: 58.00, u: 'ks', a: { 'Povrch': 'hladký', 'Barva': 'přírodní' }, img: CIMG + 'sbt-3-20-38_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['380×200×200 mm'], ['Hmotnost', '15 kg/ks']] }, { id: 'sb3', n: 'B&BC SBT 3-20-30, štípaný, přírodní', p: 68.00, u: 'ks', a: { 'Povrch': 'štípaný', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['300×200×200 mm']] }, { id: 'sb4', n: 'B&BC SBT 3-20-30, hladký, antracit', p: 75.00, u: 'ks', a: { 'Povrch': 'hladký', 'Barva': 'antracit' }, img: null, sk: true, tp: [['300×200×200 mm']] }]
+                },
+              ]
+            },
+            {
+              id: 'ploty_pan', label: 'Ploty panelové, podhrabové desky', img: CIMG + 'podhrabova-deska-295-20-5.jpg/p_catalogue_list_thumb.jpg', products: [
+                {
+                  id: 'podhrabova', label: 'Podhrabové desky', img: CIMG + 'podhrabova-deska-295-20-5.jpg/p_catalogue_list_thumb.jpg',
+                  desc: 'Betonové podhrabové desky jako spodní sokl plotu.', filters: { 'Výška': ['200 mm', '300 mm', '500 mm'] },
+                  dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                  v: [{ id: 'pd1', n: 'B&BC Podhrabová deska, výška 200 mm', p: 78.00, u: 'ks', a: { 'Výška': '200 mm' }, img: CIMG + 'podhrabova-deska-295-20-5.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['1970×200×50 mm']] }, { id: 'pd2', n: 'B&BC Podhrabová deska, výška 300 mm', p: 98.00, u: 'ks', a: { 'Výška': '300 mm' }, img: null, sk: true, tp: [['1970×300×50 mm']] }, { id: 'pd3', n: 'B&BC Podhrabová deska, výška 500 mm', p: 148.00, u: 'ks', a: { 'Výška': '500 mm' }, img: null, sk: false, tp: [['1970×500×50 mm']] }]
+                },
+              ]
+            },
+          ]
+        },
+        {
+          id: 'operne', label: 'Prvky pro opěrné stěny a svahy', icon: '⛰️', img: CIMG + 'legoblok-velky.jpg/p_catalogue_list_thumb.jpg',
+          children: [
+            {
+              id: 'zahradni', label: 'Zahradní architektura', img: CIMG + 'model_10340_palisada-phx-10-40_prirodni.jpg/p_catalogue_list_thumb.jpg', products: [
+                {
+                  id: 'palisada', label: 'Palisáda PHX', img: CIMG + 'model_10340_palisada-phx-10-40_prirodni.jpg/p_catalogue_list_thumb.jpg',
+                  desc: 'Betonové palisády PHX pro ohraničení záhonů a zahradní architekturu.', filters: { 'Výška': ['400 mm', '500 mm', '600 mm', '800 mm', '1000 mm'], 'Barva': ['přírodní', 'červená', 'antracit'] },
+                  dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                  v: [{ id: 'ph1', n: 'B&BC Palisáda PHX 12-8-40, přírodní', p: 62.00, u: 'ks', a: { 'Výška': '400 mm', 'Barva': 'přírodní' }, img: CIMG + 'model_10340_palisada-phx-10-40_prirodni.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Výška', '400 mm'], ['Průměr', '120 mm']] }, { id: 'ph2', n: 'B&BC Palisáda PHX 12-8-50, přírodní', p: 74.00, u: 'ks', a: { 'Výška': '500 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['Výška', '500 mm']] }, { id: 'ph3', n: 'B&BC Palisáda PHX 12-8-60, přírodní', p: 88.00, u: 'ks', a: { 'Výška': '600 mm', 'Barva': 'přírodní' }, img: null, sk: true, tp: [['Výška', '600 mm']] }, { id: 'ph4', n: 'B&BC Palisáda PHX 12-8-80, přírodní', p: 118.00, u: 'ks', a: { 'Výška': '800 mm', 'Barva': 'přírodní' }, img: null, sk: false, tp: [['Výška', '800 mm']] }, { id: 'ph5', n: 'B&BC Palisáda PHX 12-8-100, přírodní', p: 148.00, u: 'ks', a: { 'Výška': '1000 mm', 'Barva': 'přírodní' }, img: null, sk: false, tp: [['Výška', '1000 mm']] }]
+                },
+              ]
+            },
+            {
+              id: 'legobloky', label: 'Prvky pro opěrné stěny a svahy', img: CIMG + 'legoblok-velky.jpg/p_catalogue_list_thumb.jpg', products: [
+                {
+                  id: 'legoblok', label: 'Legoblok (L-blok)', img: CIMG + 'legoblok-velky.jpg/p_catalogue_list_thumb.jpg',
+                  desc: 'Betonové L-bloky pro opěrné stěny, přehrady materiálu a průmyslové dělicí stěny.',
+                  filters: { 'Typ': ['malý (300 kg)', 'střední (800 kg)', 'velký (1800 kg)', 'extra velký (3000 kg)'] },
+                  dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [],
+                  v: [{ id: 'lb1', n: 'B&BC Legoblok malý (300 kg)', p: 1850.00, u: 'ks', a: { 'Typ': 'malý (300 kg)' }, img: null, sk: true, tp: [['800×400×400 mm'], ['Hmotnost', '300 kg']] }, { id: 'lb2', n: 'B&BC Legoblok střední (800 kg)', p: 3950.00, u: 'ks', a: { 'Typ': 'střední (800 kg)' }, img: null, sk: true, tp: [['1200×600×600 mm'], ['Hmotnost', '800 kg']] }, { id: 'lb3', n: 'B&BC Legoblok velký (1800 kg)', p: 7800.00, u: 'ks', a: { 'Typ': 'velký (1800 kg)' }, img: CIMG + 'legoblok-velky.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['1600×800×800 mm'], ['Hmotnost', '1 800 kg']] }, { id: 'lb4', n: 'B&BC Legoblok extra velký (3000 kg)', p: 11500.00, u: 'ks', a: { 'Typ': 'extra velký (3000 kg)' }, img: null, sk: false, tp: [['2000×1000×1000 mm'], ['Hmotnost', '3 000 kg']] }]
+                },
+              ]
+            },
+          ]
+        },
+        {
+          id: 'ostatni', label: 'Ostatní doplňky a výrobky', icon: '🔧', img: CIMG + '2-litinova-mriz.jpg/p_catalogue_list_thumb.jpg',
+          children: [
+            { id: 'kor_obruby', label: 'Kořenové obruby', products: [{ id: 'korenova', label: 'Kořenová obruba YBX', img: CIMG + 'korenove-obruba-ybx-325-175.jpg/p_catalogue_list_thumb.jpg', desc: 'Betonová kořenová obruba YBX-325-175 pro výsadbu stromů v dlažebních plochách.', filters: {}, dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'ko1', n: 'B&BC Kořenová obruba YBX-325-175', p: 1850.00, u: 'sada', a: {}, img: CIMG + 'korenove-obruba-ybx-325-175.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Průměr', '3 250 mm'], ['Hloubka', '1 750 mm']] }] }] },
+            { id: 'mriz_obruba', label: 'Mříž pro kořenovou obrubu', products: [{ id: 'mriz_lit', label: 'Litinová mříž', img: CIMG + 'litinova-mriz.jpg/p_catalogue_list_thumb.jpg', desc: 'Litinové mříže pro kořenové obruby. Třídy zatížení A–D.', filters: { 'Průměr': ['2000 mm', '2500 mm', '3000 mm'] }, dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'lm1', n: 'B&BC Litinová mříž 2000 mm, tř. B125', p: 8500.00, u: 'ks', a: { 'Průměr': '2000 mm' }, img: CIMG + 'litinova-mriz.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Průměr', '2 000 mm'], ['Třída zatížení', 'B125']] }, { id: 'lm2', n: 'B&BC Litinová mříž 2500 mm, tř. B125', p: 11200.00, u: 'ks', a: { 'Průměr': '2500 mm' }, img: null, sk: true, tp: [['Průměr', '2 500 mm']] }] }] },
+            { id: 'napajedla_cat', label: 'Napajedla pro zvířata', products: [{ id: 'napajedlo', label: 'Napajedlo pro zvířata', img: CIMG + 'napajedlo_5.jpg/p_catalogue_list_thumb.jpg', desc: 'Betonová napajedla pro hospodářská zvířata. Objemy 200–1 000 litrů.', filters: { 'Objem': ['200–300 l', '400–600 l', '800–1000 l'] }, dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'nap1', n: 'B&BC Napajedlo 200–300 l', p: 3200.00, u: 'ks', a: { 'Objem': '200–300 l' }, img: CIMG + 'napajedlo_5.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Objem', '200–300 l']] }, { id: 'nap2', n: 'B&BC Napajedlo 400–600 l', p: 5800.00, u: 'ks', a: { 'Objem': '400–600 l' }, img: null, sk: true, tp: [['Objem', '400–600 l']] }] }] },
+            { id: 'tramcove', label: 'Trámcové a lanové oplocení', products: [{ id: 'sloupek', label: 'Sloupek ohradníkový', img: CIMG + 'sloupek_ohradnikovy_tramkovy.jpg/p_catalogue_list_thumb.jpg', desc: 'Betonové sloupky pro trámcové a lanové ohradníkové oplocení pastvin.', filters: { 'Délka': ['1500 mm', '2000 mm', '2500 mm', '3000 mm'] }, dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'sl1', n: 'B&BC Sloupek ohradníkový 1500 mm', p: 185.00, u: 'ks', a: { 'Délka': '1500 mm' }, img: CIMG + 'sloupek_ohradnikovy_tramkovy.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Výška', '1 500 mm'], ['Průřez', '100×100 mm']] }, { id: 'sl2', n: 'B&BC Sloupek ohradníkový 2000 mm', p: 248.00, u: 'ks', a: { 'Délka': '2000 mm' }, img: null, sk: true, tp: [['Výška', '2 000 mm']] }, { id: 'sl3', n: 'B&BC Sloupek ohradníkový 2500 mm', p: 312.00, u: 'ks', a: { 'Délka': '2500 mm' }, img: null, sk: true, tp: [['Výška', '2 500 mm']] }, { id: 'sl4', n: 'B&BC Sloupek ohradníkový 3000 mm', p: 398.00, u: 'ks', a: { 'Délka': '3000 mm' }, img: null, sk: false, tp: [['Výška', '3 000 mm']] }] }] },
+          ]
+        },
+        {
+          id: 'inzenyrske', label: 'Program pro inženýrské sítě', icon: '🔩', img: CIMG + 'tbv_3a20p_kam-kopie.jpg/p_catalogue_list_thumb.jpg',
+          children: [
+            { id: 'trouby_h', label: 'Trouby hrdlové', img: CIMG + 'tbh-tzh-400_2500-kopie.jpg/p_catalogue_list_thumb.jpg', products: [{ id: 'trouba_h', label: 'Trouby hrdlové DN 300–1200', img: CIMG + 'tbh-tzh-400_2500-kopie.jpg/p_catalogue_list_thumb.jpg', desc: 'Betonové hrdlové trouby pro gravitační kanalizaci. DN 300–1 200 mm.', filters: { 'DN': ['DN 300', 'DN 400', 'DN 500', 'DN 600', 'DN 800', 'DN 1000', 'DN 1200'] }, dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'th1', n: 'B&BC Trouba hrdlová DN 300, L=1000 mm', p: 485.00, u: 'ks', a: { 'DN': 'DN 300' }, img: CIMG + 'tbh-tzh-400_2500-kopie.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['DN', '300 mm'], ['Délka', '1 000 mm'], ['Hmotnost', '95 kg/ks']] }, { id: 'th2', n: 'B&BC Trouba hrdlová DN 400, L=1000 mm', p: 720.00, u: 'ks', a: { 'DN': 'DN 400' }, img: null, sk: true, tp: [['DN', '400 mm'], ['Hmotnost', '160 kg/ks']] }, { id: 'th3', n: 'B&BC Trouba hrdlová DN 500, L=1000 mm', p: 1050.00, u: 'ks', a: { 'DN': 'DN 500' }, img: null, sk: true, tp: [['DN', '500 mm'], ['Hmotnost', '240 kg/ks']] }, { id: 'th4', n: 'B&BC Trouba hrdlová DN 600, L=1000 mm', p: 1480.00, u: 'ks', a: { 'DN': 'DN 600' }, img: null, sk: true, tp: [['DN', '600 mm'], ['Hmotnost', '360 kg/ks']] }, { id: 'th5', n: 'B&BC Trouba hrdlová DN 800, L=1000 mm', p: 2650.00, u: 'ks', a: { 'DN': 'DN 800' }, img: null, sk: false, tp: [['DN', '800 mm'], ['Hmotnost', '680 kg/ks']] }, { id: 'th6', n: 'B&BC Trouba hrdlová DN 1000', p: 4200.00, u: 'ks', a: { 'DN': 'DN 1000' }, img: null, sk: false, tp: [['DN', '1 000 mm']] }, { id: 'th7', n: 'B&BC Trouba hrdlová DN 1200', p: 6100.00, u: 'ks', a: { 'DN': 'DN 1200' }, img: null, sk: false, tp: [['DN', '1 200 mm']] }] }] },
+            { id: 'trouby_pat', label: 'Trouby patkové', img: CIMG + 'tzhp-q-1200_2500-it-kopie.jpg/p_catalogue_list_thumb.jpg', products: [{ id: 'trouba_pat', label: 'Trouby patkové DN 300–1200', img: CIMG + 'tzhp-q-1200_2500-it-kopie.jpg/p_catalogue_list_thumb.jpg', desc: 'Betonové patkové trouby pro těžká zatížení.', filters: { 'DN': ['DN 300', 'DN 500', 'DN 800', 'DN 1000'] }, dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'tp1', n: 'B&BC Trouba patková DN 300', p: 598.00, u: 'ks', a: { 'DN': 'DN 300' }, img: CIMG + 'tzhp-q-1200_2500-it-kopie.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['DN', '300 mm'], ['Patka', 'integrovaná']] }, { id: 'tp2', n: 'B&BC Trouba patková DN 500', p: 1280.00, u: 'ks', a: { 'DN': 'DN 500' }, img: null, sk: true, tp: [['DN', '500 mm']] }, { id: 'tp3', n: 'B&BC Trouba patková DN 800', p: 3150.00, u: 'ks', a: { 'DN': 'DN 800' }, img: null, sk: false, tp: [['DN', '800 mm']] }] }] },
+            { id: 'trouby_pr', label: 'Trouby přímé', img: CIMG + 'tbp_3-15.jpg/p_catalogue_list_thumb.jpg', products: [{ id: 'trouba_pr', label: 'Trouby přímé (propustkové)', img: CIMG + 'tbp_3-15.jpg/p_catalogue_list_thumb.jpg', desc: 'Betonové přímé trouby TBP pro propustky.', filters: { 'DN': ['DN 300', 'DN 400', 'DN 500', 'DN 600'] }, dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'tpr1', n: 'B&BC Trouba přímá DN 300, L=2500 mm', p: 890.00, u: 'ks', a: { 'DN': 'DN 300' }, img: CIMG + 'tbp_3-15.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['DN', '300 mm'], ['Délka', '2 500 mm']] }, { id: 'tpr2', n: 'B&BC Trouba přímá DN 400', p: 1380.00, u: 'ks', a: { 'DN': 'DN 400' }, img: null, sk: true, tp: [['DN', '400 mm']] }, { id: 'tpr3', n: 'B&BC Trouba přímá DN 600', p: 2850.00, u: 'ks', a: { 'DN': 'DN 600' }, img: null, sk: false, tp: [['DN', '600 mm']] }] }] },
+            { id: 'podk_prahy', label: 'Podkladní prahy', img: CIMG + 'izx_12_80-kopie.jpg/p_catalogue_list_thumb.jpg', products: [{ id: 'prah', label: 'Podkladní prahy', img: CIMG + 'izx_12_80-kopie.jpg/p_catalogue_list_thumb.jpg', desc: 'Betonové podkladní prahy pro uložení trubek.', filters: {}, dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'pp1', n: 'B&BC Podkladní práh IZX DN 600', p: 285.00, u: 'ks', a: {}, img: CIMG + 'izx_12_80-kopie.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Pro DN', '600 mm']] }, { id: 'pp2', n: 'B&BC Podkladní práh IZX DN 1000', p: 420.00, u: 'ks', a: {}, img: null, sk: true, tp: [['Pro DN', '1 000 mm']] }] }] },
+            { id: 'celo_pr', label: 'Čelo propustku', img: CIMG + 'celo-propustku.jpg/p_catalogue_list_thumb.jpg', products: [{ id: 'celo', label: 'Čelo propustku', img: CIMG + 'celo-propustku.jpg/p_catalogue_list_thumb.jpg', desc: 'Betonová čela propustků pro zajištění vstupů a výstupů trubek.', filters: { 'DN': ['DN 300', 'DN 400', 'DN 500', 'DN 600'] }, dl: { tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'cp1', n: 'B&BC Čelo propustku DN 300', p: 3850.00, u: 'ks', a: { 'DN': 'DN 300' }, img: CIMG + 'celo-propustku.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['DN', '300 mm']] }, { id: 'cp2', n: 'B&BC Čelo propustku DN 500', p: 6200.00, u: 'ks', a: { 'DN': 'DN 500' }, img: null, sk: true, tp: [['DN', '500 mm']] }] }] },
+            { id: 'sachty', label: 'Revizní šachty a skruže', img: CIMG + 'tbs-800_1000_90-kopie.jpg/p_catalogue_list_thumb.jpg', products: [{ id: 'sacht', label: 'Revizní šachty a skruže', img: CIMG + 'tbs-800_1000_90-kopie.jpg/p_catalogue_list_thumb.jpg', desc: 'Prefabrikované revizní šachty a skruže pro kanalizaci.', filters: { 'Průměr': ['Ø 600 mm', 'Ø 800 mm', 'Ø 1000 mm', 'Ø 1200 mm'] }, dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'ss1', n: 'B&BC Skruž Ø 800 mm, výška 1000 mm', p: 1850.00, u: 'ks', a: { 'Průměr': 'Ø 800 mm' }, img: CIMG + 'tbs-800_1000_90-kopie.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Vnitřní průměr', '800 mm'], ['Výška', '1 000 mm'], ['Hmotnost', '480 kg/ks']] }, { id: 'ss2', n: 'B&BC Skruž Ø 1000 mm, výška 1000 mm', p: 2450.00, u: 'ks', a: { 'Průměr': 'Ø 1000 mm' }, img: null, sk: true, tp: [['Vnitřní průměr', '1 000 mm'], ['Hmotnost', '700 kg/ks']] }, { id: 'ss3', n: 'B&BC Skruž Ø 1200 mm, výška 1000 mm', p: 3150.00, u: 'ks', a: { 'Průměr': 'Ø 1200 mm' }, img: null, sk: false, tp: [['Vnitřní průměr', '1 200 mm'], ['Hmotnost', '990 kg/ks']] }] }] },
+            { id: 'jimky', label: 'Jímky a nádrže', img: CIMG + 'sestava-web.jpg/p_catalogue_list_thumb.jpg', products: [{ id: 'jimka', label: 'Jímky a nádrže', img: CIMG + 'sestava-web.jpg/p_catalogue_list_thumb.jpg', desc: 'Prefabrikované jímky pro septiky, akumulační nádrže a ČOV.', filters: { 'Objem': ['2 m³', '4 m³', '6 m³', '10 m³'] }, dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'jm1', n: 'B&BC Jímka 2 m³', p: 14800.00, u: 'ks', a: { 'Objem': '2 m³' }, img: CIMG + 'sestava-web.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Objem', '2 000 l'], ['Průměr', '1 200 mm']] }, { id: 'jm2', n: 'B&BC Jímka 4 m³', p: 24500.00, u: 'ks', a: { 'Objem': '4 m³' }, img: null, sk: true, tp: [['Objem', '4 000 l']] }, { id: 'jm3', n: 'B&BC Jímka 10 m³', p: 52000.00, u: 'ks', a: { 'Objem': '10 m³' }, img: null, sk: false, tp: [['Objem', '10 000 l']] }] }] },
+            { id: 'vpusti', label: 'Vpusti', img: CIMG + 'thv-1240-620-1530-200-kopie.jpg/p_catalogue_list_thumb.jpg', products: [{ id: 'vpust', label: 'Vpusti uliční a dvorní', img: CIMG + 'thv-1240-620-1530-200-kopie.jpg/p_catalogue_list_thumb.jpg', desc: 'Betonové vpusti uliční a dvorní pro odvod dešťové vody.', filters: { 'Typ': ['uliční', 'dvorní'] }, dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'vp1', n: 'B&BC Vpust uliční THV 1240-620', p: 2850.00, u: 'ks', a: { 'Typ': 'uliční' }, img: CIMG + 'thv-1240-620-1530-200-kopie.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Rozměr', '1240×620 mm'], ['Hloubka', '1 530 mm']] }, { id: 'vp2', n: 'B&BC Vpust dvorní THV 850-620', p: 1950.00, u: 'ks', a: { 'Typ': 'dvorní' }, img: null, sk: true, tp: [['Rozměr', '850×620 mm']] }] }] },
+          ]
+        },
+        {
+          id: 'liniove', label: 'Liniové odvodnění', icon: '💧', img: CIMG + 'bbc_sz_i_zakladni_prubezna_sterbina_20_26_28_abo15p_d400_02_ob.jpg/p_catalogue_list_thumb.jpg',
+          children: [
+            { id: 'sterbinove', label: 'Štěrbinové žlaby SZ I', products: [{ id: 'sz_i', label: 'B&BC Štěrbinové žlaby SZ I', img: CIMG + 'bbc_sz_i_zakladni_prubezna_sterbina_20_26_28_abo15p_d400_02_ob.jpg/p_catalogue_list_thumb.jpg', desc: 'Štěrbinové žlaby SZ I pro liniové odvodnění komunikací bez viditelného roštu.', filters: { 'Světlost': ['100 mm', '150 mm', '200 mm'], 'Délka': ['500 mm', '1000 mm'] }, dl: { cert: [{ n: 'Prohlášení o vlastnostech', u: '#', t: 'pdf' }], tl: [{ n: 'Technický list', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'sz1', n: 'B&BC ŠZ I 100 mm, L=1000 mm', p: 320.00, u: 'ks', a: { 'Světlost': '100 mm', 'Délka': '1000 mm' }, img: CIMG + 'bbc_sz_i_zakladni_prubezna_sterbina_20_26_28_abo15p_d400_02_ob.jpg/p_catalogue_lc_list_thumb.jpg', sk: true, tp: [['Délka', '1 000 mm'], ['Světlost', '100 mm'], ['Hmotnost', '70 kg/ks']] }, { id: 'sz2', n: 'B&BC ŠZ I 150 mm, L=1000 mm', p: 450.00, u: 'ks', a: { 'Světlost': '150 mm', 'Délka': '1000 mm' }, img: null, sk: true, tp: [['Světlost', '150 mm'], ['Hmotnost', '98 kg/ks']] }, { id: 'sz3', n: 'B&BC ŠZ I 200 mm, L=1000 mm', p: 580.00, u: 'ks', a: { 'Světlost': '200 mm', 'Délka': '1000 mm' }, img: null, sk: true, tp: [['Světlost', '200 mm'], ['Hmotnost', '128 kg/ks']] }, { id: 'sz4', n: 'B&BC ŠZ I 100 mm, L=500 mm', p: 178.00, u: 'ks', a: { 'Světlost': '100 mm', 'Délka': '500 mm' }, img: null, sk: true, tp: [['Délka', '500 mm'], ['Světlost', '100 mm']] }] }] },
+          ]
+        },
+        {
+          id: 'transportbeton', label: 'Transportbeton', icon: '🚛', img: CIMG + 'transportbeton_1.jpg/p_catalogue_list_thumb.jpg',
+          children: [
+            { id: 'beton', label: 'Transportbeton – betonárny Zbůch, Plzeň, Přeštice', products: [{ id: 'tb', label: 'Transportbeton', img: CIMG + 'transportbeton_1.jpg/p_catalogue_list_thumb.jpg', desc: 'Transportbeton vyráběný ve vlastních betonárnách. Třídy C8/10–C40/50, pumpovací beton.', filters: { 'Třída betonu': ['C8/10', 'C12/15', 'C16/20', 'C20/25', 'C25/30', 'C30/37', 'C35/45', 'C40/50'] }, dl: { tl: [{ n: 'Technický list transportbetonu', u: '#', t: 'pdf' }] }, gal: [], v: [{ id: 'tb1', n: 'Transportbeton C16/20', p: 0, u: 'm³', a: { 'Třída betonu': 'C16/20' }, img: null, sk: true, tp: [['Třída', 'C16/20'], ['Použití', 'základy, podlahy']] }, { id: 'tb2', n: 'Transportbeton C20/25', p: 0, u: 'm³', a: { 'Třída betonu': 'C20/25' }, img: null, sk: true, tp: [['Třída', 'C20/25'], ['Použití', 'základy, stropy, stěny']] }, { id: 'tb3', n: 'Transportbeton C25/30', p: 0, u: 'm³', a: { 'Třída betonu': 'C25/30' }, img: null, sk: true, tp: [['Třída', 'C25/30'], ['Použití', 'stropy, stěny, sloupy']] }, { id: 'tb4', n: 'Transportbeton C25/30 XF3 (mosty)', p: 0, u: 'm³', a: { 'Třída betonu': 'C25/30' }, img: null, sk: true, tp: [['Třída', 'C25/30 XF3'], ['Expozice', 'mrazuvzdorný']] }, { id: 'tb5', n: 'Transportbeton C30/37', p: 0, u: 'm³', a: { 'Třída betonu': 'C30/37' }, img: null, sk: true, tp: [['Třída', 'C30/37'], ['Použití', 'prefabrikáty, průmyslové podlahy']] }, { id: 'tb6', n: 'Transportbeton C40/50', p: 0, u: 'm³', a: { 'Třída betonu': 'C40/50' }, img: null, sk: false, tp: [['Třída', 'C40/50'], ['Použití', 'prefabrikáty, mosty']] }] }] },
+          ]
+        },
+      ];
 
-      function filterCat(el, cat) {
-        document.querySelectorAll('.prod-cat').forEach(function (a) { a.classList.remove('active'); });
-        el.classList.add('active');
-        document.querySelectorAll('.prod-card').forEach(function (card) {
-          if (card.dataset.cat === cat) {
-            card.classList.remove('prod-card-hidden');
-            card.style.display = '';
-          } else {
-            card.classList.add('prod-card-hidden');
-            card.style.display = 'none';
-          }
-        });
-        var h = document.getElementById('prodHeading');
-        if (h) h.textContent = CAT_LABELS[cat] || cat;
+      /* ── State ── */
+      const KS = { path: [], prod: null, var: null, sort: 'az', filters: {}, open: new Set() };
 
-        // Na mobilech odscrolluj k nadpisu produktové sekce (pod sidebar)
-        if (window.innerWidth <= 768 && h) {
-          setTimeout(function () {
-            var headerH = (document.getElementById('siteHeader') || {}).offsetHeight || 64;
-            var top = h.getBoundingClientRect().top + window.pageYOffset - headerH - 12;
-            window.scrollTo({ top: top, behavior: 'smooth' });
-          }, 50);
+      /* ── Utils ── */
+      const katFmt = n => n > 0 ? n.toLocaleString('cs-CZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' Kč' : 'Cena na dotaz';
+      function katFindId(id, ns) { ns = ns || CAT; for (var i = 0; i < ns.length; i++) { var n = ns[i]; if (n.id === id) return n; var c = (n.children || []).concat(n.products || []); var f = katFindId(id, c); if (f) return f; } return null; }
+      function katPathTo(tid, ns, cur) { ns = ns || CAT; cur = cur || []; for (var i = 0; i < ns.length; i++) { var n = ns[i]; var p = cur.concat([n.id]); if (n.id === tid) return p; var c = (n.children || []).concat(n.products || []); var f = katPathTo(tid, c, p); if (f) return f; } return null; }
+      function katCrumbs(path) { var r = [], cur = CAT; for (var i = 0; i < path.length; i++) { var id = path[i]; var n = (cur || []).find(function (x) { return x.id === id; }); if (!n) break; r.push({ id: id, label: n.label }); cur = (n.children || []).concat(n.products || []); } return r; }
+
+      /* ── Navigate ── */
+      function katNav(path, prod, vr) { KS.path = path || []; KS.prod = prod || null; KS.var = vr || null; KS.filters = {}; KS.sort = 'az'; katRender(); }
+      function katOpenProd(id) { var p = katFindId(id); if (!p) return; var path = katPathTo(id) || []; path.forEach(function (x) { KS.open.add(x); }); KS.path = path; KS.prod = p; KS.var = null; KS.filters = {}; KS.sort = 'az'; katRender(); }
+      function katOpenVar(vid) { var v = KS.prod && KS.prod.v && KS.prod.v.find(function (x) { return x.id === vid; }); if (v) { KS.var = v; katRender(); } }
+
+      /* ── Sidebar ── */
+      function katRenderSidebar() { var el = document.getElementById('katTree'); if (!el) return; el.innerHTML = katNodes(CAT, 1); }
+      function katNodes(ns, d) { return (ns || []).map(function (n) { return katNode(n, d); }).join(''); }
+      function katNode(n, d) {
+        var hasC = n.children && n.children.length, hasP = n.products && n.products.length;
+        var isOpen = KS.open.has(n.id) || KS.path.indexOf(n.id) >= 0;
+        var pAct = KS.prod && KS.prod.id === n.id;
+        var cAct = !KS.prod && KS.path[KS.path.length - 1] === n.id;
+        var bar = '<div class="kat-tbar"></div>';
+        var arr = '<span class="kat-tarr">&#9658;</span>';
+        var lbl = '<span class="kat-tl kat-d' + d + '">' + n.label + '</span>';
+        if (!hasC && !hasP) { return '<div class="kat-ti"><button class="kat-tb' + (pAct ? ' act' : '') + '" onclick="katOpenProd(\'' + n.id + '\')">' + bar + lbl + '</button></div>'; }
+        if (hasP) {
+          var ch = (n.products || []).map(function (p) { return '<div class="kat-ti"><button class="kat-tb' + (KS.prod && KS.prod.id === p.id ? ' act' : '') + '" onclick="katOpenProd(\'' + p.id + '\')">' + bar + '<span class="kat-tl kat-d' + (d + 1) + '">' + p.label + '</span></button></div>'; }).join('');
+          return '<div class="kat-ti"><button class="kat-tb' + (cAct ? ' act' : '') + ' ' + (isOpen ? 'open' : '') + '" onclick="katTogN(\'' + n.id + '\')">' + bar + lbl + arr + '</button><div class="kat-tch' + (isOpen ? ' open' : '') + '">' + ch + '</div></div>';
         }
+        return '<div class="kat-ti"><button class="kat-tb' + (cAct ? ' act' : '') + ' ' + (isOpen ? 'open' : '') + '" onclick="katNavCat(\'' + n.id + '\')">' + bar + lbl + arr + '</button><div class="kat-tch' + (isOpen ? ' open' : '') + '">' + katNodes(n.children, d + 1) + '</div></div>';
+      }
+      function katTogN(id) { if (KS.open.has(id)) KS.open.delete(id); else KS.open.add(id); katRender(); }
+      function katNavCat(id) { KS.open.add(id); var path = katPathTo(id) || []; KS.path = path; KS.prod = null; KS.var = null; katRender(); }
+
+      /* ── Breadcrumb ── */
+      function katRenderBC() {
+        var el = document.getElementById('katBC'); if (!el) return;
+        var cs = katCrumbs(KS.path);
+        var h = '<button class="kat-bcb" onclick="katNav([])">Nabídka produktů</button>';
+        cs.forEach(function (c, i) {
+          h += '<span class="kat-bcs">&#8250;</span>';
+          var last = i === cs.length - 1 && !KS.prod && !KS.var;
+          h += last ? '<span class="kat-bcc">' + c.label + '</span>' : '<button class="kat-bcb" onclick="katNavCat(\'' + c.id + '\')">' + c.label + '</button>';
+        });
+        if (KS.prod) {
+          h += '<span class="kat-bcs">&#8250;</span>';
+          if (KS.var) h += '<button class="kat-bcb" onclick="katOpenProd(\'' + KS.prod.id + '\')">' + KS.prod.label + '</button><span class="kat-bcs">&#8250;</span><span class="kat-bcc">' + KS.var.n + '</span>';
+          else h += '<span class="kat-bcc">' + KS.prod.label + '</span>';
+        }
+        el.innerHTML = h;
+        var hero = document.getElementById('prodPageHero'), bc = document.getElementById('prodHeroBreadcrumb');
+        var title = KS.var ? KS.var.n : KS.prod ? KS.prod.label : cs.length ? cs[cs.length - 1].label : 'Nabídka produktů';
+        if (hero) hero.textContent = title; if (bc) bc.textContent = title;
       }
 
-      function openModal(name, img, desc) {
-        document.getElementById('modalTitle').textContent = name;
-        document.getElementById('modalSideTitle').textContent = name;
-        document.getElementById('modalDesc').textContent = desc;
-        var imgEl = document.getElementById('modalImg');
-        var ph = document.getElementById('modalPlaceholder');
-        imgEl.style.display = 'block';
-        ph.style.display = 'none';
-        imgEl.src = img;
-        imgEl.onerror = function () { imgEl.style.display = 'none'; ph.style.display = 'flex'; };
-        imgEl.onload = function () { imgEl.style.display = 'block'; ph.style.display = 'none'; };
-        document.getElementById('prodModal').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+      /* ── Content ── */
+      function katRenderContent() {
+        var mc = document.getElementById('katContent'); if (!mc) return;
+        if (KS.var) { mc.innerHTML = katDetail(KS.var); return; }
+        if (KS.prod) { mc.innerHTML = katVarList(KS.prod); return; }
+        if (!KS.path.length) { mc.innerHTML = katGrid(CAT, 'Nabídka produktů'); return; }
+        var n = katFindId(KS.path[KS.path.length - 1]);
+        if (!n) { mc.innerHTML = '<p>Nenalezeno.</p>'; return; }
+        if (n.children && n.children.length) mc.innerHTML = katGrid(n.children, n.label);
+        else if (n.products && n.products.length) mc.innerHTML = katProdCards(n);
+        else mc.innerHTML = katVarList(n);
       }
+
+      function katGrid(ns, title) {
+        var cards = (ns || []).map(function (n) {
+          var cnt = katCountV(n);
+          return '<article class="kat-cc" onclick="katNavCat(\'' + n.id + '\')" tabindex="0" role="button">'
+            + '<div class="kat-cimg">' + (n.img ? '<img src="' + n.img + '" alt="' + n.label + '" loading="lazy" onerror="this.style.display=\'none\'">' : '')
+            + '<span class="kat-cico">' + (n.icon || '🧱') + '</span></div>'
+            + '<div class="kat-cbody"><div class="kat-cname">' + n.label + '</div>'
+            + '<div class="kat-ccnt">' + cnt + ' ' + (cnt === 1 ? 'produkt' : cnt < 5 ? 'produkty' : 'produktů') + '</div>'
+            + '<span class="kat-carr">Zobrazit &#8250;</span></div></article>';
+        }).join('');
+        return '<h2 class="kat-ptit">' + title + '</h2><div class="kat-cgrid">' + cards + '</div>';
+      }
+      function katCountV(n) { if (n.v) return n.v.length; if (n.products) return n.products.reduce(function (s, p) { return s + (p.v ? p.v.length : 0); }, 0); if (n.children) return n.children.reduce(function (s, c) { return s + katCountV(c); }, 0); return 0; }
+      function katProdCards(n) {
+        var cards = (n.products || []).map(function (p) {
+          return '<article class="kat-cc" onclick="katOpenProd(\'' + p.id + '\')" tabindex="0" role="button">'
+            + '<div class="kat-cimg">' + (p.img ? '<img src="' + p.img + '" alt="' + p.label + '" loading="lazy" onerror="this.style.display=\'none\'">' : '')
+            + '<span class="kat-cico">🧱</span></div>'
+            + '<div class="kat-cbody"><div class="kat-cname">' + p.label + '</div>'
+            + '<div class="kat-ccnt">' + (p.v ? p.v.length : 0) + ' variant</div>'
+            + '<span class="kat-carr">Zobrazit varianty &#8250;</span></div></article>';
+        }).join('');
+        return '<h2 class="kat-ptit">' + n.label + '</h2><div class="kat-cgrid">' + cards + '</div>';
+      }
+
+      /* ── Variant list ── */
+      function katVarList(prod) {
+        var fk = Object.keys(prod.filters || {});
+        var vars = (prod.v || []).slice();
+        Object.keys(KS.filters).forEach(function (k) { var v = KS.filters[k]; if (v) vars = vars.filter(function (x) { return (x.a || {})[k] === v; }); });
+        var sf = { az: function (a, b) { return a.n.localeCompare(b.n, 'cs'); }, za: function (a, b) { return b.n.localeCompare(a.n, 'cs'); }, asc: function (a, b) { return (a.p || 0) - (b.p || 0); }, desc: function (a, b) { return (b.p || 0) - (a.p || 0); } };
+        vars.sort(sf[KS.sort] || sf.az);
+        var fbar = fk.length ? '<div class="kat-fbar">' + fk.map(function (k) { return '<div class="kat-fitem"><label class="kat-flbl">' + k + '</label><select class="kat-fsel" onchange="katSetF(\'' + k + '\',this.value)"><option value="">' + k + '</option>' + (prod.filters[k] || []).map(function (v) { return '<option value="' + v + '"' + (KS.filters[k] === v ? ' selected' : '') + '>' + v + '</option>'; }).join('') + '</select></div>'; }).join('') + '<button class="kat-freset" onclick="katClrF()">Zrušit</button></div>' : '';
+        var sbar = '<div class="kat-sbar"><span>Seřadit:</span>' + [['az', 'Název A–Z'], ['za', 'Název Z–A'], ['asc', 'Cena ↑'], ['desc', 'Cena ↓']].map(function (s) { return '<button class="kat-sbt' + (KS.sort === s[0] ? ' act' : '') + '" onclick="katSetS(\'' + s[0] + '\')">' + s[1] + '</button>'; }).join('<span class="kat-ssep">|</span>') + '</div>';
+        var rows = vars.length ? vars.map(function (v) { return '<tr><td><div class="kat-vname"><div class="kat-vth">' + (v.img ? '<img src="' + v.img + '" alt="' + v.n + '" loading="lazy" onerror="this.style.display=\'none\'">' : '<span>🧱</span>') + '</div><span class="kat-vnm">' + v.n + '</span></div></td><td><span class="kat-vpr">' + katFmt(v.p) + ' vč. DPH / ' + v.u + '</span></td><td style="text-align:center"><button class="kat-vdbtn" onclick="katOpenVar(\'' + v.id + '\')">Detail</button></td></tr>'; }).join('') : '<tr><td colspan="3"><div class="kat-nores">Žádné produkty nevyhovují vybraným filtrům.</div></td></tr>';
+        return (prod.img ? '<img class="kat-phero" src="' + prod.img + '" alt="' + prod.label + '" onerror="this.style.display=\'none\'">' : '')
+          + '<h2 class="kat-ptitle">' + prod.label + '</h2>' + (prod.desc ? '<p class="kat-pdesc">' + prod.desc + '</p>' : '')
+          + fbar + sbar + '<div class="kat-vtw"><table class="kat-vt"><thead><tr><th>Název</th><th>Cena</th><th style="text-align:center">Akce</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
+          + katDlHtml(prod.dl) + katGalHtml(prod.gal);
+      }
+      function katSetF(k, v) { KS.filters[k] = v || undefined; katRenderContent(); }
+      function katClrF() { KS.filters = {}; katRender(); }
+      function katSetS(s) { KS.sort = s; katRenderContent(); }
+
+      /* ── Variant detail ── */
+      function katDetail(v) {
+        var qid = 'kq_' + v.id;
+        var tp = v.tp || []; var cols = [[], [], []];
+        tp.forEach(function (r, i) { cols[Math.min(2, Math.floor(i * 3 / Math.max(tp.length, 1)))].push(r); });
+        var prT = v.p > 0 ? '<table class="kat-dpt"><tr><td>Výrobní závod Zbůch:</td><td>' + katFmt(v.p) + ' vč. DPH / ' + v.u + '</td></tr><tr><td>Prodejní sklad:</td><td>' + katFmt(v.p) + ' vč. DPH / ' + v.u + '</td></tr></table>' : '<p style="font-size:.82rem;color:#888;margin-bottom:10px;">Cena na individuální dotaz. Kontaktujte nás.</p>';
+        var atT = v.a && Object.keys(v.a).length ? '<table class="kat-dat">' + Object.keys(v.a).map(function (k) { return '<tr><td>' + k + ':</td><td>' + v.a[k] + '</td></tr>'; }).join('') + '</table>' : '';
+        var pop = v.p > 0 ? '<div class="kat-dqr"><span class="kat-dql">Množství</span><div class="kat-dqw"><button class="kat-dqb" onclick="var e=document.getElementById(\'' + qid + '\');e.value=Math.max(1,+e.value-1)">&#8722;</button><input class="kat-dqi" id="' + qid + '" type="number" min="1" value="1"><button class="kat-dqb" onclick="var e=document.getElementById(\'' + qid + '\');e.value=+e.value+1">+</button></div><span class="kat-dqu">' + v.u + '</span><button class="kat-pbtn" onclick="katAddCart(\'' + v.id + '\',document.getElementById(\'' + qid + '\').value)"><svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3z"/></svg>Poptat</button></div>' : '<button class="btn-primary" onclick="showPage(\'kontakty\')">Poptat produkt →</button>';
+        var others = (KS.prod.v || []).filter(function (x) { return x.id !== v.id; }).slice(0, 6);
+        var rel = others.length ? '<div class="kat-secb"><div class="kat-sh">Další varianty</div><div class="kat-relw">' + others.map(function (o) { return '<button class="kat-relb" onclick="katOpenVar(\'' + o.id + '\')">' + (o.img ? '<img src="' + o.img + '" alt="' + o.n + '" onerror="this.style.display=\'none\'">' : '<span>🧱</span>') + o.n + '</button>'; }).join('') + '</div></div>' : '';
+        return '<div class="kat-dbody"><div class="kat-dimgb">' + (v.img ? '<img src="' + v.img + '" alt="' + v.n + '" onerror="this.style.display=\'none\'"><div class="kat-dchip">' + (v.a && v.a.Barva ? v.a.Barva : v.n.split(',').pop().trim()) + '</div>' : '<div class="kat-dnoimg">🧱</div>') + '</div>'
+          + '<div><div class="kat-dname">' + v.n + '</div>' + prT + atT + '<div class="kat-dsk ' + (v.sk !== false ? 'kat-sky' : 'kat-skn') + '">Trvale skladem: ' + (v.sk !== false ? 'ANO' : 'NE') + '</div>' + pop + '</div></div>'
+          + (tp.length ? '<div class="kat-secb"><div class="kat-sh">Technické informace</div><div class="kat-tgrid">' + cols.filter(function (c) { return c.length; }).map(function (c) { return '<ul class="kat-tlist">' + c.map(function (r) { return '<li><span class="kat-tk">' + r[0] + ':</span><span class="kat-tv">' + r[1] + '</span></li>'; }).join('') + '</ul>'; }).join('') + '</div></div>' : '')
+          + katDlHtml(KS.prod.dl) + katGalHtml(KS.prod.gal) + rel;
+      }
+
+      /* ── Downloads + Gallery ── */
+      function katDlHtml(dl) {
+        if (!dl) return '';
+        var secs = [['Certifikáty', dl.cert], ['CAD', dl.cad], ['Technické výkresy', dl.vyk], ['Technické listy', dl.tl], ['Postupy', dl.post]].filter(function (s) { return s[1] && s[1].length; });
+        if (!secs.length) return '';
+        return '<div class="kat-secb"><div class="kat-sh">Dokumenty ke stažení</div><div class="kat-dlgrid">' + secs.map(function (s) { return '<div><div class="kat-dlct">' + s[0] + '</div>' + s[1].map(function (d) { return '<a class="kat-dllnk" href="' + d.u + '" target="_blank" rel="noopener"><span class="kat-dlb kat-dl' + d.t + '">' + d.t.toUpperCase() + '</span>' + d.n + (d.s ? ' <small style="color:#999;font-size:.65rem;">(' + d.s + ')</small>' : '') + '</a>'; }).join('') + '</div>'; }).join('') + '</div></div>';
+      }
+      function katGalHtml(gal) {
+        if (!gal || !gal.length) return '';
+        return '<div class="kat-secb"><div class="kat-sh">Realizace</div><div class="kat-ggrid">' + gal.map(function (g) { return '<div class="kat-gitem"><img src="' + g.i + '" alt="' + g.n + '" loading="lazy" onerror="this.style.display=\'none\'"><div class="kat-gcap">' + g.n + '</div></div>'; }).join('') + '</div></div>';
+      }
+
+      /* ── Cart/Poptávka ── */
+      var KAT_CART = [];
+      function katAddCart(vid, q) {
+        var qty = parseInt(q) || 1; var v = KS.prod && KS.prod.v && KS.prod.v.find(function (x) { return x.id === vid; });
+        if (!v || v.p === 0) return;
+        var ex = KAT_CART.find(function (i) { return i.vid === vid; });
+        if (ex) ex.qty += qty; else KAT_CART.push({ vid: vid, name: v.n, price: v.p, unit: v.u, img: v.img, qty: qty });
+        katUpdBadge(); katToast('"' + v.n + '" přidán do poptávky.'); katRenderCart();
+      }
+      function katRmCart(vid) { KAT_CART = KAT_CART.filter(function (i) { return i.vid !== vid; }); katUpdBadge(); katRenderCart(); }
+      function katUpdQty(vid, qty) { var i = KAT_CART.find(function (x) { return x.vid === vid; }); if (i && qty >= 1) { i.qty = qty; katRenderCart(); } }
+      function katUpdBadge() { var el = document.getElementById('katCartCnt'); if (!el) return; el.textContent = KAT_CART.length; el.style.display = KAT_CART.length ? 'inline-flex' : 'none'; }
+      function katTogCart() { document.getElementById('katCartPanel').classList.toggle('open'); }
+      function katRenderCart() {
+        var body = document.getElementById('katCartBody'), foot = document.getElementById('katCartFoot');
+        if (!body || !foot) return;
+        if (!KAT_CART.length) { body.innerHTML = '<div class="kat-cemp"><div class="kat-cempico">🛒</div><p>Zatím žádné produkty.<br>Klikněte "Poptat" u výrobku.</p></div>'; foot.style.display = 'none'; return; }
+        var tot = KAT_CART.reduce(function (s, i) { return s + i.price * i.qty; }, 0);
+        body.innerHTML = KAT_CART.map(function (i) { return '<div class="kat-citem"><div class="kat-cithumb">' + (i.img ? '<img src="' + i.img + '" alt="' + i.name + '" onerror="this.style.display=\'none\'">' : '🧱') + '</div><div><div class="kat-cin">' + i.name + '</div><div class="kat-cip">' + katFmt(i.price) + ' / ' + i.unit + '</div><div class="kat-ciqw"><button class="kat-ciqb" onclick="katUpdQty(\'' + i.vid + '\',' + (i.qty - 1) + ')">&#8722;</button><input class="kat-ciqi" type="number" min="1" value="' + i.qty + '" onchange="katUpdQty(\'' + i.vid + '\',parseInt(this.value)||1)"><button class="kat-ciqb" onclick="katUpdQty(\'' + i.vid + '\',' + (i.qty + 1) + ')">+</button></div></div><div class="kat-ciact"><span class="kat-citot">' + katFmt(i.price * i.qty) + '</span><button class="kat-cirm" onclick="katRmCart(\'' + i.vid + '\')">&#215;</button></div></div>'; }).join('');
+        foot.style.display = 'block';
+        foot.innerHTML = '<div class="kat-ctr"><span class="kat-ctl">Celkem vč. DPH</span><span class="kat-ctv">' + katFmt(tot) + '</span></div>'
+          + '<div id="katIqw"><div class="kat-iqs"><h4>Kontaktní údaje</h4><div class="kat-igrid">'
+          + '<div class="kat-iff"><label>Jméno <span class="kat-req">*</span></label><input class="kat-inp" id="kiJ" type="text"></div>'
+          + '<div class="kat-iff"><label>Příjmení <span class="kat-req">*</span></label><input class="kat-inp" id="kiP" type="text"></div>'
+          + '<div class="kat-iff"><label>Společnost</label><input class="kat-inp" id="kiS" type="text"></div>'
+          + '<div class="kat-iff"><label>Telefon <span class="kat-req">*</span></label><input class="kat-inp" id="kiT" type="tel"></div>'
+          + '<div class="kat-iff kat-ifu"><label>E-mail <span class="kat-req">*</span></label><input class="kat-inp" id="kiE" type="email"></div>'
+          + '<div class="kat-iff kat-ifu"><label>Místo realizace <span class="kat-req">*</span></label><input class="kat-inp" id="kiM" type="text"></div>'
+          + '<div class="kat-iff kat-ifu"><label>Stav akce</label><select class="kat-inp" id="kiSt"><option value="">—</option><option>Příprava projektu</option><option>Výběrové řízení</option><option>Realizace</option><option>Dokončení</option></select></div>'
+          + '<div class="kat-iff kat-ifu"><label>Poznámka <span class="kat-req">*</span></label><textarea class="kat-inp" id="kiN" rows="3" style="resize:vertical"></textarea></div>'
+          + '</div><div class="kat-igdpr"><input type="checkbox" id="kiG"><label for="kiG">Souhlasím se zpracováním osobních údajů (GDPR) <span class="kat-req">*</span></label></div>'
+          + '<button class="kat-isub" onclick="katSubmitInq()"><svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>Odeslat poptávku</button></div></div>';
+      }
+      function katSubmitInq() {
+        var g = function (id) { return document.getElementById(id); };
+        var req = [['kiJ', 'Jméno'], ['kiP', 'Příjmení'], ['kiT', 'Telefon'], ['kiE', 'E-mail'], ['kiM', 'Místo realizace'], ['kiN', 'Poznámka']];
+        var err = []; req.forEach(function (r) { var el = g(r[0]); if (el && !el.value.trim()) { el.classList.add('err'); err.push(r[1]); } else if (el) el.classList.remove('err'); });
+        if (!g('kiG') || !g('kiG').checked) err.push('Souhlas GDPR');
+        if (err.length) { katToast('Vyplňte: ' + err.join(', ')); return; }
+        g('katIqw').innerHTML = '<div class="kat-iok"><div style="font-size:2rem;margin-bottom:10px">✅</div><h4>Poptávka odeslána!</h4><p>Brzy Vás kontaktujeme.</p></div>';
+        KAT_CART = []; katUpdBadge();
+      }
+
+      /* ── Toast ── */
+      var _katTT;
+      function katToast(msg) {
+        var el = document.getElementById('katToast'); if (!el) return;
+        el.innerHTML = '<span>✅</span> ' + msg; el.classList.add('show');
+        clearTimeout(_katTT); _katTT = setTimeout(function () { el.classList.remove('show'); }, 2800);
+      }
+
+      /* ── goToCat compatibility ── */
+      function goToCat(cat) { showPage('produkty'); setTimeout(function () { katNavCat(cat); }, 80); }
+      function filterCat(el, cat) { goToCat(cat); }
+
+      /* ── Master render ── */
+      function katRender() { katRenderSidebar(); katRenderBC(); katRenderContent(); }
+      function initKatalog() { katRender(); }
+
+      /* Hook into showPage */
+      (function () {
+        var _orig = showPage;
+        showPage = function (id, fromPopstate) {
+          _orig(id, fromPopstate);
+          if (id === 'produkty') { katRender(); }
+        };
+      })();
+
+      const CAT_LABELS = {
+        komunikace: 'Zpevněné plochy a komunikace', pozemni: 'Pozemní stavby',
+        oploceni: 'Prvky pro oplocení a zahradní architekturu', operne: 'Prvky pro opěrné stěny a svahy',
+        ostatni: 'Ostatní doplňky a výrobky', inzenyrske: 'Program pro inženýrské sítě',
+        liniove: 'Liniové odvodnění', transportbeton: 'Transportbeton'
+      };
 
       // ── PROJEKTY TABS ──
       var PROJECT_DATA = {
@@ -10472,16 +12103,7 @@
         }
       });
 
-      function goToCat(cat) {
-        showPage('produkty');
-        setTimeout(function () {
-          var links = document.querySelectorAll('.prod-cat');
-          for (var i = 0; i < links.length; i++) {
-            var oc = links[i].getAttribute('onclick') || '';
-            if (oc.indexOf(cat) !== -1) { filterCat(links[i], cat); break; }
-          }
-        }, 60);
-      }
+      /* goToCat defined in productData block above */
 
       function loadYT() {
         if (location.protocol === 'file:') {
@@ -11007,28 +12629,6 @@
     </script>
   </main><!-- /#mainContent -->
 
-  <footer id="siteFooter" role="contentinfo" aria-label="Patička webu"
-    style="background:var(--charcoal);color:rgba(255,255,255,.55);font-size:.75rem;padding:28px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:3px solid var(--red);">
-    <div>
-      <strong style="color:var(--white);">B &amp; BC a.s.</strong> &nbsp;·&nbsp;
-      Sokolská 464, 330 22 Zbůch &nbsp;·&nbsp;
-      <a href="tel:+420377199104" style="color:rgba(255,255,255,.7);text-decoration:none;">+420 377 199 104</a>
-    </div>
-    <div>
-      © <span id="footerYear"></span> B &amp; BC a.s. Všechna práva vyhrazena.
-      <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
-    </div>
-    <nav aria-label="Patička navigace" style="display:flex;gap:16px;flex-wrap:wrap;">
-      <a href="/kontakty" onclick="showPage('kontakty');return false;"
-        style="color:rgba(255,255,255,.55);text-decoration:none;">Kontakty</a>
-      <a href="/o-nas" onclick="showPage('o-nas');return false;"
-        style="color:rgba(255,255,255,.55);text-decoration:none;">O nás</a>
-      <button onclick="showPage('vnitrni-oznamovaci-system')"
-        style="background:none;border:none;color:rgba(255,255,255,.55);cursor:pointer;font-size:.75rem;padding:0;">Oznamovací
-        systém</button>
-    </nav>
-  </footer>
-
   <!-- ══════════════════════════════════════
        COOKIE BANNER
   ══════════════════════════════════════ -->
@@ -11442,6 +13042,568 @@
       color: rgba(255, 255, 255, .75);
     }
 
+    /* ── Sidebar sub-items (type & subtype level) ── */
+    .prod-cat-sub {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 16px 9px 30px;
+      font-size: .7rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      letter-spacing: .02em;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      border-top: none;
+      background: var(--bg);
+      transition: background .15s, color .15s;
+      white-space: normal;
+      line-height: 1.3;
+      position: relative;
+    }
+
+    .prod-cat-sub::before {
+      content: '▪';
+      color: var(--red);
+      position: absolute;
+      left: 16px;
+      font-size: .55rem;
+    }
+
+    .prod-cat-sub:hover {
+      background: var(--bg2);
+      color: var(--red);
+    }
+
+    .prod-cat-sub.active {
+      color: var(--red);
+      font-weight: 700;
+      background: rgba(192, 33, 30, .06);
+    }
+
+    .prod-cat-sub span {
+      color: var(--mid);
+      font-size: .8rem;
+      flex-shrink: 0;
+    }
+
+    .prod-cat-sub.active span {
+      color: var(--red);
+    }
+
+    .prod-cat-subsub {
+      padding-left: 44px;
+      font-size: .67rem;
+      background: var(--white);
+    }
+
+    .prod-cat-subsub::before {
+      left: 28px;
+    }
+
+    .prod-cat-subsubsub {
+      padding-left: 58px;
+      font-size: .63rem;
+      background: #fdfdfc;
+      color: var(--mid);
+    }
+
+    .prod-cat-subsubsub::before {
+      left: 42px;
+      content: '–';
+      color: var(--border);
+      font-size: .8rem;
+    }
+
+    .prod-cat-subsubsub.active {
+      color: var(--red);
+      font-weight: 600;
+      background: rgba(192, 33, 30, .04);
+    }
+
+    .prod-cat-subsubsub span {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .prod-cat-subsubsub {
+        padding-left: 60px !important;
+        font-size: .72rem !important;
+      }
+    }
+
+    /* ── Subtype grid (L3 when has subtypes) ── */
+    .prod-subtype-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow .2s, border-color .2s, transform .2s;
+    }
+
+    .prod-subtype-card:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .1);
+      border-color: var(--red);
+      transform: translateY(-2px);
+    }
+
+    /* ── Mobile sidebar sub-items ── */
+    @media (max-width: 768px) {
+      .prod-cat-sub {
+        padding: 11px 18px 11px 32px !important;
+        font-size: .78rem !important;
+      }
+
+      .prod-cat-subsub {
+        padding-left: 46px !important;
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       PRODUKTY — 3-LEVEL SPA NAVIGATION
+    ══════════════════════════════════════════════════════════ */
+
+    /* ── Level 1: category overview grid ── */
+    .prod-l1-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 32px 0 0;
+    }
+
+    .prod-l1-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow .22s, transform .22s, border-color .22s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .prod-l1-card:hover {
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .10);
+      transform: translateY(-3px);
+      border-color: var(--red);
+    }
+
+    .prod-l1-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg2);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .prod-l1-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s;
+    }
+
+    .prod-l1-card:hover .prod-l1-img img {
+      transform: scale(1.05);
+    }
+
+    .prod-l1-img-placeholder {
+      font-size: 2.8rem;
+      position: absolute;
+    }
+
+    .prod-l1-body {
+      padding: 14px 16px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-top: 1px solid var(--border);
+    }
+
+    .prod-l1-name {
+      font-weight: 700;
+      font-size: .82rem;
+      color: var(--charcoal);
+      line-height: 1.3;
+    }
+
+    .prod-l1-desc {
+      font-size: .73rem;
+      color: var(--mid);
+      line-height: 1.45;
+    }
+
+    .prod-l1-arrow {
+      margin-top: auto;
+      padding-top: 10px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .prod-l1-arrow svg {
+      width: 14px;
+      height: 14px;
+      transition: transform .2s;
+    }
+
+    .prod-l1-card:hover .prod-l1-arrow svg {
+      transform: translateX(4px);
+    }
+
+    /* ── Breadcrumb (inside produkty page) ── */
+    .prod-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      font-size: .72rem;
+      font-weight: 500;
+      color: var(--mid);
+      margin-bottom: 20px;
+    }
+
+    .prod-breadcrumb a,
+    .prod-breadcrumb button {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--mid);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      text-decoration: none;
+      transition: color .15s;
+    }
+
+    .prod-breadcrumb a:hover,
+    .prod-breadcrumb button:hover {
+      color: var(--red);
+    }
+
+    .prod-breadcrumb .bc-sep {
+      margin: 0 7px;
+      color: var(--border);
+      font-size: .9rem;
+    }
+
+    .prod-breadcrumb .bc-current {
+      color: var(--charcoal);
+      font-weight: 600;
+    }
+
+    /* ── Level 2: type cards grid (same style as prod-grid but with img) ── */
+    .prod-type-heading {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 22px;
+      line-height: 1.2;
+    }
+
+    /* reuses .prod-grid and .prod-card */
+
+    /* ── Level 3: product detail ── */
+    .prod-detail-header {
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .prod-detail-header h2 {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--charcoal);
+      line-height: 1.15;
+    }
+
+    .prod-detail-body {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+      margin-bottom: 36px;
+    }
+
+    .prod-detail-desc {
+      font-size: .88rem;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .prod-detail-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .prod-detail-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: .83rem;
+      color: var(--charcoal);
+      line-height: 1.5;
+    }
+
+    .prod-detail-points li::before {
+      content: '›';
+      color: var(--red);
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .prod-detail-certs {
+      font-size: .75rem;
+      color: var(--mid);
+      line-height: 1.8;
+    }
+
+    .prod-detail-certs strong {
+      color: var(--charcoal);
+    }
+
+    .prod-detail-img-box {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .prod-detail-img-box img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+    }
+
+    .prod-detail-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: var(--bg2);
+    }
+
+    /* ── Downloads section ── */
+    .prod-downloads {
+      margin-bottom: 36px;
+    }
+
+    .prod-downloads-title {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .prod-downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px 28px;
+    }
+
+    .prod-downloads-col-title {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 8px;
+    }
+
+    .prod-downloads-link {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .78rem;
+      color: var(--red);
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 5px;
+      transition: opacity .15s;
+    }
+
+    .prod-downloads-link:hover {
+      opacity: .75;
+      text-decoration: underline;
+    }
+
+    .prod-downloads-link svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      opacity: .7;
+    }
+
+    /* ── Subtypes grid ── */
+    .prod-subtypes {
+      margin-bottom: 36px;
+    }
+
+    .prod-subtypes-title {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .prod-subtypes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .prod-subtype-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow .2s, border-color .2s;
+    }
+
+    .prod-subtype-card:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .09);
+      border-color: #bbb;
+    }
+
+    .prod-subtype-card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      background: var(--bg2);
+    }
+
+    .prod-subtype-name {
+      padding: 9px 12px;
+      font-size: .78rem;
+      font-weight: 600;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Gallery section ── */
+    .prod-gallery {
+      margin-bottom: 36px;
+    }
+
+    .prod-gallery-title {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .prod-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .prod-gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      aspect-ratio: 4/3;
+      background: var(--bg2);
+    }
+
+    .prod-gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s;
+    }
+
+    .prod-gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .prod-gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, .65));
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 500;
+      padding: 18px 10px 8px;
+    }
+
+    /* ── CTA bar ── */
+    .prod-cta-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    /* ── Responsive overrides for new prod structure ── */
+    @media (max-width: 900px) {
+      .prod-l1-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .prod-detail-body {
+        grid-template-columns: 1fr;
+      }
+
+      .prod-detail-img-box {
+        max-width: 380px;
+      }
+
+      .prod-downloads-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .prod-l1-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .prod-subtypes-grid,
+      .prod-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .prod-downloads-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* ── Mobile ── */
     @media (max-width: 480px) {
       .cookie-banner {
@@ -11562,6 +13724,17 @@
   </script>
 
 
+
+  <!-- KATALOG CART PANEL -->
+  <aside class="kat-cpanel" id="katCartPanel">
+    <div class="kat-cph">
+      <h3>Poptávkový formulář</h3>
+      <button class="kat-cpx" onclick="katTogCart()">&times;</button>
+    </div>
+    <div class="kat-cpbody" id="katCartBody"></div>
+    <div class="kat-cpfoot" id="katCartFoot" style="display:none"></div>
+  </aside>
+  <div id="katToast"></div>
 </body>
 
 </html>
